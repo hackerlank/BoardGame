@@ -1,0 +1,9 @@
+{	
+	"table_mode"		 			: 1,
+	"max_round"          			: 4,
+    "pay_room_card"      			: 20,
+    "pay_mode"           			: 1,
+    "enable_235_win_plane"  		: true,
+    "enable_tax"		    	  	: true,
+    "enable_show_last_hand_cards"	: true
+}
