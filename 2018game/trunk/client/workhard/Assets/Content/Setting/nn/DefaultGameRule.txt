@@ -7,7 +7,7 @@
     "enable_flush"					: true,
     "enable_straight"				: true,
     "enable_suited"					: true,
-    "enbale_five_big"  				: true,
+    "enable_five_big"  				: true,
     "enable_five_small"		    	: true,
     "enable_full_house"				: true,
     "enable_bomb"					: true
