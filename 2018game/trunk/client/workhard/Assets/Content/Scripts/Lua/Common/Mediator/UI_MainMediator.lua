@@ -50,7 +50,6 @@ function mediator:Opened(param)
     end 
 
     if loginProxy:IsRenderWelcomeMsg() == true then 
-        self.viewComponent:RenderMsg("欢迎来到小茶馆")
         self.viewComponent:RenderMsg(luaTool:GetLocalize("game_warning_ps"))
         loginProxy:DontRenderWelcome()
     end 

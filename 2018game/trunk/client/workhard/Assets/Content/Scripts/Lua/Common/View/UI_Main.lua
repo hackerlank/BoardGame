@@ -170,7 +170,7 @@ local function LoadGameItemData(gameItem, data)
     local trans = gameItem.transform
     listItem.img = trans:Find("img_gameicon"):GetComponent("Image")
     GetResourceManager().LoadAssetAsync(GameHelper.EAssetType.EAT_Sprite, data:GetGameIconPath(), function(asset)
-        if asset and listItem.img then
+        if asset and asset:IsValid() == true and listItem.img then
             local img_size = asset:GetAsset().rect.size 
             listItem.img.sprite = asset:GetAsset()   
             listItem.img:GetComponent("RectTransform").sizeDelta = UnityEngine.Vector2(img_size.x, img_size.y)          
@@ -314,7 +314,7 @@ end
 
 --instance game list
 function tbclass:InitialGameList()
-    local allGamesInfos = luaTool:GetAllGamesInfos()
+    local allGamesInfos = luaTool:GetGamesInfos()
     for _, v in ipairs(allGamesInfos) do
         local gameItem = m_GameList:Spawn()
         LoadGameItemData(gameItem, v)
