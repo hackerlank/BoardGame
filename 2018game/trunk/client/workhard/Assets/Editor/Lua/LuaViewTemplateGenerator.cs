@@ -37,37 +37,26 @@ local tbclass = tbclass or {}
 local Log = UnityEngine.Debug.Log
 local LogWarning = UnityEngine.Debug.LogWarning
 local LogError = UnityEngine.Debug.LogError
-  
 --menu animation last time
 local MENU_OPEN_ANIM_TIME = 0.11
-
 --delay play open animation of window
 local CONST_PLAY_OPEN_ANIM_DELAY_TIME = 30
-
 --open animation style
 local CONST_OPEN_ANIM_STYLE = DG.Tweening.Ease.InOutBack
-
 --cache gameobject of window
 local gameObject = nil 
-
 --cache transform of window
 local transform = nil
-
 --window name
 local windownName = nil
-
 --loaded lua asset. custom definition data type
 local windowAsset = nil
-
 --whether self has been opened
 local bOpened = false
-
 --save the mediator
 local mediator = nil
-
 --save all btns
 local tb_btns = nil 
-
 --save game facade
 local facade = nil
 --root panel.
@@ -76,13 +65,10 @@ local m_RootPanel = nil
 local m_OpenAnimTween = nil 
 --whether is playing opening animation of window
 local m_IsPlaying = false
-
 --close self param
 local CLOSE_SELF_PARAM = ci.GetUICloseParam().new(false, '$CLASS') 
-
 --close self can restore param
 local CLOSE_CAN_RESTORE_PARAM = ci.GetUICloseParam().new(true, '$CLASS') 
-
 --private function table
 local m_PrivateFunc = {}
 
