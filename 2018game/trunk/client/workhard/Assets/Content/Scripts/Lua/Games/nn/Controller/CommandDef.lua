@@ -63,6 +63,10 @@ nn.OWNER_REQ_START_GAME_RSP = "nn.owner_req_start_game_rsp"
 nn.OWNER_REQ_START_ROUND = "nn.owner_req_start_round"
 nn.OWNER_REQ_START_ROUND_RSP = "nn.owner_req_start_round_rsp"
 
+--command:: player req open card
+nn.REQ_OPEN_CARD = "nn.req_open_card"
+nn.REQ_OPEN_CARD_RSP = "nn.req_open_card_rsp"
+
 --command:: 退出播放录像
 nn.EXIT_PLAY_RECORD = "nn.exit_play_record"
 nn.START_PLAY_RECORD = "nn.start_play_record"
@@ -123,6 +127,8 @@ if #nn.tb_commands == 0 then
     nn.tb_commands[#nn.tb_commands+1] = {name=nn.OWNER_REQ_START_GAME_RSP, script="OwnerReqStartGameRspCommand"}
     nn.tb_commands[#nn.tb_commands+1] = {name=nn.OWNER_REQ_START_ROUND, script="OwnerReqStartRoundCommand"}
     nn.tb_commands[#nn.tb_commands+1] = {name=nn.OWNER_REQ_START_ROUND_RSP, script="OwnerReqStartRoundRspCommand"}
+    nn.tb_commands[#nn.tb_commands+1] = {name=nn.REQ_OPEN_CARD, script="ReqOpenCardCommand"}
+    nn.tb_commands[#nn.tb_commands+1] = {name=nn.REQ_OPEN_CARD_RSP, script="ReqOpenCardRspCommand"}
     
 end
 

@@ -102,7 +102,7 @@ function mediator:handleNotification(notification)
         facade:sendNotification(Common.CLOSE_UI_COMMAND, OCCLUSION_MENU_CLOSE_PARAM)
     elseif Common.NTF_PLAY_GAME == name then
         --swith table state
-        self.viewComponent:NtfPlayGame(body.real_seat_id, body.bIsSelf, body.remain_time)
+        self.viewComponent:NtfPlayGame(game_proxy:GetGameState(), game_proxy:GetGameRule().start_game_mode)
     elseif Common.NTF_SHUFFLE == name then
         --发牌通知
         self.viewComponent:NtfShuffle(body.cards_info)
@@ -301,4 +301,7 @@ function mediator:GetUserScore(real_seat_id)
     return game_proxy:GetUserScore(real_seat_id)
 end 
 
+function mediator:GetGameRule()
+    return game_proxy:GetGameRule()
+end 
 return mediator

@@ -67,6 +67,8 @@ local m_Prestart = nil
 local btn_ready = nil 
 --cache invite btn
 local btn_invite = nil 
+--cache open card btn
+local btn_showcard = nil 
 --save useless card
 local m_InstancedCards = {}
 --card template
@@ -99,10 +101,12 @@ local ECardType={
 --callback function of exit button
 m_PrivateFunc.onClickExitBtn = function()
     facade:sendNotification(nn.PLAYER_LEAVE_GAME)
+    m_PrivateFunc.ShowOptionPanel(false)
 end 
 
 --dismiss room.
 m_PrivateFunc.onClickDismissBtn = function()
+    m_PrivateFunc.ShowOptionPanel(false)
 end 
 
 --share room information to wechat 
@@ -117,14 +121,19 @@ end
 
 --callback function of setting button
 m_PrivateFunc.onClickSettingBtn = function()
+    m_PrivateFunc.ShowOptionPanel(false)
 end 
 
 --show lastest round information
 m_PrivateFunc.onClickReplayBtn = function()
+    m_PrivateFunc.ShowOptionPanel(false)
 end 
 
 --callback function of info btn
 m_PrivateFunc.onClickInfoBtn = function()
+    local hand_cards = mediator:GetPlayerCards(1)
+    local seat = m_SeatInfo[1]
+    m_PrivateFunc.ShowPlayerCardType(1, hand_cards)
 end 
 
 --callback function of auto button
@@ -156,6 +165,11 @@ end
 
 --callback function of chat_voice button 
 m_PrivateFunc.onClickChatVoiceBtn = function()
+end 
+
+--req open self card
+m_PrivateFunc.onClickShowCardBtn = function()
+    facade:sendNotification(nn.REQ_OPEN_CARD)
 end 
 
 --render chat panel
@@ -244,6 +258,13 @@ m_PrivateFunc.BindCallbacks = function()
     if btn then 
         btn.onClick:AddListener(m_PrivateFunc.onClickChatVoiceBtn)
         table.insert(tb_btns, btn)
+    end 
+
+    btn = m_RootPanel:Find("bottom/btn_showcard"):GetComponent("Button")
+    if btn then 
+        btn.onClick:AddListener(m_PrivateFunc.onClickShowCardBtn)
+        btn_showcard = btn 
+        btn_showcard.gameObject:SetActive(false)
     end 
 
 end 
@@ -508,13 +529,7 @@ end
 
 --get card image asset.
 --@param initial_point
-m_PrivateFunc.GetCardAsset = function(initial_point)
-    local card_color = nil  
-    local card_point = nil 
-    if initial_point then 
-        card_color, card_point = nn.game_logic.parse_card(initial_point)
-    end 
-
+m_PrivateFunc.GetCardAsset = function(card_color, card_point)
     if not card_point and not card_color then 
         return m_LoadedPokerAsset[ECardType.max][1]:GetAsset()
     elseif card_color == 0 then 
@@ -530,7 +545,7 @@ end
 
 --create new card
 --@param seat_id 
-m_PrivateFunc.CreateNewCard = function(seat_id, card_point, bskipanim)
+m_PrivateFunc.CreateNewCard = function(seat_id, point, bskipanim)
     local card = nil 
     local seat = m_SeatInfo[seat_id]
     if not seat then 
@@ -560,9 +575,14 @@ m_PrivateFunc.CreateNewCard = function(seat_id, card_point, bskipanim)
     TransformLuaUtil.SetTransformPos(card.trans, card_initial_pos.x, card_initial_pos.y, card_initial_pos.z)
     card.trans:SetParent(seat.m_HandCardParent)
     TransformLuaUtil.SetTransformLocalScale(card.trans, 1,1,1)
-    card.card_point = card_point 
+    card.card_point = point 
     card.img.enabled = true 
-    card.img.sprite = m_PrivateFunc.GetCardAsset(card_point)
+    local card_color = nil 
+    local card_point = nil 
+    if point then 
+        card_color, card_point = nn.game_logic.parse_card(point)
+    end 
+    card.img.sprite = m_PrivateFunc.GetCardAsset(card_color, card_point)
     local pos = seat.m_HandCardsPos[#seat.m_HandCards]
     if bskipanim ==  false then 
         card.shuffle_tween = DoTweenPathLuaUtil.DOLocalMove(card.trans, pos, 0.15)
@@ -577,6 +597,44 @@ m_PrivateFunc.CreateNewCard = function(seat_id, card_point, bskipanim)
     return card
 end 
 
+--show player card type
+m_PrivateFunc.ShowPlayerCardType = function(seat_id, hand_cards)
+    local seat = m_SeatInfo[seat_id]
+    if seat and hand_cards then 
+        local niu_point,split_cards = m_PrivateFunc.SplitCards(hand_cards) 
+
+        for k,v in ipairs(split_cards) do 
+            seat.m_HandCards[k].img.sprite = m_PrivateFunc.GetCardAsset(v.color, v.point)
+        end 
+
+        local rule = mediator:GetGameRule()
+        --check ex_niu_type 
+        local ex_niu_type = nil
+        if niu_point > 0 then
+            if rule.enable_flush == true and nn.game_logic.is_flush(split_cards) == true then 
+                ex_niu_type = nn.ENiuStyle.flush
+            elseif rule.enable_five_small == true and nn.game_logic.is_five_small(split_cards) == true then 
+                ex_niu_type = nn.ENiuStyle.five_small
+            elseif rule.enable_bomb == true and nn.game_logic.is_bomb(split_cards) == true then 
+                ex_niu_type = nn.ENiuStyle.bomb          
+            elseif rule.enable_five_big == true and nn.game_logic.is_five_big(split_cards) == true then 
+                ex_niu_type = nn.ENiuStyle.five_big
+            elseif rule.enable_full_house == true and  nn.game_logic.is_full_house(split_cards) == true then 
+                ex_niu_type = nn.ENiuStyle.full_house
+            elseif rule.enable_suited == true and nn.game_logic.is_suited(split_cards) == true then 
+                ex_niu_type = nn.ENiuStyle.suited
+            elseif rule.enable_straight == true and nn.game_logic.is_straight(split_cards) == true then 
+                ex_niu_type = nn.ENiuStyle.straight
+            else 
+                ex_niu_type = nn.ENiuStyle.niuniu
+            end
+        else 
+            ex_niu_type = nn.ENiuStyle.none 
+        end  
+        m_PrivateFunc.UpdateNiuType(1,niu_point, ex_niu_type)  
+    end 
+end 
+
 --update niu type image 
 m_PrivateFunc.UpdateNiuType = function(seat_id, niu_point, ex_niu_type)
     local seat = m_SeatInfo[seat_id]
@@ -586,42 +644,81 @@ m_PrivateFunc.UpdateNiuType = function(seat_id, niu_point, ex_niu_type)
             --无牛
             str_path = "" 
         elseif ex_niu_type == nn.ENiuStyle.niuniu then 
-            str_path = string.format("%snn/nnhx_lbl_n%d",UI_IMAGE_PATH,niu_point)
+            str_path = string.format("%scommon/nn/nnhx_lbl_n%d.png",UI_IMAGE_PATH,niu_point)
         elseif ex_niu_type == nn.ENiuStyle.straight then 
             --顺子牛
-            str_path = string.format("%snn/%s",UI_IMAGE_PATH,"nnhx_lbl_szn")
+            str_path = string.format("%scommon/nn/%s.png",UI_IMAGE_PATH,"nnhx_lbl_szn")
         elseif ex_niu_type == nn.ENiuStyle.suited then 
             --同花牛
-            str_path = string.format("%snn/%s",UI_IMAGE_PATH,"nnhx_lbl_thn")
+            str_path = string.format("%scommon/nn/%s.png",UI_IMAGE_PATH,"nnhx_lbl_thn")
         elseif ex_niu_type == nn.ENiuStyle.full_house then 
             --葫芦牛
-            str_path = string.format("%snn/%s",UI_IMAGE_PATH,"nnhx_lbl_hln")
+            str_path = string.format("%scommon/nn/%s.png",UI_IMAGE_PATH,"nnhx_lbl_hln")
         elseif ex_niu_type == nn.ENiuStyle.five_big then
             --五花牛
-            str_path = string.format("%snn/%s",UI_IMAGE_PATH,"nnhx_lbl_whn")
+            str_path = string.format("%scommon/nn/%s.png",UI_IMAGE_PATH,"nnhx_lbl_whn")
         elseif ex_niu_type == nn.ENiuStyle.five_small then 
             --五小牛
-            str_path = string.format("%snn/%s",UI_IMAGE_PATH,"nnhx_lbl_wxn")
+            str_path = string.format("%scommon/nn/%s.png",UI_IMAGE_PATH,"nnhx_lbl_wxn")
         elseif ex_niu_type == nn.ENiuStyle.bomb then
             --犇牛
-            str_path = string.format("%snn/%s",UI_IMAGE_PATH,"nnhx_lbl_nnn")
+            str_path = string.format("%scommon/nn/%s.png",UI_IMAGE_PATH,"nnhx_lbl_nnn")
         elseif ex_niu_type == nn.ENiuStyle.flush then 
             --同花顺牛
-            str_path = string.format("%snn/%s",UI_IMAGE_PATH,"nnhx_lbl_szn")
+            str_path = string.format("%scommon/nn/%s.png",UI_IMAGE_PATH,"nnhx_lbl_szn")
         end 
+
         local asset = m_LoadedNiuTypeAsset[str_path]
-        if asset == nil or asset:IsValid() == false then 
-            GetResourceManager().LoadAssetsAsync(GameHelper.EAssetType.EAT_Sprite, str_path, function(tmp_asset) 
-                if tmp_asset and tmp_asset:IsValid() == true then 
-                    seat.img_niutype.sprite = tmp_asset:GetAsset()
-                    m_LoadedNiuTypeAsset[str_path] = tmp_asset
-                end 
-            end)
-        else 
-            seat.img_niutype.sprite = asset:GetAsset()
+        if str_path ~= "" then 
+            if asset == nil or asset:IsValid() == false then 
+                GetResourceManager().LoadAssetAsync(GameHelper.EAssetType.EAT_Sprite, str_path, function(tmp_asset) 
+                    if tmp_asset and tmp_asset:IsValid() == true then 
+                        seat.img_niutype.sprite = tmp_asset:GetAsset()
+                        m_LoadedNiuTypeAsset[str_path] = tmp_asset
+                    end 
+                end)
+            else 
+                seat.img_niutype.sprite = asset:GetAsset()
+            end 
+        else
+            seat.img_niutype.sprite = nil  
         end 
         seat.img_niutype.enabled = true
     end 
+end 
+
+--split cards.sorted
+m_PrivateFunc.SplitCards = function(hand_cards)
+    local tmp_result = {} 
+    local t = {} 
+    local tmp = {} 
+    for k,v in ipairs(hand_cards) do 
+        local s = {}
+        s.color,s.point = nn.game_logic.parse_card(v)
+        table.insert(tmp, s)
+    end 
+    local niu_point, results = nn.game_logic.splitNiuCards(tmp)
+    
+    local func_sort = function(left, right)
+        if left.point ~= right.point then
+            return left.point<right.point
+        else
+            return left.color<right.color
+        end
+    end 
+    local tb_three = results[1]
+    local tb_two = results[2]
+    table.sort(tb_three, func_sort)
+    table.sort(tb_two, func_sort)
+
+    for _,tt in ipairs(tb_three) do 
+        table.insert(tmp_result, tt)
+    end 
+
+    for _,tt in ipairs(tb_two) do 
+        table.insert(tmp_result, tt)
+    end 
+    return niu_point, tmp_result
 end 
 --================private interface end =====================
 
@@ -741,6 +838,10 @@ function tbclass:SafeRelease()
         end 
         tb_btns = nil 
     end 
+
+    btn_invite = nil 
+    btn_ready = nil 
+    btn_showcard = nil 
 
     if m_OpenAnimTween ~= nil then 
         DoTweenPathLuaUtil.Kill(m_OpenAnimTween, true)
@@ -876,7 +977,8 @@ end
 
 --ntf round over
 function tbclass:NtfRoundOver()
-
+    btn_showcard.gameObject:SetActive(false)
+    facade:sendNotification(Common.EXECUTE_CMD_DONE)
 end 
 
 --ntf round start
@@ -900,19 +1002,16 @@ end
 
 --ntf player open the cards
 function tbclass:NtfPlayerOpenCards(seat_id, hand_cards)
-    local seat = m_SeatInfo[seat_id]
-    if seat then 
-        if hand_cards then 
-            local len = #hand_cards 
-            for i=1, len do 
-                seat.m_HandCards[i].card_point = hand_cards[i]
-                cseat.m_HandCards[i].img.sprite = m_PrivateFunc.GetCardAsset(hand_cards[i])
-            end 
-        end 
+    if hand_cards then 
+        m_PrivateFunc.ShowPlayerCardType(seat_id, hand_cards)
     end 
 
+    if mediator:IsSelfRealSeatId(seat_id) == true then 
+        btn_showcard.gameObject:SetActive(false)
+    end 
     facade:sendNotification(Common.EXECUTE_CMD_DONE)
 end 
+
 --fresh game rule panel
 function tbclass:FreshGameRule(rule)
 end 
@@ -937,7 +1036,6 @@ function tbclass:NtfShuffle(card_info)
         if seat then 
             seat.img_dealer.enabled = true 
         end 
-
         local len = #card_info 
         local info = nil 
         local card = nil 
@@ -956,9 +1054,10 @@ function tbclass:NtfShuffle(card_info)
             end 
 
             --should us sort card of self?
+            facade:sendNotification(Common.EXECUTE_CMD_DONE)
         end)
-        coroutine.resume(shuffle_cor)
-       
+        coroutine.resume(shuffle_cor)    
+        btn_showcard.gameObject:SetActive(true)
     end 
 
 end 
@@ -994,7 +1093,6 @@ function tbclass:PlayerReconnected(info, seat_id, bShowReady, game_state, bNotSh
     else 
        -- seat.img_offline.enabled = true 
     end 
-    print(info.hand_card_num )
     if info.hand_card_num and  info.hand_card_num > 0 then 
         count = info.hand_card_num
         for i=1, count do 
@@ -1007,8 +1105,9 @@ function tbclass:PlayerReconnected(info, seat_id, bShowReady, game_state, bNotSh
     end 
 
     --show other falg or active animation according to hand_card_state
-    if info.hand_cards_state == nn.EHandCardState.open then 
+    if info.hand_cards_state == nn.EHandCardState.open and info.hand_cards and info.hand_card_num > 0 then 
         --show niu type
+        m_PrivateFunc.ShowPlayerCardType(seat_id, info.hand_cards)
     end 
 end 
 

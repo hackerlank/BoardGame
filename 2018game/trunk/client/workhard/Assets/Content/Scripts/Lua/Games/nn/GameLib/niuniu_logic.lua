@@ -19,10 +19,6 @@ function niuniu_logic.parse_card(card)
 	end  
 	local color = math.floor(card/16)
 	local point = card-color*16
-	if point>10 then 
-		point = point -10 
-	end	
-	point =point
 	return color, point
 end 
 
@@ -94,7 +90,7 @@ function  niuniu_logic.countNiu(threeCards,twoCards)
 
 
 		local tmp_point= {}
-		tmp_point[1]=threeCards[1].point
+		tmp_point[1]= threeCards[1].point
 		tmp_point[2] = threeCards[2].point
 		tmp_point[3] = threeCards[3].point
 		tmp_point[4] = twoCards[1].point

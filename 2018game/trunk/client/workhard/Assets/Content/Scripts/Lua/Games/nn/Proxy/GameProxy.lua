@@ -159,6 +159,7 @@ local function _PopupCmd()
         --[[if #m_tbGlobalNtf > 0 then 
             Log("send " ..m_ExecutingCmd  .." remain=" .. #m_tbGlobalNtf)
         end]]
+        Log("send " ..m_ExecutingCmd  .." remain=" .. #m_tbGlobalNtf)
         facade:sendNotification(m_ExecutingCmd, param)
     else 
         bPopuping = false 
@@ -429,6 +430,15 @@ function GameProxy:OwnerReqStartRoundGame()
     ClientConn.SendMessage(
         game_service_id,
         game_msg_id.owner_req_start_round,
+        nil
+    )
+end 
+
+--c2s:: req open card
+function GameProxy:ReqOpenCard()
+    ClientConn.SendMessage(
+        game_service_id,
+        game_msg_id.req_open_cards,
         nil
     )
 end 
@@ -877,6 +887,19 @@ game_pack[game_msg_id.owner_req_start_round_fail] = function(buf)
     facade:sendNotification(nn.OWNER_REQ_START_ROUND_RSP,{errorcode = body.code, desc = body.desc})
 end 
 
+--s2c::owner req start round fail
+game_pack[game_msg_id.req_open_cards_fail] = function(buf)
+    local body = game_sproto:decode("req_open_cards_fail", buf)
+    facade:sendNotification(nn.REQ_OPEN_CARD_RSP,{errorcode = body.code, desc = body.desc})
+end 
+
+--s2c::open card success
+game_pack[game_msg_id.req_open_cards_ok] = function(buf)
+    m_userGameInfo[self_seat_id].hand_cards_state = nn.EHandCardState.open 
+    facade:sendNotification(nn.REQ_OPEN_CARD_RSP,{errorcode = EGameErrorCode.EGE_Success, desc = ""})
+    PushCmd(nn.NTF_USER_OPEN_CARDS, {real_seat_id = self_real_seat_id, hand_cards = m_userGameInfo[self_seat_id].hand_cards})
+end 
+
 --s2c:: ntf user open cards
 game_pack[game_msg_id.user_open_cards] = function(buf)
     local body = game_sproto:decode("user_open_cards", buf)
@@ -885,7 +908,7 @@ game_pack[game_msg_id.user_open_cards] = function(buf)
         m_userGameInfo[body.seat_id].hand_card_num = #body.hand_cards
         m_userGameInfo[body.seat_id].hand_cards_state = nn.EHandCardState.open
     end 
-    PushCmd(nn.NTF_USER_OPEN_CARDS, {real_seat_id = m_PlayerInfo[body.seat_id].real_seat_id, cards = body.hand_cards})
+    PushCmd(nn.NTF_USER_OPEN_CARDS, {real_seat_id = m_PlayerInfo[body.seat_id].real_seat_id, hand_cards = body.hand_cards})
 end 
 
 --s2c:: notification client who has ready
@@ -987,15 +1010,8 @@ end
 
 -- s2c 广播桌子切换状态到游戏 body none
 game_pack[game_msg_id.begin_play] = function(buf)
-     m_tableInfo.state = nn.ETableState.play
-     local owner_real_seat_id = self_real_seat_id
-     for k,v in ipairs(m_PlayerInfo) do 
-        if v.seat_id == m_tableInfo.dealer then 
-            owner_real_seat_id = v.real_seat_id 
-            break
-        end 
-    end 
-     PushCmd(Common.NTF_PLAY_GAME, {real_seat_id = owner_real_seat_id, bIsSelf = GameProxy:IsOwner(), remain_time = m_tableInfo.act_timeout})
+     --m_tableInfo.state = nn.ETableState.play
+    PushCmd(Common.NTF_PLAY_GAME, nil)
 end 
 
 -- s2c 广播桌子切换状态到 body round_over
