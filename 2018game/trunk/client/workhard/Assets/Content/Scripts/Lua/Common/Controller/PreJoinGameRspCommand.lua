@@ -37,7 +37,7 @@ function PreJoinGameRspCommand:execute(note)
         else 
 
             local game_type = nil 
-                local games = luaTool:GetAllGamesInfos()
+                local games = luaTool:GetGamesInfos()
                 if games then 
                     for k,v in ipairs(games) do 
                         if v then 

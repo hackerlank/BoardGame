@@ -279,7 +279,7 @@ function luaTool:GetLevelInfo(G, D, L)
 	return nil
 end 
 
-function luaTool:GetAllGamesInfos()
+function luaTool:GetGamesInfos()
 	local szFile = "Common/Games"
 	local setting = luaTool.settingFiles[szFile]
 	if setting == nil then 

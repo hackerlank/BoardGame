@@ -50,7 +50,7 @@ function LoginGateServerRspCommand:execute(note)
         if proxy:HasJoinedGame() == true then 
             local cor = coroutine.create(function()
                 local hall_type = proxy:GetHallType(proxy:GetJoinedHall())
-                local games = luaTool:GetAllGamesInfos()
+                local games = luaTool:GetGamesInfos()
                 local game_type = nil 
                 local game_name = ""
                 for k,v in pairs(games) do 

@@ -437,7 +437,7 @@ function LoginProxy:QueryGameRecords(hall_service)
                         end
                         local m_GameType = nil 
                         local hall_type = LoginProxy:GetHallType(hall_service)
-                        local games = luaTool:GetAllGamesInfos()
+                        local games = luaTool:GetGamesInfos()
                         if games ~= nil then 
                             for k,v in ipairs(games) do 
                                 if v then 

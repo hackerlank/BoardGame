@@ -28,7 +28,7 @@ function GetRecordDetailCommand:execute(note)
         local hall_service = note.body.service_id 
         local hall_type = login_proxy:GetHallType(hall_service)
         if hall_type ~= nil then 
-            local games = luaTool:GetAllGamesInfos()
+            local games = luaTool:GetGamesInfos()
             for k,v in pairs(games) do 
                 if v:GetHallType() == hall_type then 
                     local game_type = v:GetGameType()
