@@ -1,0 +1,17 @@
+return {
+    point_A = 1,
+    point_K = 13,
+    point_Q = 12,
+    point_J = 11,
+    point_10 = 10,
+    point_9 = 9,
+    point_8 = 8,
+    point_7 = 7,
+    point_6 = 6,
+    point_5 = 5,
+    point_4 = 4,
+    point_3 = 3,
+    point_2 = 2,
+    point_joker_big = 53,
+    point_joker_small = 54,
+}
