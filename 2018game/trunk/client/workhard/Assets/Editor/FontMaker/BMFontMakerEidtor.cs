@@ -18,7 +18,7 @@ public class BMFontMakeEditor
     [MenuItem("CustomTool/Font/MakeFont")]
     public static void GenCustom()
     {
-        string root_path = "Assets/Content/ArtWork/Fonts";
+        string root_path = "Assets/Content/Artwork/font";
         List<string> pathArr_ = CustomTool.FileSystem.GetSubFiles(root_path);
         List<string> pathArr = new List<string>();
         foreach(string path in pathArr_)
