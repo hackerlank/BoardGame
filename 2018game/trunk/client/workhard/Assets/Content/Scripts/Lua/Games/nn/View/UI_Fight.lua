@@ -287,7 +287,7 @@ m_PrivateFunc.InitialCommonPanel = function()
     m_CommonPanel.img_devicepower.fillAmount = 1
     m_CommonPanel.txt_roomid = m_RootPanel:Find("top/txt_roomId"):GetComponent("Text")
     m_CommonPanel.txt_remainround = m_RootPanel:Find("top/txt_round"):GetComponent("Text")
-    m_CommonPanel.txt_remainround.text = "0局"
+    m_CommonPanel.txt_remainround.text = ""
     m_CommonPanel.txt_dealerrule = m_RootPanel:Find("top/txt_dealerrule"):GetComponent("Text")
     m_CommonPanel.txt_tuizhu = m_RootPanel:Find("top/txt_tuizhu"):GetComponent("Text")
 
@@ -531,6 +531,12 @@ function tbclass:FreshPlayerInfo(users)
                 seat.gameObject:SetActive(true)
                 seat.txt_name.text = v.user_name 
                 seat.txt_score.text = mediator:GetUserScore(v.real_seat_id)
+                seat.img_ready.enabled = false 
+                seat.img_bq.enabled = false 
+                seat.img_qz.enabled = false 
+                seat.txt_qz_num.text = ""
+                seat.txt_result.text = ""
+                seat.txt_multbei.text = ""
                 if v.head_img then 
                     GetHeadIconManager().LoadIcon(v.head_img, function(sprite) 
                         if sprite ~= nil and sprite:IsValid() == true then 
@@ -582,6 +588,10 @@ end
 --ntf player ready
 --@param seat_id
 function tbclass:NtfPlayerReady(seat_id)
+    local seat = m_SeatInfo[seat_id]
+    if seat then 
+        seat.img_ready.enabled = true 
+    end 
 end 
 
 --ntf round over
