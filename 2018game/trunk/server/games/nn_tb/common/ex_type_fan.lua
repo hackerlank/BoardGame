@@ -13,3 +13,5 @@ tmp_fan[5] = 6
 tmp_fan[11] = 7
 tmp_fan[21] = 8
 tmp_fan[31] = 10
+
+return tmp_fan

@@ -98,7 +98,7 @@
     desc 1 : string         #错误说明
 }
 
-.use_open_cards{
+.user_open_cards{
     seat_id 1:integer
     hand_cards 2 :*integer
 }

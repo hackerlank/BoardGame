@@ -8,6 +8,7 @@ local clustersend = require "clustersend"
 local niuniu_logic = require "niuniu_logic"
 local card_color = require"poker_color"
 local card_point = require "poker_point"
+local niu_style = require "niu_style"
 
 --local mj_cards_maker = require"real_mj_card"
 
@@ -197,6 +198,7 @@ function   logic.begin_deal(  )
         logic.deal()
     end
 
+    
   
 
     log.info("left_cards num is :"..#info.left_cards)
@@ -213,7 +215,7 @@ end
 --cheat init_cards()
  function logic.cheat_deal()
     command.cancel_timer()
-
+    --user.hand_cards_num = #user.hand_cards
 end
 
 -- 发牌开始
@@ -242,6 +244,7 @@ function logic.deal()
             table.remove( table_cards,#table_cards )
         end
 
+        user.hand_cards_num = user_card_num
         user.hand_cards_state = user_hand_cards_state.close
     end
 
@@ -387,7 +390,8 @@ function logic.get_winner(user1,user2)
         return user2
     else
         if user1.niu_point == user2.niu_point then 
-            local tmp_index = info.hand_cards_num
+            local tmp_index = conf.user_hand_cards_num
+            log.info("index is :"..tmp_index)
             if    niuniu_logic.compareCard (user1.sorted_cards[tmp_index],user2.sorted_cards[tmp_index]) then 
                 return user2
             else
@@ -474,8 +478,9 @@ function logic.get_user_niu_info(user)
     for i,v in ipairs(user.hand_cards) do 
         table.insert(five_cards,{color = math.floor(v/16),point = math.fmod(v,16) })
     end
-    user.sort_cards = niuniu_logic.sort_cards(five_cards)    
-
+   
+    user.sorted_cards = niuniu_logic.sort_cards(five_cards)    
+    
     user.ex_niu_type ,user.niu_point =  logic.get_ex_type(five_cards)
 end
 
@@ -493,9 +498,10 @@ function logic.round_over()
        --count score and change_state
     local tmp_winner 
     for _,tmp_user in pairs(info.users) do 
-        logic.get_user_niu_info(user)
+        logic.get_user_niu_info(tmp_user)
         tmp_winner = tmp_winner or tmp_user
-        if tmp_user.game_state == game_state.in_game then 
+        if tmp_user.game_state == user_game_state.in_game then 
+            log.error(sprint_r(tmp_winner.sorted_cards))
             tmp_winner = logic.get_winner(tmp_winner,tmp_user)
         end
     end    

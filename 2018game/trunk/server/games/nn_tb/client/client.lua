@@ -1514,7 +1514,7 @@ function table_pack.req_bao_jiao_fail(fd_,buf)
 			print_r(body)
 end
 
-function table_pack.begin_play(fd_)
+function table_pack.begin_play(fd_,buf)
 			print("table_pack.begin_play")
 
 		sleep(1)
@@ -1522,7 +1522,20 @@ function table_pack.begin_play(fd_)
 
 end
 
+function table_pack.req_open_cards_ok(fd_,buf)
+			print("table_pack.req_open_cards_ok")
+
+end
+
+function table_pack.user_open_cards(fd_,buf)
+			print("table_pack.user_open_cards")
+			local body = game_sproto:decode("user_open_cards",buf)
+
+			print_r(body)
+end
 --消息映射
+table_map[game_msg_id.req_open_cards_ok]		=table_pack.req_open_cards_ok
+table_map[game_msg_id.user_open_cards]			=table_pack.user_open_cards
 table_map[table_msg_id.user_enter_table]		=table_pack.user_enter_table
 table_map[table_msg_id.user_left_table]			=table_pack.user_left_table
 table_map[table_msg_id.dismiss_table]			=table_pack.dismiss_table
@@ -1558,6 +1571,8 @@ table_map[game_msg_id.user_ready]				=table_pack.user_is_ready
 --table_map[game_msg_id.ding_que_result]			=table_pack.ding_que_result
 table_map[game_msg_id.user_start_round]			=table_pack.user_start_round
 table_map[game_msg_id.user_start_game]			=table_pack.user_start_game
+
+
 
 -- 在gate登录
 last = ""
