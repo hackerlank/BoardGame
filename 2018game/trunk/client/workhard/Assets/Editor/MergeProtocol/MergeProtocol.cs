@@ -14,7 +14,7 @@ public class MergeProtocol
     {
         string project_root = Application.dataPath;
 
-        string client_root = project_root + "/Content/Scripts/Lua/NetWork";
+        string client_root = project_root + "/Content/Scripts/Lua/network";
 
         int clientPos = project_root.LastIndexOf("client");
 
@@ -26,7 +26,7 @@ public class MergeProtocol
 
         List<string> configs = new List<string>();
 
-        string config_file_path = project_root + "/Editor/NetWork/NeedCopyProtocolConfig.txt";
+        string config_file_path = project_root + "/Editor/MergeProtocol/NeedCopyProtocolConfig.txt";
 
         FileStream fs = new FileStream(config_file_path, FileMode.Open);
         if (fs != null)

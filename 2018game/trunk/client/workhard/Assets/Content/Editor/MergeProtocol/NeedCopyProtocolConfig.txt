@@ -1,5 +1,0 @@
-sproto
-games/mj_cdxz
-games/mj_nj
-games/zha_jin_hua
-types

@@ -35,26 +35,10 @@ return {
 
  
     -- s2c 广播玩家看牌,
-    user_check_cards      = 1086,
+   -- user_check_cards      = 1086,
 
 
-    -- s2c 通知玩家可以行动了
-    you_can_act         = 1096,
 
-    --c2s user req action 
-    req_user_act          = 1101,
-
-    --s2c 
-    req_user_act_ok     =   1104,
-
-    --s2c 
-    req_user_act_fail     = 1103,
-
-    --s2c user act
-    user_act_done               = 1102,
-
-    --s2c user scored ,(In game_play. not for round end )
-    user_get_score =    1121,
 
     --s2c last ,通知玩家获得tax
    -- user_get_tax =  1131,
