@@ -89,13 +89,17 @@ base.depends = function(szFile)
 	local tmp = String(szFile)
 	local bCache = false
 
-	if tmp:StartsWith("Common") or tmp:StartsWith("Puremvc") then 
+	if tmp:StartsWith("Common") == true or tmp:StartsWith("Puremvc") == true then 
+		bCache = true
+		if tmp:Contains("View/UI_") == true or tmp:Contains("Mediator/UI_") == true then 
+			bCache = false 
+		end 
+	end 
+
+	if bCache == false and tmp:Contains("Parameter") == true then 
 		bCache = true
 	end 
 
-	if bCache == false and tmp:Contains("Parameter") then 
-		bCache = true
-	end 
 
 	
 

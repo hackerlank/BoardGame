@@ -80,7 +80,7 @@ local m_PrivateFunc = {}
 
 local txt_ps = nil 
 
-local last_focused_game = nil 
+local focused_game = nil 
 
 --for nn begin 
 local NN_TABLE_MODE = {1,2,3}
@@ -93,7 +93,7 @@ local NN_BASE_CHIP = {10,20,30}
     enable_flush         是否支持同花顺
     enable_straight          是否支持顺子牛
     enable_suited        是否支持同花牛
-    enbale_five_big     是否支持五花牛
+    enable_five_big     是否支持五花牛
     enable_five_small   是否支持五小牛
     enable_full_house   是否支持葫芦牛
     enable_bomb         是否支持炸弹牛
@@ -160,9 +160,9 @@ m_PrivateFunc.SwithPanel = function(game)
         return 
     end 
 
-    if last_focused_game ~= nil then 
-        if last_focused_game ~= game then 
-            local last_page =  tb_Pages[last_focused_game]
+    if focused_game ~= nil then 
+        if focused_game ~= game then 
+            local last_page =  tb_Pages[focused_game]
             last_page.root:SetActive(false)
         else 
             return 
@@ -175,7 +175,7 @@ m_PrivateFunc.SwithPanel = function(game)
     if page.LoadSetting ~= nil then 
         page.LoadSetting()
     end  
-    last_focused_game = game
+    focused_game = game
 end 
 
 --load niu niu setting 
@@ -225,15 +225,15 @@ m_PrivateFunc.LoadNiuNiuSetting = function()
         elseif k == NN_KEY_BOMB then 
             page.m_bomb.toggle.isOn = v 
         elseif k == NN_KEY_SUITED then 
-            page.m_suited.toggle.isOn = true
+            page.m_suited.toggle.isOn = v
         elseif k == NN_KEY_STRAIGHT then 
             page.m_straight.toggle.isOn = v 
         elseif k == NN_KEY_FULL_HOUSE then 
             page.m_fullhouse.toggle.isOn = v 
         elseif k == NN_KEY_FIVE_SMALL then 
-            page.m_fivesmall.toggle.isOn = true
+            page.m_fivesmall.toggle.isOn = v
         elseif k == NN_KEY_FIVE_BIG then 
-            page.m_fivesbig.toggle.isOn = true
+            page.m_fivebig.toggle.isOn = v
         end 
     end 
 end 
@@ -254,9 +254,9 @@ m_PrivateFunc.InitialPanel_NiuNiu = function()
         item.desc = trans:Find("desc"):GetComponent("Text")
         item.toggle.onValueChanged:AddListener(function(isOn) 
             if isOn == true then 
-                local bSame = m_GameRule[KEY_MAX_ROUND] == NN_MAX_ROUND[i]
-                m_GameRule[KEY_MAX_ROUND] = NN_MAX_ROUND[i]
-                m_GameRule[KEY_ROOM_CARD] = NN_COST_CARD[i]
+                local bSame = m_GameRule[NN_KEY_ROUND] == NN_MAX_ROUND[i]
+                m_GameRule[NN_KEY_ROUND] = NN_MAX_ROUND[i]
+                m_GameRule[NN_KEY_ROOM_CARD] = NN_COST_CARD[i]
                 item.desc.color = FOCUSED_COLOR
                 if bCanPlaySound == true and bSame == false then 
                     AudioManager.getInstance():PlaySound(EGameSound.EGS_Btn_Choose)
@@ -299,8 +299,8 @@ m_PrivateFunc.InitialPanel_NiuNiu = function()
         item.desc = trans:Find("desc"):GetComponent("Text")
         item.toggle.onValueChanged:AddListener(function(isOn) 
             if isOn == true then 
-                local bSame = m_GameRule[KEY_PAY_MODE] == NN_PAY_MODE[s]
-                m_GameRule[KEY_PAY_MODE] = NN_PAY_MODE[s]
+                local bSame = m_GameRule[NN_KEY_PAY_MODE] == NN_PAY_MODE[s]
+                m_GameRule[NN_KEY_PAY_MODE] = NN_PAY_MODE[s]
                 item.desc.color = FOCUSED_COLOR
                 if bCanPlaySound == true and bSame == false then 
                     AudioManager.getInstance():PlaySound(EGameSound.EGS_Btn_Choose)
@@ -320,8 +320,8 @@ m_PrivateFunc.InitialPanel_NiuNiu = function()
         item.desc = trans:Find("desc"):GetComponent("Text")
         item.toggle.onValueChanged:AddListener(function(isOn) 
             if isOn == true then 
-                local bSame = m_GameRule[KEY_TABLE_MODE] == NN_TABLE_MODE[i]
-                m_GameRule[KEY_TABLE_MODE] = NN_TABLE_MODE[i]
+                local bSame = m_GameRule[NN_KEY_TABLE_MODE] == NN_TABLE_MODE[i]
+                m_GameRule[NN_KEY_TABLE_MODE] = NN_TABLE_MODE[i]
                 item.desc.color = FOCUSED_COLOR
                 if bCanPlaySound == true and bSame == false then 
                     AudioManager.getInstance():PlaySound(EGameSound.EGS_Btn_Choose)
@@ -575,6 +575,8 @@ function tbclass:Init()
     --register callback of buttons
     m_PrivateFunc.BindCallbacks()
     m_PrivateFunc.PlayOpenAmin()
+
+    m_PrivateFunc.SwithPanel(focused_game)
 end 
 
 --set the mediator
