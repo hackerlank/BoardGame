@@ -101,6 +101,8 @@
 .user_open_cards{
     seat_id 1:integer
     hand_cards 2 :*integer
+    ex_niu_type 3:integer
+    niu_point 4:integer
 }
 
 .owner_req_start_game_fail{

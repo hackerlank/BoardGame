@@ -259,7 +259,8 @@ function sender.send_user_open_cards(user)
         table.insert(tmp_cards,v)
     end    
 
-	local body = game_sproto:encode("user_open_cards",{seat_id=user.seat_id,hand_cards = tmp_cards})
+	local body = game_sproto:encode("user_open_cards",{seat_id=user.seat_id,hand_cards = tmp_cards,
+        ex_niu_type = user.ex_niu_type,niu_point = user.niu_point})
 	local np = spx.encode_pack1(info.table_service,game_msg_id.user_open_cards,body)
 
     for _,dst in pairs(user_list) do

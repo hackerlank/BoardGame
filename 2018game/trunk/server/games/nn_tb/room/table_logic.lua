@@ -495,7 +495,9 @@ function logic.round_over()
        --count score and change_state
     local tmp_winner 
     for _,tmp_user in pairs(info.users) do 
-        logic.get_user_niu_info(tmp_user)
+         if not user.ex_niu_type then 
+             logic.get_user_niu_info(tmp_user)
+         end    
         tmp_winner = tmp_winner or tmp_user
         if tmp_user.game_state == user_game_state.in_game then 
             log.error(sprint_r(tmp_winner.sorted_cards))
@@ -735,6 +737,7 @@ function logic.req_open_cards(user)
     if user.game_state == user_game_state.in_game and  user.hand_cards_state ~= user_hand_cards_state.open then 
           sender.  send_req_open_cards_ok(user)
           user.hand_cards_state = user_hand_cards_state.open
+          logic.get_user_niu_info(user)
           sender.send_user_open_cards(user)
 
           --check if all open 

@@ -749,7 +749,9 @@ function table_pack.user_enter_table(fd_,buf)
 	local body = table_sproto:decode("user_enter_table",buf)
 	print_r(body)
 
-
+	if body.seat_id~=user_info.seat_id then 
+	send_pack(fd_,table_service,game_msg_id.owner_req_start_game,nil)
+	end
 end
 --玩家离开桌子
 function table_pack.user_left_table(fd_,buf)
@@ -979,8 +981,8 @@ function table_pack.user_is_ready(fd_,buf)
 
 		print("req .owner_req_start_game")
 
-			send_pack(fd_,table_service,game_msg_id.owner_req_start_game,
-		nil)	
+			--send_pack(fd_,table_service,game_msg_id.owner_req_start_game,nil)
+			
 
 	end
 end
@@ -1534,8 +1536,8 @@ function table_pack.user_open_cards(fd_,buf)
 			print_r(body)
 end
 --消息映射
-table_map[game_msg_id.req_open_cards_ok]		=table_pack.req_open_cards_ok
-table_map[game_msg_id.user_open_cards]			=table_pack.user_open_cards
+--table_map[game_msg_id.req_open_cards_ok]		=table_pack.req_open_cards_ok
+--table_map[game_msg_id.user_open_cards]			=table_pack.user_open_cards
 table_map[table_msg_id.user_enter_table]		=table_pack.user_enter_table
 table_map[table_msg_id.user_left_table]			=table_pack.user_left_table
 table_map[table_msg_id.dismiss_table]			=table_pack.dismiss_table
