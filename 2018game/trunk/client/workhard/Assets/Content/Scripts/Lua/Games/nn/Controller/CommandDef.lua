@@ -55,6 +55,14 @@ nn.PLAYER_REQ_START_GAME_RSP = "nn.player_req_start_game_rsp"
 nn.PLAYER_REQ_START_ROUND = "nn.player_req_start_round"
 nn.PLAYER_REQ_START_ROUND_RSP = "nn.player_req_start_round_rsp"
 
+--command:: player req start new game
+nn.OWNER_REQ_START_GAME = "nn.owner_req_start_game"
+nn.OWNER_REQ_START_GAME_RSP = "nn.owner_req_start_game_rsp"
+
+--command:: player req start new game
+nn.OWNER_REQ_START_ROUND = "nn.owner_req_start_round"
+nn.OWNER_REQ_START_ROUND_RSP = "nn.owner_req_start_round_rsp"
+
 --command:: 退出播放录像
 nn.EXIT_PLAY_RECORD = "nn.exit_play_record"
 nn.START_PLAY_RECORD = "nn.start_play_record"
@@ -65,6 +73,7 @@ nn.PLAY_RECORD_PREV_STEP = "nn.play_record_prev_step"
 nn.RESTART_PLAY_RECORD = "nn.restart_play_record"
 
 nn.NTF_RESET_PLAYER_INFOS = "nn.ntf_reset_player_infos"
+nn.NTF_USER_OPEN_CARDS = "nn.ntf_user_open_cards"
 
 --command::send message to we chat
 nn.SEND_MSG_WECHAT = "nn.send_msg_wechat"
@@ -110,6 +119,10 @@ if #nn.tb_commands == 0 then
 	nn.tb_commands[#nn.tb_commands+1] = {name=nn.PLAY_RECORD_PREV_STEP, script="PlayRecordPrevStepCommand"}
     nn.tb_commands[#nn.tb_commands+1] = {name=nn.RESTART_PLAY_RECORD, script="RestartPlayRecordCommand"}  
     nn.tb_commands[#nn.tb_commands+1] = {name=nn.PLAYER_REQ_READY, script="PlayerReadyCommand"}
+    nn.tb_commands[#nn.tb_commands+1] = {name=nn.OWNER_REQ_START_GAME, script="OwnerReqStartGameCommand"}
+    nn.tb_commands[#nn.tb_commands+1] = {name=nn.OWNER_REQ_START_GAME_RSP, script="OwnerReqStartGameRspCommand"}
+    nn.tb_commands[#nn.tb_commands+1] = {name=nn.OWNER_REQ_START_ROUND, script="OwnerReqStartRoundCommand"}
+    nn.tb_commands[#nn.tb_commands+1] = {name=nn.OWNER_REQ_START_ROUND_RSP, script="OwnerReqStartRoundRspCommand"}
     
 end
 

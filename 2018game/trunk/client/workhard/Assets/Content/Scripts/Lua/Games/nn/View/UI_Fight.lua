@@ -67,7 +67,33 @@ local m_Prestart = nil
 local btn_ready = nil 
 --cache invite btn
 local btn_invite = nil 
+--save useless card
+local m_InstancedCards = {}
+--card template
+local m_cardsTemplate = nil 
+--useless card parent
+local m_UselessCardParent = nil 
+--instanced card count
+local m_CardCount = 0
 
+local card_initial_pos = UnityEngine.Vector3(0,0,0)
+--save poker asset
+local m_LoadedPokerAsset = nil 
+--save niu type image 
+local m_LoadedNiuTypeAsset = {}
+--whether is loading asset
+local m_bIsLoadingAsset = false 
+
+local ECardType={
+    diamond=1,
+    club=2,
+    heart=3,
+    spade=4,
+    joker_small=5,
+    joker_big=6, --王
+    universal=7,
+    max=8   --it means background of poker
+}
 
 --================private interface begin =====================
 --callback function of exit button
@@ -111,6 +137,9 @@ end
 
 --callback function of start button 
 m_PrivateFunc.onClickStartBtn = function()
+    if facade then 
+        facade:sendNotification(nn.OWNER_REQ_START_GAME)
+    end 
 end 
 
 --callback function of ready button 
@@ -273,6 +302,14 @@ m_PrivateFunc.InitialSharePanel = function()
         btn.onClick:AddListener(m_PrivateFunc.onClickDuplicateBtn)
     end 
     table.insert(tb_btns, btn)
+    --interface
+    m_SharePanel.ShowPanel = function(game_state)
+        if game_state ~= nn.ETableState.idle then 
+            m_SharePanel.gameObject:SetActive(false)
+        else 
+            m_SharePanel.gameObject:SetActive(true)
+        end 
+    end 
 
     m_SharePanel.Free = function()
         m_SharePanel.gameObject = nil 
@@ -319,28 +356,44 @@ m_PrivateFunc.InitialSeat = function()
         seat.txt_score = trans:Find("txt_score"):GetComponent("Text")
         seat.img_dealer = trans:Find("img_dealer"):GetComponent("Image")
         seat.txt_result = trans:Find("txt_result"):GetComponent("Text")
-        seat.txt_result.text = ""
         seat.txt_multbei = trans:Find("txt_mult"):GetComponent("Text")
-        seat.txt_multbei.text = ""
         seat.img_ready = trans:Find("img_ready"):GetComponent("Image")
-        seat.img_ready.enabled = false 
         seat.img_bq = trans:Find("img_buqiang"):GetComponent("Image")
-        seat.img_bq.enabled = false 
         seat.img_qz = trans:Find("qz"):GetComponent("Image")
-        seat.img_qz.enabled = false 
         seat.txt_qz_num = trans:Find("qz/txt_num"):GetComponent("Text")
-        seat.txt_qz_num.text = ""
+        seat.img_niutype = trans:Find("img_niutype"):GetComponent("Image")
+        --interface
+        seat.Cleanup = function()
+            seat.img_niutype.enabled = false
+            seat.img_qz.enabled = false 
+            seat.img_bq.enabled = false
+            seat.img_ready.enabled = false 
+            seat.txt_multbei.text = ""
+            seat.txt_result.text = ""
+            seat.txt_qz_num.text = ""
+
+            for k,v in ipairs(seat.m_HandCards) do 
+                if v then 
+                    v.img.enabled = false 
+                    v.card_point = nil 
+                    table.insert(m_InstancedCards, v)
+                    seat.m_HandCards[k] = nil 
+                end 
+            end 
+        end 
         --seat.btn = trans:GetComponent("Button")
         --table.insert(tb_btns, seat.btn)
         seat.img_dealer.enabled = false 
         seat.m_HandCards = {} 
         seat.m_HandCardsPos = {}  
+        seat.m_HandCardParent = trans:Find("cards")
         for t=1,5 do 
             card = trans:Find("cards/card_" .. t)
             pos = card.localPosition
             card.gameObject:SetActive(false)
             table.insert(seat.m_HandCardsPos, UnityEngine.Vector3(pos.x, pos.y, pos.z))
         end 
+        seat.Cleanup()
         seat.gameObject:SetActive(false)
         table.insert(m_SeatInfo, seat)
     end 
@@ -372,28 +425,30 @@ m_PrivateFunc.InitialPrestartGamePanel = function()
     m_Prestart.obj_startgame = root:Find("start_set/btn_start").gameObject
     m_Prestart.obj_sit = root:Find("start_set/btn_sit").gameObject
 
-    --interface
-    m_Prestart.UpdateSitCost = function(bEnable, cost)
-        if bEnable == true then 
-            if cost and cost >= 0 then 
-                m_Prestart.obj_sit:SetActive(true)
+    m_Prestart.ShowPanel = function(game_state,start_mode)
+        local cost = 20
+        if start_mode == nn.EStartMode.owner then 
+            local bShow = false 
+            if game_state == nn.ETableState.idle or game_state == nn.ETableState.round_over then 
+                bShow = true 
+            end 
+            if mediator:IsOwner() == true then 
+                m_Prestart.obj_startgame:SetActive(bShow)
+                m_Prestart.obj_sit:SetActive(false)
+                m_Prestart.obj_sitcost:SetActive(false)
+            else
+                --@todo check if self has sit down?
                 m_Prestart.obj_startgame:SetActive(false)
+                m_Prestart.obj_sit:SetActive(true)
                 m_Prestart.obj_sitcost:SetActive(true)
                 m_Prestart.txt_cost.text = tostring(cost)
-                m_Prestart.img_watch.enabled = true 
-            else 
-                m_Prestart.obj_sit:SetActive(false)
-                m_Prestart.obj_startgame:SetActive(true)
-                m_Prestart.obj_sitcost:SetActive(false)
-                m_Prestart.txt_cost.text = ""
-                m_Prestart.img_watch.enabled = false 
             end 
         else 
             m_Prestart.obj_sitcost:SetActive(false)
             m_Prestart.obj_startgame:SetActive(false)
             m_Prestart.obj_sit:SetActive(false)
-            m_Prestart.img_watch.enabled = false
         end 
+        m_Prestart.img_watch.enabled = true
     end 
 end 
 
@@ -401,6 +456,166 @@ end
 m_PrivateFunc.InitialChatPanel = function() 
     m_ChatPanel = {} 
 
+end 
+
+--load  poker image
+m_PrivateFunc.LoadPokerImage = function()
+    m_bIsLoadingAsset = true
+    local tb_path = {} 
+    m_LoadedPokerAsset = {} 
+
+    poker_card_asset = {}
+    local strs = { "diamond", "club", "heart",  "spade" }
+    local id = 1
+    local path = "Assets/Content/Artwork/tmp/poker/"
+    local t = {}
+    local index = 1
+    local paths = {}
+    for k,v in pairs(strs) do 
+        for i=1, 13 do 
+            local s = {id=id}
+            paths[#paths + 1 ] = string.format("%s%s-%d.png", path, v, i)
+            t[#t +1] = s
+        end 
+        id = id + 1
+    end 
+
+    --load bg 
+    table.insert(paths, string.format("%s%s", path, "pkp_bm.png"))
+    table.insert(t, {id = ECardType.max})
+
+    --@todo if has other poker , add it in bellow
+    GetResourceManager().LoadAssetsAsync(GameHelper.EAssetType.EAT_Sprite, paths, function(assets) 
+        for k,v in ipairs(assets) do 
+            local key = t[k].id
+            if m_LoadedPokerAsset[key] == nil then 
+                m_LoadedPokerAsset[key] = {} 
+            end 
+
+            local len = #m_LoadedPokerAsset[key] + 1
+            m_LoadedPokerAsset[key][len] = v
+        end 
+        
+        m_bIsLoadingAssetAsset = false 
+    end)
+end 
+
+--get card image asset.
+--@param initial_point
+m_PrivateFunc.GetCardAsset = function(initial_point)
+    local card_color = nil  
+    local card_point = nil 
+    if initial_point then 
+        card_color, card_point = nn.game_logic.parse_card(initial_point)
+    end 
+
+    if not card_point and not card_color then 
+        return m_LoadedPokerAsset[ECardType.max][1]:GetAsset()
+    elseif card_color == 0 then 
+        if card_point == ECardPoint.point_joker_big then 
+            return m_LoadedPokerAsset[ECardType.joker_big][1]:GetAsset()
+        elseif card_point == point_joker_small then 
+            return m_LoadedPokerAsset[ECardType.joker_small][1]:GetAsset()
+        end 
+    elseif card_color > 0 and card_point > 0 then 
+        return m_LoadedPokerAsset[card_color][card_point]:GetAsset()
+    end 
+end 
+
+--create new card
+--@param seat_id 
+m_PrivateFunc.CreateNewCard = function(seat_id, card_point, bskipanim)
+    local card = nil 
+    local seat = m_SeatInfo[seat_id]
+    if not seat then 
+        return card 
+    end 
+
+    if m_cardsTemplate == nil then 
+        LogError("missed card template")
+        return card 
+    end 
+
+    if #m_InstancedCards > 0 then 
+        card = m_InstancedCards[1]
+        table.remove(m_InstancedCards,1)
+    else
+        local obj = UnityEngine.GameObject.Instantiate(m_cardsTemplate)
+        card = {} 
+        m_CardCount = m_CardCount + 1
+        obj.name = string.format("card_nn_%d", m_CardCount)
+        card.trans = obj.transform 
+        card.gameObject = obj 
+        card.img = card.trans:GetComponent("Image")
+        table.insert(seat.m_HandCards, card)
+        obj:SetActive(true)
+        card.trans:SetParent(m_UselessCardParent)
+    end 
+    TransformLuaUtil.SetTransformPos(card.trans, card_initial_pos.x, card_initial_pos.y, card_initial_pos.z)
+    card.trans:SetParent(seat.m_HandCardParent)
+    TransformLuaUtil.SetTransformLocalScale(card.trans, 1,1,1)
+    card.card_point = card_point 
+    card.img.enabled = true 
+    card.img.sprite = m_PrivateFunc.GetCardAsset(card_point)
+    local pos = seat.m_HandCardsPos[#seat.m_HandCards]
+    if bskipanim ==  false then 
+        card.shuffle_tween = DoTweenPathLuaUtil.DOLocalMove(card.trans, pos, 0.15)
+        DoTweenPathLuaUtil.SetEaseTweener(card.shuffle_tween, DG.Tweening.Ease.Linear)
+        DoTweenPathLuaUtil.SetAutoKill(card.shuffle_tween, true)
+        DoTweenPathLuaUtil.SetRecyclable(card.shuffle_tween,true)
+        DoTweenPathLuaUtil.OnComplete(card.shuffle_tween,function()  card.shuffle_tween = nil end)
+        DoTweenPathLuaUtil.DOPlay(card.trans)
+    else 
+        TransformLuaUtil.SetTransformLocalPos(card.trans, pos.x, pos.y, pos.z)
+    end 
+    return card
+end 
+
+--update niu type image 
+m_PrivateFunc.UpdateNiuType = function(seat_id, niu_point, ex_niu_type)
+    local seat = m_SeatInfo[seat_id]
+    if seat then 
+        local str_path = ""
+        if ex_niu_type == nn.ENiuStyle.none then 
+            --无牛
+            str_path = "" 
+        elseif ex_niu_type == nn.ENiuStyle.niuniu then 
+            str_path = string.format("%snn/nnhx_lbl_n%d",UI_IMAGE_PATH,niu_point)
+        elseif ex_niu_type == nn.ENiuStyle.straight then 
+            --顺子牛
+            str_path = string.format("%snn/%s",UI_IMAGE_PATH,"nnhx_lbl_szn")
+        elseif ex_niu_type == nn.ENiuStyle.suited then 
+            --同花牛
+            str_path = string.format("%snn/%s",UI_IMAGE_PATH,"nnhx_lbl_thn")
+        elseif ex_niu_type == nn.ENiuStyle.full_house then 
+            --葫芦牛
+            str_path = string.format("%snn/%s",UI_IMAGE_PATH,"nnhx_lbl_hln")
+        elseif ex_niu_type == nn.ENiuStyle.five_big then
+            --五花牛
+            str_path = string.format("%snn/%s",UI_IMAGE_PATH,"nnhx_lbl_whn")
+        elseif ex_niu_type == nn.ENiuStyle.five_small then 
+            --五小牛
+            str_path = string.format("%snn/%s",UI_IMAGE_PATH,"nnhx_lbl_wxn")
+        elseif ex_niu_type == nn.ENiuStyle.bomb then
+            --犇牛
+            str_path = string.format("%snn/%s",UI_IMAGE_PATH,"nnhx_lbl_nnn")
+        elseif ex_niu_type == nn.ENiuStyle.flush then 
+            --同花顺牛
+            str_path = string.format("%snn/%s",UI_IMAGE_PATH,"nnhx_lbl_szn")
+        end 
+        local asset = m_LoadedNiuTypeAsset[str_path]
+        if asset == nil or asset:IsValid() == false then 
+            GetResourceManager().LoadAssetsAsync(GameHelper.EAssetType.EAT_Sprite, str_path, function(tmp_asset) 
+                if tmp_asset and tmp_asset:IsValid() == true then 
+                    seat.img_niutype.sprite = tmp_asset:GetAsset()
+                    m_LoadedNiuTypeAsset[str_path] = tmp_asset
+                end 
+            end)
+        else 
+            seat.img_niutype.sprite = asset:GetAsset()
+        end 
+        seat.img_niutype.enabled = true
+    end 
 end 
 --================private interface end =====================
 
@@ -422,9 +637,13 @@ function tbclass:Init()
         return
     end 
     
+    m_PrivateFunc.LoadPokerImage() 
+
     facade = pm.Facade.getInstance(GAME_FACADE_NAME)
     tb_btns = {}
     m_RootPanel = transform:Find('Panel')
+    m_cardsTemplate = m_RootPanel:Find("card_template").gameObject
+    m_UselessCardParent = m_RootPanel:Find("card_tree")
     
     --register callback of buttons
     m_PrivateFunc.BindCallbacks()
@@ -523,6 +742,29 @@ function tbclass:SafeRelease()
     end 
     m_RootPanel = nil 
 
+    if m_LoadedNiuTypeAsset then 
+        for k,v in pairs(m_LoadedNiuTypeAsset) do 
+            if v then 
+                v:Free()
+            end 
+            m_LoadedNiuTypeAsset[k] = nil 
+        end 
+        m_LoadedNiuTypeAsset = nil 
+    end 
+
+    if m_LoadedPokerAsset then 
+        for k,v in ipairs(m_LoadedPokerAsset) do 
+            if v then 
+                for _k,_v in ipairs(v) do 
+                    _v:Free()
+                    v[_k] = nil 
+                end 
+            end 
+            m_LoadedPokerAsset[k] = nil 
+        end 
+    end 
+    m_LoadedPokerAsset = nil 
+
     windowAsset = nil   
     facade = nil
     CLOSE_SELF_PARAM = nil 
@@ -532,33 +774,6 @@ function tbclass:SafeRelease()
     end 
     gameObject = nil 
 end
-
---disable or enable share btn .. etc
---@param bEnabled whether controls will be render or not
-function tbclass:EnableSharePanel(bEnabled, bIsOnwner)
-    if m_SharePanel then 
-        m_SharePanel.gameObject:SetActive(bEnabled)
-    end 
-end 
-
---fresh prestart panel
-function tbclass:FreshPrestartPanel(game_state, start_mode)
-    if start_mode == nn.EStartMode.owner then 
-        if game_state == nn.ETableState.idle then 
-            local bIsOwner = mediator:IsOwner()
-            if bIsOwner == true then
-                m_Prestart.UpdateSitCost(true,nil)
-            else 
-                m_Prestart.UpdateSitCost(true, 20)
-            end 
-        else 
-            --@todo check if self has sit?
-            m_Prestart.UpdateSitCost(false,nil)
-        end 
-    else 
-        m_Prestart.UpdateSitCost(false,nil)
-    end 
-end 
 
 --fresh room information
 --@param room_id
@@ -643,10 +858,13 @@ end
 
 --ntf player ready
 --@param seat_id
-function tbclass:NtfPlayerReady(seat_id)
+function tbclass:NtfPlayerReady(seat_id, bSendDoneCmd)
     local seat = m_SeatInfo[seat_id]
     if seat then 
         seat.img_ready.enabled = true 
+    end 
+    if bSendDoneCmd == true or bSendDoneCmd == nil then 
+        facade:sendNotification(Common.EXECUTE_CMD_DONE)
     end 
 end 
 
@@ -657,26 +875,86 @@ end
 
 --ntf round start
 function tbclass:NtfRoundStart()
+    facade:sendNotification(Common.EXECUTE_CMD_DONE)
 end 
 
 --ntf play game
-function tbclass:NtfPlayGame(owner_seat_id, remain_time)
-    local seat = m_SeatInfo[owner_seat_id]
-    --if bSendDoneCmd == nil or  bSendDoneCmd == true then 
-    facade:sendNotification(Common.EXECUTE_CMD_DONE)
-    --end 
+function tbclass:NtfPlayGame(game_state, start_mode, bSendDoneCmd)
+    if m_Prestart then 
+        m_Prestart.ShowPanel(game_state, start_mode)
+    end 
+
+    if m_SharePanel then 
+        m_SharePanel.ShowPanel(game_state)
+    end 
+    if bSendDoneCmd == nil or  bSendDoneCmd == true then 
+        facade:sendNotification(Common.EXECUTE_CMD_DONE)
+    end 
 end 
 
+--ntf player open the cards
+function tbclass:NtfPlayerOpenCards(seat_id, hand_cards)
+    local seat = m_SeatInfo[seat_id]
+    if seat then 
+        if hand_cards then 
+            local len = #hand_cards 
+            for i=1, len do 
+                seat.m_HandCards[i].card_point = hand_cards[i]
+                cseat.m_HandCards[i].img.sprite = m_PrivateFunc.GetCardAsset(hand_cards[i])
+            end 
+        end 
+    end 
+
+    facade:sendNotification(Common.EXECUTE_CMD_DONE)
+end 
 --fresh game rule panel
 function tbclass:FreshGameRule(rule)
 end 
 
 --cleanup table
 function tbclass:CleanupTable()
+    for k,v in ipairs(m_SeatInfo) do 
+        if v then 
+            if v.gameObject.activeSelf == true then 
+                v.Cleanup()
+            end 
+        end 
+    end 
 end 
 
 --ntf begin shuffle
+--@param card_info  player cards_info
 function tbclass:NtfShuffle(card_info)
+    if card_info then 
+        local dealer =  card_info[1]
+        local seat = m_SeatInfo[dealer.real_seat_id]
+        if seat then 
+            seat.img_dealer.enabled = true 
+        end 
+
+        local len = #card_info 
+        local info = nil 
+        local card = nil 
+        local shuffle_cor = coroutine.create(function() 
+            for i=1, 5 do
+                for t=1, len do 
+                    info = card_info[t]
+                    if info.hand_cards then 
+                        card = m_PrivateFunc.CreateNewCard(info.real_seat_id, info.hand_cards[i],false)
+                    else 
+                        card = m_PrivateFunc.CreateNewCard(info.real_seat_id, nil, false)
+                    end 
+
+                    UnityEngine.Yield(UnityEngine.WaitForSeconds(0.06))
+                end  
+            end 
+
+            --should us sort card of self?
+        end)
+        coroutine.resume(shuffle_cor)
+       
+    end 
+
 end 
 
 --recieved chat msg 
@@ -686,6 +964,50 @@ function tbclass:NtfRecievedMsg(seat_id, msg)
 end 
 --restore game 
 function tbclass:PlayerReconnected(info, seat_id, bShowReady, game_state, bNotShuffle)
+    local bIsSelf = mediator:IsSelfRealSeatId(seat_id)
+    local seat = m_SeatInfo[seat_id]
+    if seat == nil then 
+        return 
+    end 
+
+    if bShowReady then 
+		seat.img_ready.enabled = true
+	else
+		seat.img_ready.enabled = false
+    end
+    
+    local is_dealer = mediator:IsDealer(seat_id)
+    seat.img_dealer.enabled = is_dealer
+
+    if bNotShuffle == true then 
+        return 
+    end 
+
+    if info.is_online == true then 
+        --seat.img_offline.enabled = false 
+    else 
+       -- seat.img_offline.enabled = true 
+    end 
+    print(info.hand_card_num )
+    if info.hand_card_num and  info.hand_card_num > 0 then 
+        count = info.hand_card_num
+        for i=1, count do 
+            if bIsSelf == true or info.hand_cards_state == nn.EHandCardState.open then 
+                m_PrivateFunc.CreateNewCard(seat_id, info.hand_cards[i], true)
+            else 
+                m_PrivateFunc.CreateNewCard(seat_id, nil, true)
+            end 
+        end 
+    end 
+
+    --show other falg or active animation according to hand_card_state
+    if info.hand_cards_state == nn.EHandCardState.open then 
+        --show niu type
+    end 
+end 
+
+function tbclass:IsLoadingAsset()
+    return m_bIsLoadingAsset
 end 
 
 --Don't remove all of them

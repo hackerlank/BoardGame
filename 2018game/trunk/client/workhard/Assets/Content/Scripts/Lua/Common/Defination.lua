@@ -4,6 +4,10 @@
 --     
 -----------------------------------------------------------------------------
 DEFINED_SCREEN_RESOLUTION = {width=1920, height=1080}
+GLOBAL_SCALE = {} 
+GLOBAL_SCALE.x = UnityEngine.Screen.currentResolution.width / DEFINED_SCREEN_RESOLUTION.width 
+GLOBAL_SCALE.y = UnityEngine.Screen.currentResolution.height / DEFINED_SCREEN_RESOLUTION.height
+
 
 --pre-define path of manager
 DEFAULT_LUA_GAME_MODE = "Common.LaunchGameMode"

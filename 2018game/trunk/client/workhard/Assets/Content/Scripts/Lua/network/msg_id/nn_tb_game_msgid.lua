@@ -32,16 +32,34 @@ return {
     ]]
     user_ready          = 1053,
 
+    --c2s 请求开牌
+    req_open_cards = 1081,
 
+    --s2c 请求开牌结果
+    req_open_cards_fail = 1082,
+
+    req_open_cards_ok = 1083,
  
-    -- s2c 广播玩家看牌,
-   -- user_check_cards      = 1086,
+    -- s2c 广播玩家开牌,
+    user_open_cards      = 1086,
 
 
 
 
     --s2c last ,通知玩家获得tax
    -- user_get_tax =  1131,
+
+    --c2s 房主要求开始游戏
+    owner_req_start_game = 1131,
+
+    --sc2 房主要求开始失败
+    owner_req_start_game_fail = 1132,
+
+    --c2s 房主要求开始游戏
+    owner_req_start_round = 1133,
+
+    --sc2 房主要求开始失败
+    owner_req_start_round_fail = 1134,
 
     
 

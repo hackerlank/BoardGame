@@ -51,6 +51,7 @@ function mediator:listNotificationInterests()
 
     table.insert(notification,nn.PLAYER_REQ_ACT_RSP)
     table.insert(notification,nn.PLAYER_REQ_READY_RSP)
+    table.insert(notification,nn.NTF_USER_OPEN_CARDS)
 	return notification
 end
 
@@ -72,7 +73,6 @@ function mediator:handleNotification(notification)
     elseif Common.NTF_PLAYER_JOINED_GAME == name then
         --玩家加入游戏
         self.viewComponent:NtfPlayerJoinedGame(body.real_seat_id)
-        self:OpenIpWarningMenu()
     elseif Common.NTF_PLAYER_LEFT_GAME == name then
         --玩家离开游戏通知
         self.viewComponent:NtfPlayerLeftGame(body.real_seat_id)
@@ -98,7 +98,8 @@ function mediator:handleNotification(notification)
         --show score
     elseif Common.NTF_GAME_START == name then 
         --通知游戏开始
-        self.viewComponent:NtfPlayGame(true)
+        self.viewComponent:NtfPlayGame(game_proxy:GetGameState(), game_proxy:GetGameRule().start_game_mode)
+        facade:sendNotification(Common.CLOSE_UI_COMMAND, OCCLUSION_MENU_CLOSE_PARAM)
     elseif Common.NTF_PLAY_GAME == name then
         --swith table state
         self.viewComponent:NtfPlayGame(body.real_seat_id, body.bIsSelf, body.remain_time)
@@ -116,6 +117,8 @@ function mediator:handleNotification(notification)
         if body.errorcode ~= EGameErrorCode.EGE_Success then 
             facade:sendNotification(Common.RENDER_MESSAGE_VALUE, body.desc)
         end 
+    elseif nn.NTF_USER_OPEN_CARDS == name then 
+        self.viewComponent:NtfPlayerOpenCards(body.real_seat_id, body.hand_cards)
     end  
 end
 
@@ -129,7 +132,6 @@ function mediator:FreshGame()
     local bNotShuffle = false
 
     self.viewComponent:FreshGameRule(rule)
-    self.viewComponent:FreshPrestartPanel(state, rule.start_game_mode)
     self.viewComponent:FreshRoomId(game_proxy:GetRoomId())
 
     local all_players = game_proxy:GetAllPlayerInfo()
@@ -148,11 +150,6 @@ function mediator:FreshGame()
         end 
     end 
 
-    if self_game_info.req_ready == true and state == nn.ETableState.round_over then 
-        bNotShuffle = true 
-    end 
-
-
     for k,v in pairs(all_players) do 
         local seat_id = v.seat_id
         local i = v.real_seat_id
@@ -166,7 +163,7 @@ function mediator:FreshGame()
                 bShowReady = false 
             end 
         end 
-        self.viewComponent:PlayerReconnected(tmp, i, bShowReady, state, bNotShuffle)
+        self.viewComponent:PlayerReconnected(tmp, i, bShowReady, state)
         if state == nn.ETableState.round_over and self_game_info.req_ready == false then 
             if round_result == nil then 
                 round_result = {}
@@ -181,30 +178,16 @@ function mediator:FreshGame()
         end 
     end 
 
-    self.viewComponent:NtfPlayGame(game_proxy:IsGamePlaying())
+    self.viewComponent:NtfPlayGame(state, rule.start_game_mode, false) 
+    if state == nn.ETableState.play then 
 
-    if state == nn.ETableState.idle then  
-        --[[if self_game_info.req_ready == false then 
-            self:OpenIpWarningMenu()
-        end ]]
-        self.viewComponent:EnableSharePanel(true,self:IsOwner())
-    else     
-        if state == nn.ETableState.play then 
-            --try to get self acts 
-            if self_game_info then 
-                if #self_game_info.allow_acts > 0 then 
-                   -- self.viewComponent:NtfPlayerDoAction(self_real_seat_id, self_game_info.allow_acts, 0, false)
-                end 
-            end  
-        elseif state == nn.ETableState.game_over then 
-            facade:sendNotification(Common.NTF_GAME_OVER, {dismissed = false})   
-        end 
-
-        if round_result ~= nil then 
-            facade:sendNotification(Common.NTF_ROUND_OVER, round_result)
-        end      
-        self.viewComponent:EnableSharePanel(false, self:IsOwner())
+    elseif state == nn.ETableState.game_over then 
+        facade:sendNotification(Common.NTF_GAME_OVER, {dismissed = false})   
     end 
+
+    if round_result ~= nil then 
+        facade:sendNotification(Common.NTF_ROUND_OVER, round_result)
+    end      
 
     local vote_req_user, bIsSelf = game_proxy:IsInVote()
     if vote_req_user > 0 then 
@@ -217,6 +200,7 @@ function mediator:FreshGame()
             facade:sendNotification(Common.OPEN_UI_COMMAND, vote_result_menu)
         end 
     end 
+
 end 
 
 --Opened:: dont remove.. called by uimanager

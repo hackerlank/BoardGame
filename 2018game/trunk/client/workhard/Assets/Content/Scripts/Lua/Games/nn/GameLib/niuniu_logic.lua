@@ -13,6 +13,19 @@ function niuniu_logic.change_card(base_card )
 	niu_card.point =point
 end
 
+function niuniu_logic.parse_card(card)
+	if card == nil then 
+		return 0,0
+	end  
+	local color = math.floor(card/16)
+	local point = card-color*16
+	if point>10 then 
+		point = point -10 
+	end	
+	point =point
+	return color, point
+end 
+
 function   niuniu_logic.compareCard( cardA, cardB)
 	if cardA.point ~= cardB.point then
 		return cardA.point<cardB.point
