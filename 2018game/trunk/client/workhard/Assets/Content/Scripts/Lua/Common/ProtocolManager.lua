@@ -11,9 +11,7 @@ local gate_sproto = sproto.parse(loadsproto("network/sproto/gate_sproto"))
 local agent_sproto = sproto.parse(loadsproto("network/sproto/agent_sproto"))
 local hall_sproto = sproto.parse(loadsproto("network/sproto/hall_sproto"))
 local common_sproto = sproto.parse(loadsproto("network/sproto/common_sproto"))
-local mj_cdxz_sproto = sproto.parse(loadsproto("network/sproto/mj_cdxz_game_sproto"))
-local mj_nj_sproto = sproto.parse(loadsproto("network/sproto/mj_nj_game_sproto"))
-local zha_jin_hua_sproto = sproto.parse(loadsproto("network/sproto/zha_jin_hua_game_sproto"))
+local nn_tb_sproto = sproto.parse(loadsproto("network/sproto/nn_tb_game_sproto"))
 local table_base_sproto = sproto.parse(loadsproto("network/sproto/table_base_sproto"))
 
 --protocol:: login
@@ -47,20 +45,11 @@ protocols.GetBaseSproto = function()
 end 
 
 --============protocols of games begin====================
---protocol:: mj_cdxz
-protocols.GetGameSproto_CDXZ = function()
-    return mj_cdxz_sproto
+--game protocol:: nn_tb
+protocols.GetGameSproto_NNTb = function()
+    return nn_tb_sproto
 end 
 
---protocol:: mj_nj
-protocols.GetGameSproto_NJMJ = function()
-    return mj_nj_sproto
-end
-
---protocol:: zha_jin_hua
-protocols.GetGameSproto_ZhaJinHua = function()
-    return zha_jin_hua_sproto
-end
 --============protocols of games end======================
 
 return protocols
