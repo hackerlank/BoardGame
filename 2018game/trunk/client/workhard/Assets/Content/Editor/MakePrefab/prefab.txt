@@ -1,0 +1,9 @@
+{
+    "source" : "Assets/Content/ArtWork/Sound/",    
+    "dest" : "Assets/Content/Prefabs/Sound/",    
+    "gameName" : "mj_cdxz",    
+    "operation" : 0,    
+    "act_type" : 1,    
+    "prefab_config_path" : "Assets/Content/Setting/mj_cdxz/gamesound.txt",    
+    "source_folder" : "xiayu"
+}
