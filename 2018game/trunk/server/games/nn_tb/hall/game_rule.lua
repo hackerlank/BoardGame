@@ -60,7 +60,7 @@ local rule_error = {
     pay_room_card       = "没有正确设置：局数对应支付的房卡数",
     pay_mode            = "没有正确设置：谁支付房卡",
     base_chip            = "没有正确设置：下注分数",
-    start_game_mode     = "没有正确设置：开始游戏方式",
+    --start_game_mode     = "没有正确设置：开始游戏方式",
    
 }
 
@@ -108,7 +108,7 @@ function game_rule.verify(rules)
 
         game_rule.assert_is_member(rules,"base_chip")
 
-        game_rule.assert_is_member(rules,"start_game_mode")
+       -- game_rule.assert_is_member(rules,"start_game_mode")
        
         return true
     end)

@@ -98,7 +98,12 @@ function table_events.open_table(table_info_)
     info.base_chip = tonumber(rules.base_chip)
     info.max_round = tonumber(rules.max_round)
 
+    if  rules.start_game_mode then
     info.start_game_mode = tonumber(rules.start_game_mode)
+    else
+        info.start_game_mode = 2
+    end    
+     
 
     enable_flush= toboolean(rules.enable_flush)
     enable_straight          = toboolean(rules.enable_straight)
