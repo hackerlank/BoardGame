@@ -88,6 +88,7 @@ local NN_MAX_ROUND = {5,10,15,20}
 local NN_COST_CARD = {5,20,30,40}
 local NN_PAY_MODE = {1,2,3,4}
 local NN_BASE_CHIP = {10,20,30}
+local NN_START_MODE = {1,2}
 
 --[[
     enable_flush         是否支持同花顺
@@ -110,6 +111,7 @@ local NN_KEY_FIVE_BIG = "enable_five_big"
 local NN_KEY_FIVE_SMALL = "enable_five_small"
 local NN_KEY_FULL_HOUSE = "enable_full_house"
 local NN_KEY_BOMB = "enable_bomb"
+local NN_KEY_START_MODE = "start_game_mode"
 --for nn end
 
 --================private interface begin =====================
@@ -220,6 +222,14 @@ m_PrivateFunc.LoadNiuNiuSetting = function()
                 end 
             end 
             page.m_BaseChip[key].toggle.isOn = true 
+        elseif k == NN_KEY_START_MODE then 
+            for _,sv in ipairs(NN_START_MODE) do 
+                if sv == v then 
+                    key = _
+                    break
+                end 
+            end 
+            page.m_StartMode[key].toggle.isOn = true 
         elseif k == NN_KEY_FLUSH then 
             page.m_flush.toggle.isOn = v 
         elseif k == NN_KEY_BOMB then 
@@ -288,6 +298,27 @@ m_PrivateFunc.InitialPanel_NiuNiu = function()
             end 
         end) 
         table.insert(page.m_BaseChip, item)
+    end 
+
+    page.m_StartMode = {} 
+    for k=1,2 do 
+        local item = {}
+        trans = root:Find("base_chip/section/" .. k)
+        item.toggle = trans:GetComponent("Toggle")
+        item.desc = trans:Find("desc"):GetComponent("Text")
+        item.toggle.onValueChanged:AddListener(function(isOn) 
+            if isOn == true then 
+                local bSame = m_GameRule[NN_KEY_START_MODE] == NN_START_MODE[k]
+                m_GameRule[NN_KEY_START_MODE] = NN_START_MODE[k]
+                item.desc.color = FOCUSED_COLOR
+                if bCanPlaySound == true and bSame == false then 
+                    AudioManager.getInstance():PlaySound(EGameSound.EGS_Btn_Choose)
+                end 
+            else 
+                item.desc.color = DEFAULT_COLOR
+            end 
+        end) 
+        table.insert(page.m_StartMode, item)
     end 
 
     
@@ -487,6 +518,16 @@ m_PrivateFunc.InitialPanel_NiuNiu = function()
             page.m_BaseChip[_] = nil 
         end 
         page.m_BaseChip = nil
+
+        for _,v in ipairs(page.m_StartMode) do 
+            if v then 
+                v.toggle.onValueChanged:RemoveAllListeners()
+                v.toggle = nil 
+                v.desc = nil 
+            end 
+            page.m_StartMode[_] = nil 
+        end 
+        page.m_StartMode = nil
 
         page.m_flush.toggle.onValueChanged:RemoveAllListeners()
         page.m_flush.desc = nil 

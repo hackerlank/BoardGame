@@ -58,12 +58,18 @@ local m_CommonPanel = nil
 local m_ChatPanel = nil 
 --share panel 
 local m_SharePanel = nil 
+--option panel 
+local m_OptPanel = nil 
 
 
 --================private interface begin =====================
 --callback function of exit button
 m_PrivateFunc.onClickExitBtn = function()
     facade:sendNotification(nn.PLAYER_LEAVE_GAME)
+end 
+
+--dismiss room.
+m_PrivateFunc.onClickDismissBtn = function()
 end 
 
 --share room information to wechat 
@@ -80,9 +86,54 @@ end
 m_PrivateFunc.onClickSettingBtn = function()
 end 
 
+--show lastest round information
+m_PrivateFunc.onClickReplayBtn = function()
+end 
+
+--callback function of info btn
+m_PrivateFunc.onClickInfoBtn = function()
+end 
+
+--callback function of auto button
+m_PrivateFunc.onClickAutoBtn = function()
+end 
+
+--callback function of invite button 
+m_PrivateFunc.onClickInviteBtn = function()
+end 
+
+--callback function of start button 
+m_PrivateFunc.onClickStartBtn = function()
+end 
+
+--callback function of ready button 
+m_PrivateFunc.onClickReadyBtn = function()
+end 
+
+--callback function of sit button 
+m_PrivateFunc.onClickSitBtn = function()
+end 
+
+--callback function of chat_msg button 
+m_PrivateFunc.onClickChatMsgBtn = function()
+end 
+
+--callback function of chat_voice button 
+m_PrivateFunc.onClickChatVoiceBtn = function()
+end 
+
 --render chat panel
 m_PrivateFunc.ShowChatPanel = function(bShow) 
 end 
+
+--render option panel 
+m_PrivateFunc.ShowOptionPanel = function(bShow)
+    if m_OptPanel then 
+        m_OptPanel.gameObject:SetActive(bShow)
+    end 
+end 
+
+
 
 --update system time and power
 --@param time curent time of os
@@ -100,24 +151,100 @@ end
 
 --bind callback for buttons in here
 m_PrivateFunc.BindCallbacks = function()
-    local btn = m_RootPanel:Find('top/btn_back'):GetComponent('Button')
+    btn = m_RootPanel:Find('top/btn_optpanel'):GetComponent('Button')
     if btn ~= nil then
+        btn.onClick:AddListener(function() m_PrivateFunc.ShowOptionPanel(true)  end)
+        table.insert(tb_btns, btn)
+    end
+
+    --tuo guan
+    btn = m_RootPanel:Find("top/btn_auto"):GetComponent("Button")
+    if btn ~= nil then 
+        btn.onClick:AddListener(m_PrivateFunc.onClickAutoBtn)
+        table.insert(tb_btns, btn)
+    end 
+
+    --info
+    btn = m_RootPanel:Find("top/btn_info"):GetComponent("Button")
+    if btn ~= nil then 
+        btn.onClick:AddListener(m_PrivateFunc.onClickInfoBtn)
+        table.insert(tb_btns, btn)
+    end 
+
+    btn = m_RootPanel:Find("bottom/btn_invite"):GetComponent("Button")
+    if btn then 
+        btn.onClick:AddListener(m_PrivateFunc.onClickInviteBtn)
+        table.insert(tb_btns, btn)
+    end 
+
+    btn = m_RootPanel:Find("bottom/btn_sit"):GetComponent("Button")
+    if btn then 
+        btn.onClick:AddListener(m_PrivateFunc.onClickSitBtn)
+        table.insert(tb_btns, btn)
+    end 
+
+    btn = m_RootPanel:Find("bottom/btn_start"):GetComponent("Button")
+    if btn then 
+        btn.onClick:AddListener(m_PrivateFunc.onClickStartBtn)
+        table.insert(tb_btns, btn)
+    end 
+
+    btn = m_RootPanel:Find("bottom/btn_ready"):GetComponent("Button")
+    if btn then 
+        btn.onClick:AddListener(m_PrivateFunc.onClickReadyBtn)
+        table.insert(tb_btns, btn)
+    end 
+
+    btn = m_RootPanel:Find("bottom/btn_chat_msg"):GetComponent("Button")
+    if btn then 
+        btn.onClick:AddListener(m_PrivateFunc.onClickChatMsgBtn)
+        table.insert(tb_btns, btn)
+    end 
+
+    btn = m_RootPanel:Find("bottom/btn_chat_voice"):GetComponent("Button")
+    if btn then 
+        btn.onClick:AddListener(m_PrivateFunc.onClickChatVoiceBtn)
+        table.insert(tb_btns, btn)
+    end 
+
+end 
+
+--initial option panel
+m_PrivateFunc.InitialOptionPanel = function()
+    m_OptPanel = {} 
+    local root = m_RootPanel:Find("panel_opt")
+    m_OptPanel.gameObject = root.gameObject
+
+    local btn = root:GetComponent("Button")
+    if btn then 
+        btn.onClick:AddListener(function() m_PrivateFunc.ShowOptionPanel(false) end)
+        table.insert(tb_btns, btn)
+    end 
+    
+    btn = root:Find("btn_back"):GetComponent("Button")
+    if btn then 
         btn.onClick:AddListener(m_PrivateFunc.onClickExitBtn)
         table.insert(tb_btns, btn)
-    end
+    end 
 
-    btn = m_RootPanel:Find('top/btn_setting'):GetComponent('Button')
-    if btn ~= nil then
+    btn = root:Find("btn_dismiss"):GetComponent("Button")
+    if btn then 
+        btn.onClick:AddListener(m_PrivateFunc.onClickDismissBtn)
+        table.insert(tb_btns, btn)
+    end 
+
+    btn = root:Find("btn_setting"):GetComponent("Button")
+    if btn then 
         btn.onClick:AddListener(m_PrivateFunc.onClickSettingBtn)
         table.insert(tb_btns, btn)
-    end
+    end 
 
-    btn = m_RootPanel:Find('bottom/btn_chat'):GetComponent('Button')
-    if btn ~= nil then
-        btn.onClick:AddListener(function() m_PrivateFunc.ShowChatPanel(true) end)
+    btn = root:Find("btn_replay"):GetComponent("Button")
+    if btn then 
+        btn.onClick:AddListener(m_PrivateFunc.onClickReplayBtn)
         table.insert(tb_btns, btn)
-    end
-
+    end 
+    m_OptPanel.gameObject:SetActive(false)
 end 
 
 --initial share panel 
@@ -127,7 +254,6 @@ m_PrivateFunc.InitialSharePanel = function()
     m_SharePanel.gameObject = trans.gameObject 
     local btn = trans:Find("btn_dismiss"):GetComponent("Button")
     if btn ~= nil then 
-        btn.onClick:RemoveAllListeners()
         btn.onClick:AddListener(m_PrivateFunc.onClickExitBtn)
         m_SharePanel.dimiss_obj = btn.gameObject 
     end 
@@ -135,14 +261,12 @@ m_PrivateFunc.InitialSharePanel = function()
 
     btn = trans:Find("btn_share"):GetComponent("Button")
     if btn ~= nil then 
-        btn.onClick:RemoveAllListeners()
         btn.onClick:AddListener(m_PrivateFunc.onClickShareBtn)
     end 
     table.insert(tb_btns, btn)
 
     btn = trans:Find("btn_duplicate"):GetComponent("Button")
     if btn ~= nil then 
-        btn.onClick:RemoveAllListeners()
         btn.onClick:AddListener(m_PrivateFunc.onClickDuplicateBtn)
     end 
     table.insert(tb_btns, btn)
@@ -161,10 +285,13 @@ m_PrivateFunc.InitialCommonPanel = function()
     m_CommonPanel.txt_netdelay = m_RootPanel:Find("top/txt_netdelay"):GetComponent("Text")
     m_CommonPanel.img_devicepower = m_RootPanel:Find("top/power/fill"):GetComponent("Image")
     m_CommonPanel.img_devicepower.fillAmount = 1
-    m_CommonPanel.txt_roomid = m_RootPanel:Find("top/bg_roomId/txt_roomId"):GetComponent("Text")
-    m_CommonPanel.txt_remainround = m_RootPanel:Find("top/bg_round/txt_round"):GetComponent("Text")
+    m_CommonPanel.txt_roomid = m_RootPanel:Find("top/txt_roomId"):GetComponent("Text")
+    m_CommonPanel.txt_remainround = m_RootPanel:Find("top/txt_round"):GetComponent("Text")
     m_CommonPanel.txt_remainround.text = "0局"
-    GetLuaPing().RegisterText(m_CommonPanel.txt_netdelay)
+    m_CommonPanel.txt_dealerrule = m_RootPanel:Find("top/txt_dealerrule"):GetComponent("Text")
+    m_CommonPanel.txt_tuizhu = m_RootPanel:Find("top/txt_tuizhu"):GetComponent("Text")
+
+    --GetLuaPing().RegisterText(m_CommonPanel.txt_netdelay)
     m_CommonPanel.Free = function()
         m_CommonPanel.txt_time = nil 
         m_CommonPanel.txt_netdelay = nil 
@@ -187,10 +314,22 @@ m_PrivateFunc.InitialSeat = function()
         seat.gameObject = trans.gameObject 
         seat.img_head = trans:Find("mask/img_head"):GetComponent("Image")
         seat.txt_name = trans:Find("txt_name"):GetComponent("Text")
-        seat.txt_score = trans:Find("score/txt_score"):GetComponent("Text")
+        seat.txt_score = trans:Find("txt_score"):GetComponent("Text")
         seat.img_dealer = trans:Find("img_dealer"):GetComponent("Image")
-        seat.btn = trans:GetComponent("Button")
-        table.insert(tb_btns, seat.btn)
+        seat.txt_result = trans:Find("txt_result"):GetComponent("Text")
+        seat.txt_result.text = ""
+        seat.txt_multbei = trans:Find("txt_mult"):GetComponent("Text")
+        seat.txt_multbei.text = ""
+        seat.img_ready = trans:Find("img_ready"):GetComponent("Image")
+        seat.img_ready.enabled = false 
+        seat.img_bq = trans:Find("img_buqiang"):GetComponent("Image")
+        seat.img_bq.enabled = false 
+        seat.img_qz = trans:Find("qz/img_qz"):GetComponent("Image")
+        seat.img_qz.enabled = false 
+        seat.txt_qz_num = trans:Find("qz/txt_num"):GetComponent("Text")
+        seat.txt_qz_num.text = ""
+        --seat.btn = trans:GetComponent("Button")
+        --table.insert(tb_btns, seat.btn)
         seat.img_dealer.enabled = false 
         seat.m_HandCards = {} 
         seat.m_HandCardsPos = {}  
@@ -207,7 +346,7 @@ m_PrivateFunc.InitialSeat = function()
     m_SeatInfo.Free = function() 
         for k,v in ipairs(m_SeatInfo) do 
             if v then 
-                v.btn = nil 
+                --v.btn = nil 
                 v.img_dealer = nil 
                 v.gameObject = nil 
                 v.txt_name = nil 
@@ -256,6 +395,7 @@ function tbclass:Init()
     m_PrivateFunc.InitialCommonPanel()
     m_PrivateFunc.InitialChatPanel()
     m_PrivateFunc.InitialSharePanel()
+    m_PrivateFunc.InitialOptionPanel()
     --register self to game manager for receiving update events
     GetLuaGameManager():GetGameMode():RegisterComponent(self, windownName)
 end 
@@ -324,7 +464,7 @@ function tbclass:SafeRelease()
         windowAsset:Free(1)
     end 
 
-    GetLuaPing():RemoveText(m_CommonPanel.txt_netdelay)
+    --GetLuaPing():RemoveText(m_CommonPanel.txt_netdelay)
     m_CommonPanel.Free()
     m_CommonPanel = nil 
     m_SharePanel.Free()
@@ -378,7 +518,7 @@ function tbclass:FreshRound(curRound, maxRound)
     if remain <= 0 then 
         remain = 0
     end 
-    m_CommonPanel.txt_remainround.text = string.format("%s局", tostring(remain))
+    m_CommonPanel.txt_remainround.text = string.format(luaTool:GetLocalize("remain_round"), curRound, maxRound)
 end 
 
 --fresh player info
