@@ -518,7 +518,7 @@ function logic.round_over()
     --add score to total score
     for _,tmp_user in pairs(info.users) do 
         if tmp_user == info.winner then 
-                tmp_user.round_score = tmp_score *info.user_num
+                tmp_user.round_score = tmp_score *(info.user_num-1)
         else
              tmp_user.round_score = tmp_score *-1 
         end

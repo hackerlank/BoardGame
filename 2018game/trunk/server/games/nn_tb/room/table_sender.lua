@@ -52,19 +52,8 @@ function sender.get_table_info(user)
     for k,v in pairs(info.rules) do
         table.insert(t.rules,{name=k,value=v})
     end
+ 
 
-    local dealer = info.dealer
-    if dealer then
-        t.dealer_id = dealer.seat_id
-    else
-        --t.dealer_id = 0
-    end
-
-    if info.turn_user then 
-        t.turn_user = info.turn_user.seat_id
-    end    
-
-    local req_add_chip_users = {}
 
     for seat_id,seat_user in pairs(info.users) do
         t.users[seat_id] = {
@@ -77,14 +66,12 @@ function sender.get_table_info(user)
 
             game_state = seat_user.game_state,
            
-            score = seat_user.score,
+            round_score = seat_user.round_score,
           
             total_score = seat_user.total_score,
 
             phase_ack = seat_user.phase_ack,
-
-            add_chip_times_total = seat_user.add_chip_times_total,
-
+            
             is_online = logic.is_user_online(seat_user),
             ipaddr = seat_user.ipaddr,
             gps_x = tostring(seat_user.gps_x),
@@ -106,8 +93,8 @@ function sender.get_table_info(user)
                     table.insert( t.hand_cards, _v2 )
                 end   
               
-        elseif     t.hand_cards_state == user_hand_cards_state.see then 
-                if seat_user == user then 
+        else    
+                if seat_user == user and seat_user.hand_cards then 
                     t.hand_cards = {}
                     for _i2,_v2 in ipairs(seat_user.hand_cards) do 
                         table.insert( t.hand_cards, _v2 )
@@ -193,11 +180,49 @@ function sender.send_begin_play()
     end
 end
 
+
+--返回一局游戏结束消息
+function sender.get_round_over()
+    local t = { users = {} }
+    if info.table_cards and #info.table_cards > 0 then 
+        t.table_cards = info.table_cards
+    end    
+
+    for seat_id,seat_user in pairs(info.users) do
+        local t_user = {
+            seat_id = seat_user.seat_id,
+            money = seat_user.money,
+            room_card = seat_user.room_card,
+            head_img = seat_user.head_img,
+            hand_cards = seat_user.hand_cards,
+
+            --hu_infos = {},
+
+            round_score = seat_user.round_score,
+            total_score = seat_user.total_score,
+            niu_point = seat_user.niu_point,
+            ex_niu_type =seat_user.ex_niu_type,
+            --user_bunkos = seat_user.bunkos,
+
+            is_online = logic.is_user_online(seat_user),
+        }
+
+         t.users[seat_id] = t_user
+    end
+
+     t.round_over_time = info.round_over_time_string
+
+    return t
+end
+
 --通知所有玩家回合结束
 function sender.send_round_over()
     log.debug("send_round_over()")
 
-	local np = spx.encode_pack1(info.table_service,game_msg_id.round_over,nil)
+    local t = sender.get_round_over()
+
+    local body = game_sproto:encode("round_over",t)
+	local np = spx.encode_pack1(info.table_service,game_msg_id.round_over,body)
 
     for _,dst in pairs(user_list) do
 	    sender.send_user_pack(dst,np)
