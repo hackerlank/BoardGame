@@ -11,11 +11,7 @@ LUA_GAME_MODE_BASE = "Common.LuaGameModeBase"
 LUA_GAME_MANAGER = "Common.LuaGameManager"
 TOOL_LUA_GAME_MANAGER = "Common.ToolLuaGameManager"
 
-if GameHelper.isWithBundle then
 LUA_RESOURCE_MANAGER = "Common.ResourceManager"
-else
-LUA_RESOURCE_MANAGER = "Common.EditorRM"
-end
 
 LUA_DOWNLOAD_MANAGER = "Common.DownloadManager"
 LUA_UPDATE_MANAGER = "Common.UpdateManager"
@@ -37,7 +33,7 @@ BUNDLE_MANAGER_FILE="bm.data"
 GAME_CONTENT_VERSION_FILE="Version.txt"
 
 --pre-define asset path 
-UI_IMAGE_PATH="Assets/Content/Artwork/UI/"
+UI_IMAGE_PATH="Assets/Content/Artwork/ui/"
 
 GAME_FACADE_NAME = 'game_facade'
 
@@ -105,15 +101,7 @@ EBundleUpdateMode ={
 --Defined Game type
 EGameType = {
     EGT_Common=0, --it means common bundle. not a game
-	EGT_Fish=1,  --Fish Game
-    EGT_Fish2d=2, --Fish2d Game
-    EGT_NiuNiu=3, --poker_niuniu
-    EGT_BlackJack=4, --21点
-    EGT_Baccarat=5, --百家乐
-    EGT_ShuiHuZhuan=6, --老虎机
-    EGT_CDMaJiang=7, --成都麻将
-    EGT_NJMaJiang=8,--内江麻将
-    EGT_ZhaJinHua=9, --焖鸡
+    EGT_NiuNiu=1, --poker_niuniu
 	EGT_MAX=10000,  --Invalid Game
     }
 
@@ -134,15 +122,7 @@ EMenuType = {
 
 --Defined Game Name
 GameNames = GameNames or {}
-GameNames[tostring(EGameType.EGT_Fish)] = "Fish"
-GameNames[tostring(EGameType.EGT_Fish2d)] = "Fish2d"
-GameNames[tostring(EGameType.EGT_NiuNiu)] = "NiuNiu"
-GameNames[tostring(EGameType.EGT_BlackJack)] = "BlackJack"
-GameNames[tostring(EGameType.EGT_Baccarat)] = "Baccarat"
-GameNames[tostring(EGameType.EGT_ShuiHuZhuan)] = "ShuiHuZhuan"
-GameNames[tostring(EGameType.EGT_CDMaJiang)] = "mj_cdxz"
-GameNames[tostring(EGameType.EGT_NJMaJiang)] = "mj_nj"
-GameNames[tostring(EGameType.EGT_ZhaJinHua)] = "zha_jin_hua"
+GameNames[tostring(EGameType.EGT_NiuNiu)] = "nn"
 GameNames[tostring(EGameType.EGT_MAX)] = "Invalid"
 
 --fish particle type

@@ -40,8 +40,8 @@ ci.GetSoundElement = function()
     return depends("Common.Parameter.SoundElement")
 end 
 
-ci.GetAllGamesInfo = function()
-    return depends("Common.Parameter.AllGamesInfo")
+ci.GetGamesInfo = function()
+    return depends("Common.Parameter.GamesInfo")
 end
 
 ci.GetBindServerParam = function()

@@ -1,7 +1,7 @@
-local AllGamesInfo = class('AllGamesInfo')
+local GamesInfo = class('GamesInfo')
 
 
-function AllGamesInfo:ctor(tbKey, tbValue)
+function GamesInfo:ctor(tbKey, tbValue)
     self.id = nil
     self.Name = nil
     self.IconPath = nil
@@ -29,37 +29,37 @@ function AllGamesInfo:ctor(tbKey, tbValue)
     end 
 end 
 
-function AllGamesInfo:GetGameName()
+function GamesInfo:GetGameName()
     return self.Name
 end 
 
-function AllGamesInfo:GetGameIconPath()
+function GamesInfo:GetGameIconPath()
     return self.IconPath
 end 
 
-function AllGamesInfo:GetGameId()
+function GamesInfo:GetGameId()
     return self.id
 end 
 
-function AllGamesInfo:GetGameType()
+function GamesInfo:GetGameType()
     return self.Type
 end
 
-function AllGamesInfo:isEqual(obj)
+function GamesInfo:isEqual(obj)
     return id == obj:GetGameId()
 end 
 
-function AllGamesInfo:GetMenuOpenParam()
+function GamesInfo:GetMenuOpenParam()
     return self.MenuOpenParam
 end 
 
-function AllGamesInfo:GetHallType()
+function GamesInfo:GetHallType()
     return self.HallType
 end 
 
-function AllGamesInfo:ToString()
+function GamesInfo:ToString()
     local t = {self.id, self.Name, self.IconPath, self.Type}
     return  table.concat(t)
 end 
 
-return AllGamesInfo
+return GamesInfo
