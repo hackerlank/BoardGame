@@ -350,6 +350,7 @@ m_PrivateFunc.InitialCommonPanel = function()
     m_CommonPanel.txt_remainround.text = ""
     m_CommonPanel.txt_dealerrule = m_RootPanel:Find("top/txt_dealerrule"):GetComponent("Text")
     m_CommonPanel.txt_tuizhu = m_RootPanel:Find("top/txt_tuizhu"):GetComponent("Text")
+    m_CommonPanel.txt_basescore = m_RootPanel:Find("top/txt_basesocre"):GetComponent("Text")
 
     --GetLuaPing().RegisterText(m_CommonPanel.txt_netdelay)
     m_CommonPanel.Free = function()
@@ -358,6 +359,7 @@ m_PrivateFunc.InitialCommonPanel = function()
         m_CommonPanel.img_devicepower = nil 
         m_CommonPanel.txt_roomid = nil 
         m_CommonPanel.txt_remainround = nil 
+        m_CommonPanel.txt_basescore = nil 
     end
 end 
 
@@ -976,8 +978,19 @@ function tbclass:NtfPlayerReady(seat_id, bSendDoneCmd)
 end 
 
 --ntf round over
-function tbclass:NtfRoundOver()
+function tbclass:NtfRoundOver(round_result)
     btn_showcard.gameObject:SetActive(false)
+    if round_result then 
+        for k,v in ipairs(round_result) do 
+            local seat_id = mediator:GetRealSeatId(k)
+            local seat = m_SeatInfo[k] 
+            if seat then 
+                m_PrivateFunc.ShowPlayerCardType(seat_id, v.hand_cards)
+                seat.txt_result.text = tostring(v.score)
+                seat.txt_score.text = tostring(v.total_score)
+            end 
+        end 
+    end 
     facade:sendNotification(Common.EXECUTE_CMD_DONE)
 end 
 
@@ -1014,6 +1027,7 @@ end
 
 --fresh game rule panel
 function tbclass:FreshGameRule(rule)
+    m_CommonPanel.txt_basescore.text = string.format(luaTool:GetLocalize("base_chip"),tostring(rule.base_chip))
 end 
 
 --cleanup table
@@ -1031,11 +1045,11 @@ end
 --@param card_info  player cards_info
 function tbclass:NtfShuffle(card_info)
     if card_info then 
-        local dealer =  card_info[1]
+        --[[local dealer =  card_info[1]
         local seat = m_SeatInfo[dealer.real_seat_id]
         if seat then 
             seat.img_dealer.enabled = true 
-        end 
+        end ]]
         local len = #card_info 
         local info = nil 
         local card = nil 
@@ -1068,7 +1082,7 @@ end
 function tbclass:NtfRecievedMsg(seat_id, msg)
 end 
 --restore game 
-function tbclass:PlayerReconnected(info, seat_id, bShowReady, game_state, bNotShuffle)
+function tbclass:PlayerReconnected(info, seat_id, bShowReady, game_state)
     local bIsSelf = mediator:IsSelfRealSeatId(seat_id)
     local seat = m_SeatInfo[seat_id]
     if seat == nil then 
@@ -1081,12 +1095,8 @@ function tbclass:PlayerReconnected(info, seat_id, bShowReady, game_state, bNotSh
 		seat.img_ready.enabled = false
     end
     
-    local is_dealer = mediator:IsDealer(seat_id)
-    seat.img_dealer.enabled = is_dealer
-
-    if bNotShuffle == true then 
-        return 
-    end 
+    --local is_dealer = mediator:IsDealer(seat_id)
+   -- seat.img_dealer.enabled = is_dealer
 
     if info.is_online == true then 
         --seat.img_offline.enabled = false 

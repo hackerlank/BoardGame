@@ -69,7 +69,7 @@ function mediator:handleNotification(notification)
             facade:sendNotification(Common.RENDER_MESSAGE_VALUE, body.desc) 
         end 
     elseif Common.NTF_ROUND_OVER == name then 
-        self.viewComponent:NtfRoundOver()
+        self.viewComponent:NtfRoundOver(body)
     elseif Common.NTF_PLAYER_JOINED_GAME == name then
         --玩家加入游戏
         self.viewComponent:NtfPlayerJoinedGame(body.real_seat_id)

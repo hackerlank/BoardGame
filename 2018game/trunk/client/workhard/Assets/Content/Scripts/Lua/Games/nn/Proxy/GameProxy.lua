@@ -1025,7 +1025,7 @@ game_pack[game_msg_id.round_over] = function(buf)
             _result[seatId] = {}     
             _result[seatId].money = v.money
             _result[seatId].hand_cards = v.hand_cards
-            _result[seatId].score = v.score
+            _result[seatId].score = v.round_score
             _result[seatId].total_score = v.total_score
             _result[seatId].bIsSelf = seatId == self_seat_id
             m_userGameInfo[seatId].score = v.score
