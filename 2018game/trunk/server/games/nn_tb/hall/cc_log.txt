@@ -1,0 +1,196 @@
+2017-12-19 02:22:06 sntxt : (7) LAUNCH snlua service_mgr
+2017-12-19 02:22:06 sntxt : (8) LAUNCH snlua main
+2017-12-19 02:22:06 sntxt : (9) LAUNCH snlua clusternode
+2017-12-19 02:22:06 sntxt : (10) LAUNCH snlua clusterd
+2017-12-19 02:22:06 info  : (9#clusternode)  start clusternode id is 9
+2017-12-19 02:22:06 info  : (9#clusternode)  clusternode service start
+2017-12-19 02:22:06 info  : (9#clusternode)  center_node_info
++node_address [127.0.0.1:2501]
++node_id [1]
++node_name [center]
++node_type [center]
+2017-12-19 02:22:06 info  : (9#clusternode)  self_node_info
++node_address [127.0.0.1:2911]
++node_name [zhajinhua_hall1]
++node_type [zhajinhua_hall]
+2017-12-19 02:22:06 info  : (9#clusternode)  register center node
+2017-12-19 02:22:06 info  : (9#clusternode)  reload cluster name
+2017-12-19 02:22:06 info  : (9#clusternode)  1 center 127.0.0.1:2501
+2017-12-19 02:22:06 info  : (9#clusternode)  999999 zhajinhua_hall1 127.0.0.1:2911
+2017-12-19 02:22:06 info  : (9#clusternode)  open cluster node 2911
+2017-12-19 02:22:06 sntxt : (11) LAUNCH snlua gate
+2017-12-19 02:22:06 sntxt : (11) Listen on 0.0.0.0:2911
+2017-12-19 02:22:06 info  : (9#clusternode)  done
+2017-12-19 02:22:06 info  : (9#clusternode)  create center proxy
+2017-12-19 02:22:06 sntxt : (12) LAUNCH snlua clusterproxy center center
+2017-12-19 02:22:06 info  : (9#clusternode)  done
+2017-12-19 02:22:06 info  : (9#clusternode)  register self node ...
+2017-12-19 02:22:06 info  : (9#clusternode)  done
+2017-12-19 02:22:06 info  : (9#clusternode)  refresh_node_list
+2017-12-19 02:22:06 info  : (9#clusternode)  self_node_id 9
+2017-12-19 02:22:06 info  : (9#clusternode)  reload cluster name
+2017-12-19 02:22:06 info  : (9#clusternode)  8 ugate1 127.0.0.1:2506
+2017-12-19 02:22:06 info  : (9#clusternode)  9 zhajinhua_hall1 127.0.0.1:2911
+2017-12-19 02:22:06 info  : (9#clusternode)  4 plaza 127.0.0.1:2503
+2017-12-19 02:22:06 info  : (9#clusternode)  3 httpd 127.0.0.1:2507
+2017-12-19 02:22:06 info  : (9#clusternode)  1 center 127.0.0.1:2501
+2017-12-19 02:22:06 info  : (9#clusternode)  7 lgate1 127.0.0.1:2505
+2017-12-19 02:22:06 info  : (9#clusternode)  2 db 127.0.0.1:2502
+2017-12-19 02:22:06 info  : (9#clusternode)  6 agent 127.0.0.1:2508
+2017-12-19 02:22:06 info  : (9#clusternode)  5 login 127.0.0.1:2504
+2017-12-19 02:22:06 info  : (9#clusternode)  add new node ugate1 8
+2017-12-19 02:22:06 info  : (9#clusternode)  add new node plaza 4
+2017-12-19 02:22:06 info  : (9#clusternode)  add new node httpd 3
+2017-12-19 02:22:06 info  : (9#clusternode)  add new node lgate1 7
+2017-12-19 02:22:06 info  : (9#clusternode)  add new node db 2
+2017-12-19 02:22:06 info  : (9#clusternode)  add new node agent 6
+2017-12-19 02:22:06 info  : (9#clusternode)  add new node login 5
+2017-12-19 02:22:06 info  : (9#clusternode)  start update_node_list
+2017-12-19 02:22:06 sntxt : (13) LAUNCH snlua hall
+2017-12-19 02:22:06 sntxt : (10) socket accept from 127.0.0.1:52918
+2017-12-19 02:22:06 debug : (9#clusternode)  command.probe_alive()
+2017-12-19 02:22:06 info  : (13#hall)  start hall id is 13
+2017-12-19 02:22:06 info  : (13#hall)  command.reload_version()
+2017-12-19 02:22:06 info  : (13#hall)  hall version_info is not changed
+2017-12-19 02:22:06 info  : (13#hall)  register hall
+2017-12-19 02:22:06 sntxt : (14) LAUNCH snlua console
+2017-12-19 02:22:06 sntxt : (2) KILL self
+2017-12-19 02:22:10 info  : (9#clusternode)  refresh_node_list
+2017-12-19 02:22:10 info  : (9#clusternode)  self_node_id 9
+2017-12-19 02:22:10 info  : (9#clusternode)  reload cluster name
+2017-12-19 02:22:10 info  : (9#clusternode)  8 ugate1 127.0.0.1:2506
+2017-12-19 02:22:10 info  : (9#clusternode)  9 zhajinhua_hall1 127.0.0.1:2911
+2017-12-19 02:22:10 info  : (9#clusternode)  4 plaza 127.0.0.1:2503
+2017-12-19 02:22:10 info  : (9#clusternode)  3 httpd 127.0.0.1:2507
+2017-12-19 02:22:10 info  : (9#clusternode)  10 zhajinhua_room1 127.0.0.1:2912
+2017-12-19 02:22:10 info  : (9#clusternode)  1 center 127.0.0.1:2501
+2017-12-19 02:22:10 info  : (9#clusternode)  7 lgate1 127.0.0.1:2505
+2017-12-19 02:22:10 info  : (9#clusternode)  2 db 127.0.0.1:2502
+2017-12-19 02:22:10 info  : (9#clusternode)  6 agent 127.0.0.1:2508
+2017-12-19 02:22:10 info  : (9#clusternode)  5 login 127.0.0.1:2504
+2017-12-19 02:22:10 info  : (9#clusternode)  add new node zhajinhua_room1 10
+2017-12-19 02:22:10 sntxt : (10) socket accept from 127.0.0.1:52926
+2017-12-19 02:22:10 info  : (13#hall)  register room ok, info.room_num 1 
++client_version [1]
++is_expired [false]
++users
++tables
++payload [0]
++user_num [0]
++room_service [167772173]
++table_num [0]
+2017-12-19 02:22:10 info  : (13#hall)  
++client_version [1]
++is_expired [false]
++users
++tables
++payload [0]
++user_num [0]
++room_service [167772173]
++table_num [0]
+2017-12-19 02:23:00 sntxt : (10) socket accept from 127.0.0.1:52958
+2017-12-19 02:23:00 debug : (13#hall)  hall on_pack,msg_id 1
+2017-12-19 02:23:00 debug : (13#hall)  read user 1221 from db
+2017-12-19 02:23:00 info  : (13#hall)  dbmysql.logic.connectdb(),connecting to db
+2017-12-19 02:23:00 info  : (13#hall)  cc_mysql.on_connect(),id 1
+2017-12-19 02:23:00 info  : (13#hall)  dbmysql.logic.on_connect()
+2017-12-19 02:23:00 info  : (13#hall)  ok
+2017-12-19 02:23:00 debug : (13#hall)  exec sql : select record_id from game_play_record where record_id in (select record_id from user_play_record where user_id=?) and hall_type=? 1221 zhajinhua
+2017-12-19 02:23:00 info  : (13#hall)  logic.read_user_play_record(),user_id 1221
+2017-12-19 02:23:00 info  : (13#hall)  logic.read_user_info(),user_id 1221 info.user_num 1
+2017-12-19 02:23:00 debug : (13#hall)  send_req_enter_hall_ok(),gate_service 134217741 fd 9
+2017-12-19 02:23:00 info  : (13#hall)  pack.req_enter_hall(),user_id 1221 enter hall ok,info.user_num 1
+2017-12-19 02:23:00 debug : (13#hall)  user_info :
++ipaddr [192.168.50.104]
++money [1000]
++gps_x [4747.145]
++room_card [415]
++user_id [1221]
++user_name [test201]
++gps_y [9264.631]
++gps_state [0]
++gate_service [134217741]
++fd [9]
++state [0]
+2017-12-19 02:23:00 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
+2017-12-19 02:23:00 debug : (13#hall)  hall on_pack,msg_id 11
+2017-12-19 02:23:00 debug : (13#hall)  send_your_table_info(),gate_service 134217741 fd 9
+2017-12-19 02:23:00 debug : (13#hall)  user.table is nil
+2017-12-19 02:23:00 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
+2017-12-19 02:23:00 debug : (13#hall)  hall on_pack,msg_id 31
+2017-12-19 02:23:00 debug : (13#hall)  command.create_table()
++table_type [2]
++rules+table_mode [1]
+|     +enable_235_win_plane [true]
+|     +private_table_cost [5]
+|     +max_chip_one_turn [10]
+|     +max_round [5]
+|     +enable_show_last_hand_cards [true]
+|     +pay_mode [1]
+|     +pay_room_card [5]
+|     +enable_tax [true]
++owner [1221]
+2017-12-19 02:23:00 debug : (9#clusternode)  clusternode.call(),address 167772173 cmd create_table
+2017-12-19 02:23:00 info  : (13#hall)  command.create_table() ok,table_service 167772175 room 167772173 room.table_num 1 info.table_num 1
+2017-12-19 02:23:00 debug : (13#hall)  
++rules+table_mode [1]
+|     +enable_235_win_plane [true]
+|     +private_table_cost [5]
+|     +max_chip_one_turn [10]
+|     +max_round [5]
+|     +enable_show_last_hand_cards [true]
+|     +pay_mode [1]
+|     +pay_room_card [5]
+|     +enable_tax [true]
++user_num [0]
++table_service [167772175]
++room+client_version [1]
+|    +is_expired [false]
+|    +users
+|    +tables+167772175 {.}
+|    +payload [0]
+|    +user_num [0]
+|    +room_service [167772173]
+|    +table_num [1]
++users
++table_type [2]
++dismissed [false]
++owner [1221]
++private_key [940398]
+2017-12-19 02:23:00 debug : (13#hall)  send_req_create_private_table_ok(),gate_service 134217741 fd 9
+2017-12-19 02:23:00 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
+2017-12-19 02:23:00 debug : (9#clusternode)  clusternode.call(),address 167772173 cmd user_join_table
+2017-12-19 02:23:00 info  : (13#hall)  command.user_join_table() ok,user_id, 1221 table_info.user_num 1 room 167772173 user_num 1
+2017-12-19 02:23:00 debug : (13#hall)  send_you_enter_table(),gate_service 134217741 fd 9
+2017-12-19 02:23:00 info  : (13#hall)  pack.req_create_private_table() ok,user_id 1221
+2017-12-19 02:23:00 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
+2017-12-19 02:23:02 debug : (13#hall)  hall on_pack,msg_id 1
+2017-12-19 02:23:02 debug : (13#hall)  read user 1232 from db
+2017-12-19 02:23:02 debug : (13#hall)  exec sql : select record_id from game_play_record where record_id in (select record_id from user_play_record where user_id=?) and hall_type=? 1232 zhajinhua
+2017-12-19 02:23:02 info  : (13#hall)  logic.read_user_play_record(),user_id 1232
+2017-12-19 02:23:02 info  : (13#hall)  logic.read_user_info(),user_id 1232 info.user_num 2
+2017-12-19 02:23:02 debug : (13#hall)  send_req_enter_hall_ok(),gate_service 134217741 fd 18
+2017-12-19 02:23:02 info  : (13#hall)  pack.req_enter_hall(),user_id 1232 enter hall ok,info.user_num 2
+2017-12-19 02:23:02 debug : (13#hall)  user_info :
++ipaddr [192.168.50.104]
++money [1000]
++gps_x [2194.559]
++room_card [100]
++user_id [1232]
++user_name [test212]
++gps_y [3919.44]
++gps_state [0]
++gate_service [134217741]
++fd [18]
++state [0]
+2017-12-19 02:23:02 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
+2017-12-19 02:23:02 debug : (13#hall)  hall on_pack,msg_id 11
+2017-12-19 02:23:02 debug : (13#hall)  send_your_table_info(),gate_service 134217741 fd 18
+2017-12-19 02:23:02 debug : (13#hall)  user.table is nil
+2017-12-19 02:23:02 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
+2017-12-19 02:23:02 debug : (13#hall)  hall on_pack,msg_id 41
+2017-12-19 02:23:02 debug : (9#clusternode)  clusternode.call(),address 167772173 cmd user_join_table
+2017-12-19 02:23:02 info  : (13#hall)  command.user_join_table() ok,user_id, 1232 table_info.user_num 2 room 167772173 user_num 2
+2017-12-19 02:23:02 debug : (13#hall)  send_you_enter_table(),gate_service 134217741 fd 18
+2017-12-19 02:23:02 info  : (13#hall)  pack.req_join_private_table() ok,user_id 1232 table_service 167772175
+2017-12-19 02:23:02 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
