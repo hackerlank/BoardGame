@@ -178,7 +178,7 @@ end
 
 local function onClickShowBtn()
     if m_ShowPanelTween == nil then 
-        m_ShowPanelTween = DoTweenPathLuaUtil.DOMoveX(m_RootPanel, 640, MENU_OPEN_ANIM_TIME)
+        m_ShowPanelTween = DoTweenPathLuaUtil.DOMoveX(m_RootPanel, 960, MENU_OPEN_ANIM_TIME)
         DoTweenPathLuaUtil.SetEaseTweener(m_ShowPanelTween, DG.Tweening.Ease.OutExpo)
         DoTweenPathLuaUtil.SetAutoKill(m_ShowPanelTween, false)
         DoTweenPathLuaUtil.OnComplete(m_ShowPanelTween, onShowPanelComplete)

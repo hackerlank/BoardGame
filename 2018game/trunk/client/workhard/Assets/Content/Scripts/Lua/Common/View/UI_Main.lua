@@ -259,7 +259,7 @@ local function InitialGameList()
             local bg_path = string.format("%s%s",UI_IMAGE_PATH, v:GetBGIconPath())
             game.btn.onClick:RemoveAllListeners()
             game.btn.onClick:AddListener(function() 
-                onClickGameBtn(game)
+                onClickGameBtn(v)
             end)
             GetResourceManager().LoadAssetAsync(GameHelper.EAssetType.EAT_Sprite, bg_path , function(asset) 
                     if asset and asset:IsValid() == true then 
@@ -276,7 +276,9 @@ local function InitialGameList()
                 game.img_name.enabled = false 
                 game.img_coming.enabled = false 
                 game.img_game_icon.enabled = false 
+                game.btn.interactable = false 
             else 
+                game.btn.interactable = true
                 game.img_card.enabled = true 
                 game.img_name.enabled = true 
                 game.img_coming.enabled = game_type == EGameType.EGT_Coming 
