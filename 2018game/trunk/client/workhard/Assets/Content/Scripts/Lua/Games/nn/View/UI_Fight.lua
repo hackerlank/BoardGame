@@ -631,7 +631,7 @@ m_PrivateFunc.ShowPlayerCardType = function(seat_id, hand_cards)
         else 
             ex_niu_type = nn.ENiuStyle.none 
         end  
-        m_PrivateFunc.UpdateNiuType(1,niu_point, ex_niu_type)  
+        m_PrivateFunc.UpdateNiuType(seat_id,niu_point, ex_niu_type)  
     end 
 end 
 
