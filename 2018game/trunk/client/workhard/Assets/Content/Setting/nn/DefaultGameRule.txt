@@ -4,6 +4,7 @@
     "pay_room_card"      			: 20,
     "pay_mode"           			: 1,
     "base_chip"						: 10,
+    "start_game_mode"               : 1,
     "enable_flush"					: true,
     "enable_straight"				: true,
     "enable_suited"					: true,

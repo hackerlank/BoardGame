@@ -60,6 +60,13 @@ local m_ChatPanel = nil
 local m_SharePanel = nil 
 --option panel 
 local m_OptPanel = nil 
+--wathch game 
+local m_Prestart = nil 
+
+--cache ready btn 
+local btn_ready = nil 
+--cache invite btn
+local btn_invite = nil 
 
 
 --================private interface begin =====================
@@ -175,15 +182,16 @@ m_PrivateFunc.BindCallbacks = function()
     if btn then 
         btn.onClick:AddListener(m_PrivateFunc.onClickInviteBtn)
         table.insert(tb_btns, btn)
+        btn_invite = btn 
     end 
 
-    btn = m_RootPanel:Find("bottom/btn_sit"):GetComponent("Button")
+    btn = m_RootPanel:Find("prestart/start_set/btn_sit"):GetComponent("Button")
     if btn then 
         btn.onClick:AddListener(m_PrivateFunc.onClickSitBtn)
         table.insert(tb_btns, btn)
     end 
 
-    btn = m_RootPanel:Find("bottom/btn_start"):GetComponent("Button")
+    btn = m_RootPanel:Find("prestart/start_set/btn_start"):GetComponent("Button")
     if btn then 
         btn.onClick:AddListener(m_PrivateFunc.onClickStartBtn)
         table.insert(tb_btns, btn)
@@ -193,6 +201,8 @@ m_PrivateFunc.BindCallbacks = function()
     if btn then 
         btn.onClick:AddListener(m_PrivateFunc.onClickReadyBtn)
         table.insert(tb_btns, btn)
+        btn_ready = btn 
+        btn_ready.gameObject:SetActive(false)
     end 
 
     btn = m_RootPanel:Find("bottom/btn_chat_msg"):GetComponent("Button")
@@ -252,14 +262,7 @@ m_PrivateFunc.InitialSharePanel = function()
     m_SharePanel = {} 
     local trans = m_RootPanel:Find("share")
     m_SharePanel.gameObject = trans.gameObject 
-    local btn = trans:Find("btn_dismiss"):GetComponent("Button")
-    if btn ~= nil then 
-        btn.onClick:AddListener(m_PrivateFunc.onClickExitBtn)
-        m_SharePanel.dimiss_obj = btn.gameObject 
-    end 
-    table.insert(tb_btns, btn)
-
-    btn = trans:Find("btn_share"):GetComponent("Button")
+    local btn = trans:Find("btn_share"):GetComponent("Button")
     if btn ~= nil then 
         btn.onClick:AddListener(m_PrivateFunc.onClickShareBtn)
     end 
@@ -272,7 +275,6 @@ m_PrivateFunc.InitialSharePanel = function()
     table.insert(tb_btns, btn)
 
     m_SharePanel.Free = function()
-        m_SharePanel.dimiss_obj = nil 
         m_SharePanel.gameObject = nil 
         m_SharePanel = nil 
     end
@@ -324,7 +326,7 @@ m_PrivateFunc.InitialSeat = function()
         seat.img_ready.enabled = false 
         seat.img_bq = trans:Find("img_buqiang"):GetComponent("Image")
         seat.img_bq.enabled = false 
-        seat.img_qz = trans:Find("qz/img_qz"):GetComponent("Image")
+        seat.img_qz = trans:Find("qz"):GetComponent("Image")
         seat.img_qz.enabled = false 
         seat.txt_qz_num = trans:Find("qz/txt_num"):GetComponent("Text")
         seat.txt_qz_num.text = ""
@@ -358,6 +360,41 @@ m_PrivateFunc.InitialSeat = function()
         end 
         m_SeatInfo = nil 
     end   
+end 
+
+--initial watch game panel 
+m_PrivateFunc.InitialPrestartGamePanel = function() 
+    m_Prestart = {} 
+    local root = m_RootPanel:Find("prestart")
+    m_Prestart.img_watch = root:Find("img_watch"):GetComponent("Image")
+    m_Prestart.obj_sitcost = root:Find("cost").gameObject
+    m_Prestart.txt_cost = root:Find("cost/txt_cost"):GetComponent("Text")
+    m_Prestart.obj_startgame = root:Find("start_set/btn_start").gameObject
+    m_Prestart.obj_sit = root:Find("start_set/btn_sit").gameObject
+
+    --interface
+    m_Prestart.UpdateSitCost = function(bEnable, cost)
+        if bEnable == true then 
+            if cost and cost >= 0 then 
+                m_Prestart.obj_sit:SetActive(true)
+                m_Prestart.obj_startgame:SetActive(false)
+                m_Prestart.obj_sitcost:SetActive(true)
+                m_Prestart.txt_cost.text = tostring(cost)
+                m_Prestart.img_watch.enabled = true 
+            else 
+                m_Prestart.obj_sit:SetActive(false)
+                m_Prestart.obj_startgame:SetActive(true)
+                m_Prestart.obj_sitcost:SetActive(false)
+                m_Prestart.txt_cost.text = ""
+                m_Prestart.img_watch.enabled = false 
+            end 
+        else 
+            m_Prestart.obj_sitcost:SetActive(false)
+            m_Prestart.obj_startgame:SetActive(false)
+            m_Prestart.obj_sit:SetActive(false)
+            m_Prestart.img_watch.enabled = false
+        end 
+    end 
 end 
 
 --initial chat panel
@@ -396,6 +433,7 @@ function tbclass:Init()
     m_PrivateFunc.InitialChatPanel()
     m_PrivateFunc.InitialSharePanel()
     m_PrivateFunc.InitialOptionPanel()
+    m_PrivateFunc.InitialPrestartGamePanel()
     --register self to game manager for receiving update events
     GetLuaGameManager():GetGameMode():RegisterComponent(self, windownName)
 end 
@@ -500,7 +538,25 @@ end
 function tbclass:EnableSharePanel(bEnabled, bIsOnwner)
     if m_SharePanel then 
         m_SharePanel.gameObject:SetActive(bEnabled)
-        --m_SharePanel.dimiss_obj:SetActive(bIsOnwner)
+    end 
+end 
+
+--fresh prestart panel
+function tbclass:FreshPrestartPanel(game_state, start_mode)
+    if start_mode == nn.EStartMode.owner then 
+        if game_state == nn.ETableState.idle then 
+            local bIsOwner = mediator:IsOwner()
+            if bIsOwner == true then
+                m_Prestart.UpdateSitCost(true,nil)
+            else 
+                m_Prestart.UpdateSitCost(true, 20)
+            end 
+        else 
+            --@todo check if self has sit?
+            m_Prestart.UpdateSitCost(false,nil)
+        end 
+    else 
+        m_Prestart.UpdateSitCost(false,nil)
     end 
 end 
 

@@ -163,6 +163,7 @@ nn.ECardColor = depends("Games.nn.GameLib.poker_color")
 nn.ECardPoint = depends("Games.nn.GameLib.poker_point")
 nn.game_logic = depends("Games.nn.GameLib.niuniu_logic")
 nn.ENiuStyle = depends("Games.nn.GameLib.niu_style")
+nn.EStartMode = depends("Games.nn.GameLib.start_game_mode")
 
 --defined game menus
 nn.GAME_VIEW = "Game"

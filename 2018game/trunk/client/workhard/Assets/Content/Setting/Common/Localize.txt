@@ -5,6 +5,7 @@ user_login=登陆中. . .
 re_connect=重连中. . .
 re_connect_countdown=%ss之后重试. . .
 failed_connect_to_server=连接服务器失败,请重试！！！
+create_table_ps=本次游戏消耗%s张房卡
 location_title=归属地:
 dismiss_room=玩家<color=#D83606>%s</color>想要解散房间，是否同意？超时默认为同意解散房间！！！
 dismiss_room_yes=%s同意解散房间

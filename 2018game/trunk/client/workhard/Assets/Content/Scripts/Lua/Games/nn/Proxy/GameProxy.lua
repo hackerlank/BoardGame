@@ -532,25 +532,27 @@ local function ParseUserInfo(users)
                 player.money = v.money
                 player.room_card = v.room_card  
                 player.ip_address = v.ipaddr
-                if v.latitude == nil then 
+                player.gps_state = v.gps_state
+                if v.gps_x == nil then 
                     if player.latitude == nil then 
                         player.latitude = 30.57265663147  +  math.random( 100000 , 10000000  ) * 0.00000001
                     end 
                 else 
-                    v.latitude = tonumber(v.latitude)
+                    v.latitude = tonumber(v.gps_x)
                 end 
 
-                if v.longitude == nil then 
+                if v.gps_y == nil then 
                     if player.longitude == nil  then 
                         player.longitude = 104.06225585938  + math.random( 100000, 10000000 ) * 0.00000001
                     end 
                 else 
-                    player.longitude = tonumber(v.longitude)
+                    player.longitude = tonumber(v.gps_y)
                 end 
                 
                 player.head_img = v.head_img
 
                 m_PlayerInfo[v.seat_id] = player
+
                 t = m_userGameInfo[v.seat_id] 
                 if t == nil then 
                     t = {}
@@ -561,27 +563,19 @@ local function ParseUserInfo(users)
                     for sk, sv in ipairs(v.hand_cards) do 
                         table.insert(t.hand_cards, sv)
                     end 
-                end 
-
-                t.allow_acts = {}
-                if v.allow_acts ~= nil then 
-                    for sk, sv in ipairs(v.allow_acts) do 
-                        table.insert(t.allow_acts, sv)
-                    end
-                end 				
+                end 			
 
                 t.hand_card_num = v.hand_card_num or 0
                 t.req_ready = v.req_ready or false -- 34 : boolean          #玩家是否发送准备好
-                t.req_start_round = v.req_start_round -- 35 : boolean    #玩家是否发start_round
-                t.req_start_game = v.req_start_game -- 36 : boolean     #玩家是否发送start_game
                 t.vote_ack = v.vote_ack or EVoteType.none
+                t.niu_point = v.niu_point
+                t.ex_niu_type = v.ex_niu_type --#额外牛牌型
                 t.hand_cards_state = v.hand_cards_state
-                t.user_state = v.game_state
-                t.add_chip_times_total = v.add_chip_times_total
-
-                t.score = v.score or 0-- 51 : integer          #本局积分
+                t.chips = v.chips 
+                t.round_score = v.round_score or 0-- 51 : integer          #本局积分
                 t.total_score = v.total_score or 0 -- 52 : integer    #总积
                 t.is_online = v.is_online -- 101 : boolean       #玩家是否在线
+                t.game_state = v.game_state
                 m_userGameInfo[v.seat_id] = t
 
                 if m_tableInfo.state == nn.ETableState.game_over then 
@@ -613,19 +607,12 @@ local function ParseTableInfo(tableInfo)
     m_tableInfo.vote_dismiss_table_span = tableInfo.vote_dismiss_table_span / 100
     m_tableInfo.remain_act_time = tableInfo.remain_act_time
     m_tableInfo.vote_dismiss_table_starter = tableInfo.vote_dismiss_table_starter
-
+    m_tableInfo.winner = tableInfo.winner
     m_tableInfo.vote_left_time = (tableInfo.vote_left_time or 0) / 100
     m_tableInfo.dices = tableInfo.dices
     m_tableInfo.turn_user = tableInfo.turn_user
     m_tableInfo.dealer = tableInfo.dealer
     m_tableInfo.act_timeout = math.floor(tableInfo.act_timeout or 100 / 100)
-
-    if tableInfo.latest_discard ~= nil then 
-        m_tableInfo.latest_discard = {seat_id =  tableInfo.latest_discard.seat_id, card = tableInfo.latest_discard.card} 
-    else 
-        m_tableInfo.latest_discard = nil 
-    end 
-
     
     if m_PlayerInfo == nil then 
         m_PlayerInfo = {}
@@ -636,19 +623,7 @@ local function ParseTableInfo(tableInfo)
     if m_tableInfo.vote_dismiss_table_starter > 0 then 
         m_tableInfo.vote_end_time = os.time() + m_tableInfo.vote_left_time
     end 
-
     CalculateRealSeatId()
-    m_currentActionInfo = {}
-    m_currentActionInfo.actions = {}
-    if m_userGameInfo[self_seat_id].allow_acts ~= nil then 
-        for k,v in pairs(m_userGameInfo[self_seat_id].allow_acts ) do 
-            local t = {} 
-            t.act_type = v.act_type
-            t.need_chip = v.need_chip    
-            table.insert(m_currentActionInfo.actions, t)   
-        end 
-        PushCmd(Common.NTF_PLAYER_ACTION, {actions = m_currentActionInfo.actions, real_seat_id = m_PlayerInfo[self_seat_id].real_seat_id, remain_time = m_tableInfo.act_timeout})
-    end  
 end 
 
 --===================== public interface end ================
@@ -968,7 +943,6 @@ game_pack[game_msg_id.begin_deal] = function(buf)
     end 
     --@todo::
     PushCmd(Common.NTF_SHUFFLE, {cards_info = tb_final, remain_cards = m_remaincards})
-    --facade:sendNotification(Common.NTF_SHUFFLE,{dices = m_dices, cards_info = tb_final, remain_cards = m_remaincards})
 end 
 
 -- s2c 广播桌子切换状态到游戏 body none

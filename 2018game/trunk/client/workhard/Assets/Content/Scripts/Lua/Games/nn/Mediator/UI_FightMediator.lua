@@ -120,7 +120,16 @@ function mediator:handleNotification(notification)
 end
 
 function mediator:FreshGame()
-    self.viewComponent:FreshGameRule(game_proxy:GetGameRule())
+    local state = game_proxy:GetGameState() 
+    local rule = game_proxy:GetGameRule()
+    local tmp = nil 
+    local round_result = nil 
+    local self_game_info = nil 
+    local self_real_seat_id = nil 
+    local bNotShuffle = false
+
+    self.viewComponent:FreshGameRule(rule)
+    self.viewComponent:FreshPrestartPanel(state, rule.start_game_mode)
     self.viewComponent:FreshRoomId(game_proxy:GetRoomId())
 
     local all_players = game_proxy:GetAllPlayerInfo()
@@ -128,12 +137,6 @@ function mediator:FreshGame()
 
     self.viewComponent:FreshRound(game_proxy:GetCurrentRound(), game_proxy:GetMaxRound())
     --shuffle??
-    local state = game_proxy:GetGameState() 
-    local tmp = nil 
-    local round_result = nil 
-    local self_game_info = nil 
-    local self_real_seat_id = nil 
-    local bNotShuffle = false
 
     for _k,_v in pairs(all_players) do 
         local i = _v.real_seat_id
@@ -184,7 +187,7 @@ function mediator:FreshGame()
         --[[if self_game_info.req_ready == false then 
             self:OpenIpWarningMenu()
         end ]]
-        self.viewComponent:EnableSharePanel(true,game_proxy:IsOwner())
+        self.viewComponent:EnableSharePanel(true,self:IsOwner())
     else     
         if state == nn.ETableState.play then 
             --try to get self acts 
@@ -200,7 +203,7 @@ function mediator:FreshGame()
         if round_result ~= nil then 
             facade:sendNotification(Common.NTF_ROUND_OVER, round_result)
         end      
-        self.viewComponent:EnableSharePanel(false, game_proxy:IsOwner())
+        self.viewComponent:EnableSharePanel(false, self:IsOwner())
     end 
 
     local vote_req_user, bIsSelf = game_proxy:IsInVote()
@@ -284,6 +287,10 @@ end
 
 function mediator:IsSelfRealSeatId(real_seat_id)
     return game_proxy:IsSelfRealSeatId(real_seat_id)
+end 
+
+function mediator:IsOwner()
+    return game_proxy:IsOwner()
 end 
 
 function mediator:GetRoomOwner()

@@ -303,7 +303,7 @@ m_PrivateFunc.InitialPanel_NiuNiu = function()
     page.m_StartMode = {} 
     for k=1,2 do 
         local item = {}
-        trans = root:Find("base_chip/section/" .. k)
+        trans = root:Find("option/start_mode/" .. k)
         item.toggle = trans:GetComponent("Toggle")
         item.desc = trans:Find("desc"):GetComponent("Text")
         item.toggle.onValueChanged:AddListener(function(isOn) 

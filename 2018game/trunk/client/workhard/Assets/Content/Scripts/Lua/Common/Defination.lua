@@ -208,7 +208,8 @@ EOperation = {
     EO_JoinGame=1,
     EO_ReqOnline=2,
     EO_LeaveGame=3,
-    EO_Max=4
+    EO_DismissGame=4,
+    EO_Max=5
 }
 
 
