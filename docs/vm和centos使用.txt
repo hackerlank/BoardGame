@@ -1,0 +1,6 @@
+VM 和 centos使用简易说明
+1. 安装VM并破解。破解方法请baidu
+2. 解压centos压缩包。然后在?VM中选择打开虚拟机。进入centos
+3. centos 的进入密码为123 .进入centos后，已安装编程工具vscode和版本工具smartsvn
+4. 进入home目录下的"server\frame\ugate 目录，找到 mainconfig 文件 ，将其中的“用户网关配置” 下的address改为本地虚拟机的ip 查看IP命令:ifconfig
+5. 在控制台运行 launch2018game.sh ，既可启动本地服务器。启动命令： sh launch2018game.sh
