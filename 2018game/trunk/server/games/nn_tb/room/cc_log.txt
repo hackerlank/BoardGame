@@ -1,0 +1,306 @@
+2018-01-03 19:08:34 info  : (8)  game table server start
+2018-01-03 19:08:34 sntxt : (9) LAUNCH snlua clusternode
+2018-01-03 19:08:34 sntxt : (10) LAUNCH snlua clusterd
+2018-01-03 19:08:34 info  : (9#clusternode)  start clusternode id is 9
+2018-01-03 19:08:34 info  : (9#clusternode)  clusternode service start
+2018-01-03 19:08:34 info  : (9#clusternode)  center_node_info
++node_address [127.0.0.1:2501]
++node_id [1]
++node_name [center]
++node_type [center]
+2018-01-03 19:08:34 info  : (9#clusternode)  self_node_info
++node_address [127.0.0.1:2922]
++node_name [nn_tb_room1]
++node_type [nn_tb_room]
+2018-01-03 19:08:34 info  : (9#clusternode)  register center node
+2018-01-03 19:08:34 info  : (9#clusternode)  reload cluster name
+2018-01-03 19:08:34 info  : (9#clusternode)  1 center 127.0.0.1:2501
+2018-01-03 19:08:34 info  : (9#clusternode)  999999 nn_tb_room1 127.0.0.1:2922
+2018-01-03 19:08:34 info  : (9#clusternode)  open cluster node 2922
+2018-01-03 19:08:34 sntxt : (11) LAUNCH snlua gate
+2018-01-03 19:08:34 sntxt : (11) Listen on 0.0.0.0:2922
+2018-01-03 19:08:34 info  : (9#clusternode)  done
+2018-01-03 19:08:34 info  : (9#clusternode)  create center proxy
+2018-01-03 19:08:34 sntxt : (12) LAUNCH snlua clusterproxy center center
+2018-01-03 19:08:34 info  : (9#clusternode)  done
+2018-01-03 19:08:34 info  : (9#clusternode)  register self node ...
+2018-01-03 19:08:34 info  : (9#clusternode)  done
+2018-01-03 19:08:34 info  : (9#clusternode)  refresh_node_list
+2018-01-03 19:08:34 info  : (9#clusternode)  self_node_id 10
+2018-01-03 19:08:34 info  : (9#clusternode)  reload cluster name
+2018-01-03 19:08:34 info  : (9#clusternode)  8 ugate1 127.0.0.1:2506
+2018-01-03 19:08:34 info  : (9#clusternode)  4 plaza 127.0.0.1:2503
+2018-01-03 19:08:34 info  : (9#clusternode)  3 httpd 127.0.0.1:2507
+2018-01-03 19:08:34 info  : (9#clusternode)  1 center 127.0.0.1:2501
+2018-01-03 19:08:34 info  : (9#clusternode)  5 login 127.0.0.1:2504
+2018-01-03 19:08:34 info  : (9#clusternode)  7 lgate1 127.0.0.1:2505
+2018-01-03 19:08:34 info  : (9#clusternode)  2 db 127.0.0.1:2502
+2018-01-03 19:08:34 info  : (9#clusternode)  6 agent 127.0.0.1:2508
+2018-01-03 19:08:34 info  : (9#clusternode)  10 nn_tb_room1 127.0.0.1:2922
+2018-01-03 19:08:34 info  : (9#clusternode)  9 nn_tb_hall1 127.0.0.1:2921
+2018-01-03 19:08:34 info  : (9#clusternode)  add new node ugate1 8
+2018-01-03 19:08:34 info  : (9#clusternode)  add new node plaza 4
+2018-01-03 19:08:34 info  : (9#clusternode)  add new node httpd 3
+2018-01-03 19:08:34 info  : (9#clusternode)  add new node login 5
+2018-01-03 19:08:34 info  : (9#clusternode)  add new node lgate1 7
+2018-01-03 19:08:34 info  : (9#clusternode)  add new node db 2
+2018-01-03 19:08:34 info  : (9#clusternode)  add new node agent 6
+2018-01-03 19:08:34 info  : (9#clusternode)  add new node nn_tb_hall1 9
+2018-01-03 19:08:34 info  : (9#clusternode)  start update_node_list
+2018-01-03 19:08:34 sntxt : (13) LAUNCH snlua room
+2018-01-03 19:08:34 sntxt : (10) socket accept from 127.0.0.1:39216
+2018-01-03 19:08:34 debug : (9#clusternode)  command.probe_alive()
+2018-01-03 19:08:34 info  : (13#room)  start room id is 13
+2018-01-03 19:08:34 sntxt : (14) LAUNCH snlua console
+2018-01-03 19:08:34 sntxt : (2) KILL self
+2018-01-03 19:08:42 sntxt : (10) socket accept from 127.0.0.1:39254
+2018-01-03 19:08:42 info  : (13#room)  room.command.create_table
+2018-01-03 19:08:42 info  : (13#room)  
++table_type [2]
++rules+table_mode [1]
+|     +enable_straight [true]
+|     +enable_suited [true]
+|     +base_chip [10]
+|     +private_table_cost [5]
+|     +enbale_five_big [true]
+|     +start_game_mode [2]
+|     +pay_room_card [5]
+|     +max_round [5]
+|     +enable_bomb [true]
+|     +enable_five_small [true]
+|     +pay_mode [1]
+|     +enable_full_house [true]
+|     +enable_flush [true]
++private_key [154206]
++owner [1221]
+2018-01-03 19:08:42 sntxt : (15) LAUNCH snlua game_table
+2018-01-03 19:08:42 info  : (15#game_table)  start game_table service,self id is 15
+2018-01-03 19:08:42 info  : (15#game_table)  hall_node_name nn_tb_hall1
+2018-01-03 19:08:42 info  : (15#game_table)  command.start(),param nil self 15
+2018-01-03 19:08:42 info  : (15#game_table)  table_events.start,param nil
+2018-01-03 19:08:42 info  : (15#game_table)  table start,table_service 167772175
+2018-01-03 19:08:42 info  : (15#game_table)  command.open_table()
+2018-01-03 19:08:42 info  : (15#game_table)  
++table_type [2]
++rules+table_mode [1]
+|     +enable_flush [true]
+|     +enable_suited [true]
+|     +base_chip [10]
+|     +enable_straight [true]
+|     +enbale_five_big [true]
+|     +start_game_mode [2]
+|     +pay_room_card [5]
+|     +max_round [5]
+|     +pay_mode [1]
+|     +enable_five_small [true]
+|     +enable_bomb [true]
+|     +enable_full_house [true]
+|     +private_table_cost [5]
++owner [1221]
++private_key [154206]
+2018-01-03 19:08:42 info  : (15#game_table)  table_events.open_table()
++table_type [2]
++rules+table_mode [1]
+|     +enable_flush [true]
+|     +enable_suited [true]
+|     +base_chip [10]
+|     +enable_straight [true]
+|     +enbale_five_big [true]
+|     +start_game_mode [2]
+|     +pay_room_card [5]
+|     +max_round [5]
+|     +pay_mode [1]
+|     +enable_five_small [true]
+|     +enable_bomb [true]
+|     +enable_full_house [true]
+|     +private_table_cost [5]
++owner [1221]
++private_key [154206]
+2018-01-03 19:08:42 info  : (13#room)  create table ok,table_service 167772175
+2018-01-03 19:08:42 debug : (13#room)  room.command.user_join_table(),table_service 167772175 user_id 1221
+2018-01-03 19:08:42 debug : (13#room)  
++ipaddr [192.168.0.108]
++money [1000]
++gps_x [3434.547]
++room_card [420]
++user_id [1221]
++user_name [test201]
++gps_y [3679.6]
++gps_state [0]
++gate_service [134217741]
++fd [9]
++state [3]
+2018-01-03 19:08:42 info  : (15#game_table)  command.user_join_table() 1221
+2018-01-03 19:08:42 debug : (15#game_table)  
++ipaddr [192.168.0.108]
++money [1000]
++gps_x [3434.547]
++room_card [420]
++user_id [1221]
++user_name [test201]
++gps_y [3679.6]
++gps_state [0]
++state [3]
++fd [9]
++gate_service [134217741]
+2018-01-03 19:08:42 info  : (15#game_table)  table_events.can_user_enter_table,user_id 1221
+2018-01-03 19:08:42 error : (15#game_table)  no,info.state 1
+2018-01-03 19:08:42 info  : (15#game_table)  table_events.user_enter_table,user_id 1221
+2018-01-03 19:08:42 debug : (15#game_table)  send_user_enter_table(),user_id 1221
+2018-01-03 19:08:42 info  : (15#game_table)  user join table,user_id 1221 seat_id 1 info.user_num 1
+2018-01-03 19:08:42 info  : (13#room)  room.user_join_table ok,user_id 1221 _table.user_num 1 info.user_num 1
+2018-01-03 19:08:42 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd add_watcher
+2018-01-03 19:08:42 sntxt : (10) socket accept from 127.0.0.1:39258
+2018-01-03 19:08:42 debug : (15#game_table)  game_table on_pack,msg_id 41
+2018-01-03 19:08:42 info  : (15#game_table)  table.pack.req_online() gate_service 134217741 fd 9 user_id 1221
+2018-01-03 19:08:42 debug : (15#game_table)  sender.send_req_online_ok() user_id 1221
+2018-01-03 19:08:42 debug : (15#game_table)  sender.send_pack(),gate_service 134217741 fd 9
+2018-01-03 19:08:42 debug : (15#game_table)  sender.send_user_online() user_id 1221
+2018-01-03 19:08:42 info  : (15#game_table)  table_events.user_online,user_id 1221
+2018-01-03 19:08:42 debug : (15#game_table)  send_table_info(),user_id 1221
+2018-01-03 19:08:42 debug : (15#game_table)  sender.send_pack(),gate_service 134217741 fd 9
+2018-01-03 19:08:42 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
+2018-01-03 19:08:42 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
+2018-01-03 19:08:42 debug : (15#game_table)  game_table on_pack,msg_id 1051
+2018-01-03 19:08:42 debug : (15#game_table)  pack.user_ready(),user_id 1221
+2018-01-03 19:08:42 info  : (15#game_table)  logic.user_is_ready() 1221
+2018-01-03 19:08:42 debug : (15#game_table)  send_user_is_ready(),user_id 1221
+2018-01-03 19:08:42 debug : (15#game_table)  sender.send_pack(),gate_service 134217741 fd 9
+2018-01-03 19:08:42 info  : (15#game_table)  user 1 ready state is :1
+2018-01-03 19:08:42 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
+2018-01-03 19:08:42 debug : (15#game_table)  game_table on_pack,msg_id 1131
+2018-01-03 19:08:42 debug : (15#game_table)  sender.send_pack(),gate_service 134217741 fd 9
+2018-01-03 19:08:42 error : (15#game_table)  not enough user,user num is :1 and min user is :2
+2018-01-03 19:08:42 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
+2018-01-03 19:08:48 debug : (13#room)  room.command.user_join_table(),table_service 167772175 user_id 1232
+2018-01-03 19:08:48 debug : (13#room)  
++ipaddr [192.168.0.108]
++money [1000]
++gps_x [8263.367]
++room_card [100]
++user_id [1232]
++user_name [test212]
++gps_y [2944.71]
++gps_state [0]
++gate_service [134217741]
++fd [16]
++state [3]
+2018-01-03 19:08:48 info  : (15#game_table)  command.user_join_table() 1232
+2018-01-03 19:08:48 debug : (15#game_table)  
++ipaddr [192.168.0.108]
++money [1000]
++gps_x [8263.367]
++room_card [100]
++user_id [1232]
++user_name [test212]
++gps_y [2944.71]
++gps_state [0]
++state [3]
++fd [16]
++gate_service [134217741]
+2018-01-03 19:08:48 info  : (15#game_table)  table_events.can_user_enter_table,user_id 1232
+2018-01-03 19:08:48 error : (15#game_table)  no,info.state 1
+2018-01-03 19:08:48 info  : (15#game_table)  table_events.user_enter_table,user_id 1232
+2018-01-03 19:08:48 debug : (15#game_table)  send_user_enter_table(),user_id 1232
+2018-01-03 19:08:48 debug : (15#game_table)  sender.send_pack(),gate_service 134217741 fd 9
+2018-01-03 19:08:48 info  : (15#game_table)  user join table,user_id 1232 seat_id 2 info.user_num 2
+2018-01-03 19:08:48 info  : (13#room)  room.user_join_table ok,user_id 1232 _table.user_num 2 info.user_num 2
+2018-01-03 19:08:48 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd add_watcher
+2018-01-03 19:08:48 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
+2018-01-03 19:08:48 debug : (15#game_table)  game_table on_pack,msg_id 41
+2018-01-03 19:08:48 info  : (15#game_table)  table.pack.req_online() gate_service 134217741 fd 16 user_id 1232
+2018-01-03 19:08:48 debug : (15#game_table)  sender.send_req_online_ok() user_id 1232
+2018-01-03 19:08:48 debug : (15#game_table)  sender.send_pack(),gate_service 134217741 fd 16
+2018-01-03 19:08:48 debug : (15#game_table)  sender.send_user_online() user_id 1232
+2018-01-03 19:08:48 debug : (15#game_table)  sender.send_pack(),gate_service 134217741 fd 9
+2018-01-03 19:08:48 info  : (15#game_table)  table_events.user_online,user_id 1232
+2018-01-03 19:08:48 debug : (15#game_table)  send_table_info(),user_id 1232
+2018-01-03 19:08:48 debug : (15#game_table)  sender.send_pack(),gate_service 134217741 fd 16
+2018-01-03 19:08:48 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
+2018-01-03 19:08:48 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
+2018-01-03 19:08:48 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
+2018-01-03 19:08:48 debug : (15#game_table)  game_table on_pack,msg_id 1051
+2018-01-03 19:08:48 debug : (15#game_table)  pack.user_ready(),user_id 1232
+2018-01-03 19:08:48 info  : (15#game_table)  logic.user_is_ready() 1232
+2018-01-03 19:08:48 debug : (15#game_table)  send_user_is_ready(),user_id 1232
+2018-01-03 19:08:48 debug : (15#game_table)  sender.send_pack(),gate_service 134217741 fd 16
+2018-01-03 19:08:48 debug : (15#game_table)  sender.send_pack(),gate_service 134217741 fd 9
+2018-01-03 19:08:48 info  : (15#game_table)  full . wait owner start game
+2018-01-03 19:08:48 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
+2018-01-03 19:08:48 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
+2018-01-03 19:08:48 debug : (15#game_table)  game_table on_pack,msg_id 1131
+2018-01-03 19:08:48 debug : (15#game_table)  sender.send_pack(),gate_service 134217741 fd 16
+2018-01-03 19:08:48 debug : (15#game_table)  game_table on_pack,msg_id 1131
+2018-01-03 19:08:48 info  : (15#game_table)  owner start game  now . enough user
+2018-01-03 19:08:48 info  : (15#game_table)  logic.game_start
+2018-01-03 19:08:48 debug : (15#game_table)  command.cancel_timer
+2018-01-03 19:08:48 debug : (15#game_table)  send_game_start()
+2018-01-03 19:08:48 debug : (15#game_table)  sender.send_pack(),gate_service 134217741 fd 16
+2018-01-03 19:08:48 debug : (15#game_table)  sender.send_pack(),gate_service 134217741 fd 9
+2018-01-03 19:08:48 info  : (15#game_table)  logic.round_start()
+2018-01-03 19:08:48 error : (15#game_table)  fatal error!! no dealer !!
+2018-01-03 19:08:48 debug : (15#game_table)  send_round_start()
+2018-01-03 19:08:48 debug : (15#game_table)  sender.send_pack(),gate_service 134217741 fd 16
+2018-01-03 19:08:48 debug : (15#game_table)  sender.send_pack(),gate_service 134217741 fd 9
+2018-01-03 19:08:48 info  : (15#game_table)  logic.deal()
+2018-01-03 19:08:48 info  : (15#game_table)  number
+2018-01-03 19:08:48 debug : (15#game_table)  command.cancel_timer
+2018-01-03 19:08:48 info  : (15#game_table)  left_cards num is :42
+2018-01-03 19:08:48 info  : (15#game_table)  38
+2018-01-03 19:08:48 info  : (15#game_table)  52
+2018-01-03 19:08:48 info  : (15#game_table)  41
+2018-01-03 19:08:48 info  : (15#game_table)  55
+2018-01-03 19:08:48 info  : (15#game_table)  27
+2018-01-03 19:08:48 info  : (15#game_table)  37
+2018-01-03 19:08:48 info  : (15#game_table)  49
+2018-01-03 19:08:48 info  : (15#game_table)  72
+2018-01-03 19:08:48 info  : (15#game_table)  50
+2018-01-03 19:08:48 info  : (15#game_table)  61
+2018-01-03 19:08:48 info  : (15#game_table)  36
+2018-01-03 19:08:48 info  : (15#game_table)  73
+2018-01-03 19:08:48 info  : (15#game_table)  54
+2018-01-03 19:08:48 info  : (15#game_table)  51
+2018-01-03 19:08:48 info  : (15#game_table)  65
+2018-01-03 19:08:48 info  : (15#game_table)  22
+2018-01-03 19:08:48 info  : (15#game_table)  53
+2018-01-03 19:08:48 info  : (15#game_table)  19
+2018-01-03 19:08:48 info  : (15#game_table)  66
+2018-01-03 19:08:48 info  : (15#game_table)  20
+2018-01-03 19:08:48 info  : (15#game_table)  28
+2018-01-03 19:08:48 info  : (15#game_table)  45
+2018-01-03 19:08:48 info  : (15#game_table)  71
+2018-01-03 19:08:48 info  : (15#game_table)  77
+2018-01-03 19:08:48 info  : (15#game_table)  74
+2018-01-03 19:08:48 info  : (15#game_table)  68
+2018-01-03 19:08:48 info  : (15#game_table)  70
+2018-01-03 19:08:48 info  : (15#game_table)  56
+2018-01-03 19:08:48 info  : (15#game_table)  24
+2018-01-03 19:08:48 info  : (15#game_table)  60
+2018-01-03 19:08:48 info  : (15#game_table)  76
+2018-01-03 19:08:48 info  : (15#game_table)  57
+2018-01-03 19:08:48 info  : (15#game_table)  75
+2018-01-03 19:08:48 info  : (15#game_table)  34
+2018-01-03 19:08:48 info  : (15#game_table)  40
+2018-01-03 19:08:48 info  : (15#game_table)  43
+2018-01-03 19:08:48 info  : (15#game_table)  42
+2018-01-03 19:08:48 info  : (15#game_table)  25
+2018-01-03 19:08:48 info  : (15#game_table)  21
+2018-01-03 19:08:48 info  : (15#game_table)  58
+2018-01-03 19:08:48 info  : (15#game_table)  39
+2018-01-03 19:08:48 info  : (15#game_table)  18
+2018-01-03 19:08:48 debug : (15#game_table)  send_begin_deal()
+2018-01-03 19:08:48 debug : (15#game_table)  sender.send_pack(),gate_service 134217741 fd 16
+2018-01-03 19:08:48 debug : (15#game_table)  sender.send_pack(),gate_service 134217741 fd 9
+2018-01-03 19:08:48 info  : (15#game_table)  start dealer action
+2018-01-03 19:08:48 debug : (15#game_table)  send_begin_play()
+2018-01-03 19:08:48 debug : (15#game_table)  sender.send_pack(),gate_service 134217741 fd 16
+2018-01-03 19:08:48 debug : (15#game_table)  sender.send_pack(),gate_service 134217741 fd 9
+2018-01-03 19:08:48 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
+2018-01-03 19:08:48 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
+2018-01-03 19:08:48 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
+2018-01-03 19:08:48 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
+2018-01-03 19:08:48 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
+2018-01-03 19:08:48 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
+2018-01-03 19:08:48 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
+2018-01-03 19:08:48 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
+2018-01-03 19:08:48 debug : (9#clusternode)  clusternode.send(),address 134217741 cmd send_pack
