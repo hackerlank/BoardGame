@@ -1,0 +1,143 @@
+# 大厅服务消息定义
+# 版本信息
+# desc  版本说明
+.version_info {
+    desc 0 : string
+}
+# 游戏规则
+#   name    规则名称
+#   value
+.game_rule {
+    name  0 : string
+    value 1 : string
+}
+# 进入大厅失败
+#   desc    错误原因
+.req_enter_hall_fail {
+    desc 0 : string
+}
+# 离开大厅失败
+#   desc    错误原因
+.req_left_hall_fail {
+    desc 0 : string
+}
+# 查询房间信息失败
+#   desc    错误原因
+.get_table_info_fail {
+    desc 0 : string
+}
+# 查询房间信息成功
+#   table_service   房间服务编号
+#   rules           房间游戏规则
+#   private_key     私有房间号码，房主才有的信息
+.your_table_info {
+    table_service 0 : integer
+    rules 1 : *game_rule
+    private_key 2 : integer
+}
+# 通知玩家已经进入桌子
+#   table_service   房间服务编号
+#   rules           房间规则
+#   private_key     私有房间号码，房主才有的信息
+.you_enter_table {
+    table_service 0 : integer
+    rules 1 : *game_rule
+    private_key 2 : integer
+}
+# 玩家请求进入公共房间
+.req_join_public_table {
+    # 房间规则
+    rules 0 : *game_rule
+}
+# 玩家请求进入公共房间失败
+.req_join_public_table_fail {
+    # 错误原因
+    desc 0 : string
+}
+# 玩家请求创建私有房间
+.req_create_private_table {
+    # 房间规则
+    rules 0 : *game_rule
+}
+# 玩家请求创建私有房间失败
+.req_create_private_table_fail {
+    # 错误原因
+    desc 0 : string
+}
+# 玩家请求创建私有房间成功
+.req_create_private_table_ok {
+    # 房间规则
+    rules 1 : *game_rule
+    # 私有房间号码，房主才有的信息
+    private_key 2 : integer
+}
+# 玩家请求进入私有房间
+.req_join_private_table {
+    # 房间规则
+    private_key 0 : integer
+}
+# 玩家请求进入私有房间失败
+.req_join_private_table_fail {
+    # 错误原因
+    desc 0 : string
+}
+# 玩家录像记录列表
+#   record_list 要读取的录像列表
+.req_get_play_records {
+    record_list 0 : *integer        
+}
+# 游戏录像信息
+#   record_id   录像编号
+#   record_time 时间
+#   owner       房主
+#   private_key 房间号
+#   version     录像版本
+#   brief
+.record_info {
+    record_id   0 : integer         
+    record_time 1 : string          
+    owner       2 : integer         
+    private_key 3 : integer         
+    version     4 : integer          
+    brief       5 : string          
+}
+# 玩家录像记录
+.your_play_records { 
+    play_records 0 : *record_info   
+}
+# 玩家的录像记录列表
+#   record_list 要读取的录像列表
+.your_play_record_list {
+    record_list 0 : *integer
+}
+# 玩家请求查询游戏录像数据
+#   record_id   录像编号
+.req_get_play_record_data {
+    record_id 0 : integer
+}
+# 玩家游戏录像数据，没有找到，play_data为空
+#   record_id 录像编号
+#   play_data 录像数据
+.your_play_record_data {
+    record_id       0 : integer
+    play_data       1 : string
+}
+.record_score_info{
+    user_id 0:integer
+    user_name 1:string
+    score   2:integer
+}
+.round_score_info{
+    
+        round 0:integer
+        score_infos 1:*record_score_info
+        time 3:string
+        game_rules  4: *game_rule
+    
+}
+.game_brief{
+        game_score_infos 0:*record_score_info
+        round_score_infos 1:*round_score_info
+        game_rules       2:*game_rule
+}
+    

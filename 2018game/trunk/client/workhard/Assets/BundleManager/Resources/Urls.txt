@@ -1,0 +1,27 @@
+{
+    "downloadUrls" : 
+    {
+        "Android" : "F:/GameBundle_Develop/WorkSpace/Android/AssetBundle/Compressed",        
+        "IOS" : "F:/GameBundle_Develop/WorkSpace/IPhone/AssetBundle/Compressed",        
+        "Standalones" : "F:/GameBundle_Develop/projectx/Windows/AssetBundle/Compressed",        
+        "WP8" : "$(DataPath)/../AssetBundle/$(Platform)"
+    },    
+    "outputs" : 
+    {
+        "Android" : "$(DataPath)/../AssetBundle/$(Platform)",        
+        "IOS" : "$(DataPath)/../AssetBundle/$(Platform)",        
+        "Standalones" : "$(DataPath)/../Packages/$(Platform)",        
+        "WP8" : "$(DataPath)/../AssetBundle/$(Platform)"
+    },    
+    "backupDownloadUrls" : 
+    {
+        "Standalones" : "F:/GameBundle_Develop/projectx/Windows/AssetBundle/Compressed",        
+        "IOS" : "F:/GameBundle_Develop/WorkSpace/IPhone/AssetBundle/Compressed",        
+        "Android" : "F:/GameBundle_Develop/WorkSpace/Android/AssetBundle/Compressed",        
+        "WP8" : ""
+    },    
+    "bundleTarget" : 2,    
+    "useEditorTarget" : true,    
+    "downloadFromOutput" : false,    
+    "offlineCache" : false
+}

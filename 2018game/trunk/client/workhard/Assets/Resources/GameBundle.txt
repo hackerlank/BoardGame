@@ -1,0 +1,30 @@
+[
+    
+    {
+        "gameType" : 0,        
+        "gameName" : "Common",        
+        "bundles" : 
+        [
+            "lua_common.u",            
+            "lua_puremvc.u",            
+            "setting_common.u",            
+            "lua_sproto.u",            
+            "lua_network.u",            
+            "ui_common.u",            
+            "sound_common.u",            
+            "lua_thirdsdk.u",            
+            "art_ui.u",            
+            "setting_cdxz.u",            
+            "lua_cdxz.u",            
+            "cdxz_particle.u",            
+            "common_anim.u",            
+            "font.u",            
+            "emoji.u",            
+            "ui_cdxz.u",            
+            "art_majiang.u",            
+            "lua_mj_nj.u",            
+            "ui_mj_nj.u",            
+            "setting_mj_nj.u"
+        ]
+    }
+]

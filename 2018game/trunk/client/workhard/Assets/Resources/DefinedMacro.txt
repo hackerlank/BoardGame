@@ -1,0 +1,10 @@
+{
+    "bUseBundle" : false,    
+    "bUseLuajit" : false,    
+    "bLogEnabled" : true,    
+    "bSkipCheckAPK" : true,    
+    "gameType" : 10000,    
+    "bCompressedBundle" : false,    
+    "bSkipUpdate" : true,    
+    "bWithWeChat" : true
+}

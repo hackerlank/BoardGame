@@ -1,0 +1,5 @@
+#通用错误消息
+.error {
+    code 0 : integer    #错误码
+    desc 1 : string     #错误说明
+}
