@@ -3,7 +3,12 @@
 	"max_round"          			: 4,
     "pay_room_card"      			: 20,
     "pay_mode"           			: 1,
-    "enable_235_win_plane"  		: true,
-    "enable_tax"		    	  	: true,
-    "enable_show_last_hand_cards"	: true
+    "base_chip"						: 10,
+    "enable_flush"					: true,
+    "enable_straight"				: true,
+    "enable_suited"					: true,
+    "enbale_five_big"  				: true,
+    "enable_five_small"		    	: true,
+    "enable_full_house"				: true,
+    "enable_bomb"					: true
 }

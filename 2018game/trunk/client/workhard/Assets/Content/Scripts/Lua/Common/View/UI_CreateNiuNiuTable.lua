@@ -72,12 +72,45 @@ local CLOSE_SELF_PARAM = ci.GetUICloseParam().new(false, 'UI_CreateNiuNiuTable')
 --close self can restore param
 local CLOSE_CAN_RESTORE_PARAM = ci.GetUICloseParam().new(true, 'UI_CreateNiuNiuTable') 
 
+local FOCUSED_COLOR = UnityEngine.Color(135/255,2/255,0/255,255/255)
+local DEFAULT_COLOR = UnityEngine.Color(89/255,76/255,67/255,255/255)
+
 --private function table
 local m_PrivateFunc = {}
 
 local txt_ps = nil 
 
 local last_focused_game = nil 
+
+--for nn begin 
+local NN_TABLE_MODE = {1,2,3}
+local NN_MAX_ROUND = {5,10,15,20}
+local NN_COST_CARD = {5,20,30,40}
+local NN_PAY_MODE = {1,2,3,4}
+local NN_BASE_CHIP = {10,20,30}
+
+--[[
+    enable_flush         是否支持同花顺
+    enable_straight          是否支持顺子牛
+    enable_suited        是否支持同花牛
+    enbale_five_big     是否支持五花牛
+    enable_five_small   是否支持五小牛
+    enable_full_house   是否支持葫芦牛
+    enable_bomb         是否支持炸弹牛
+]]
+local NN_KEY_TABLE_MODE = "table_mode"
+local NN_KEY_ROUND = "max_round"
+local NN_KEY_ROOM_CARD = "pay_room_card"
+local NN_KEY_BASE_CHIP = "base_chip"
+local NN_KEY_PAY_MODE = "pay_mode"
+local NN_KEY_FLUSH = "enable_flush"
+local NN_KEY_STRAIGHT = "enable_straight"
+local NN_KEY_SUITED = "enable_suited"
+local NN_KEY_FIVE_BIG = "enable_five_big"
+local NN_KEY_FIVE_SMALL = "enable_five_small"
+local NN_KEY_FULL_HOUSE = "enable_full_house"
+local NN_KEY_BOMB = "enable_bomb"
+--for nn end
 
 --================private interface begin =====================
 --callback function of closeing animation has been completed
@@ -95,7 +128,7 @@ m_PrivateFunc.PlayOpenAmin = function()
     m_IsPlaying = true
     LuaTimer.Add(CONST_PLAY_OPEN_ANIM_DELAY_TIME,function(timer)
         LuaTimer.Delete(timer)
-        m_OpenAnimTween = DoTweenPathLuaUtil.DOMoveX(m_RootPanel, 640, MENU_OPEN_ANIM_TIME)
+        m_OpenAnimTween = DoTweenPathLuaUtil.DOMoveX(m_RootPanel, 960, MENU_OPEN_ANIM_TIME)
         DoTweenPathLuaUtil.SetEaseTweener(m_OpenAnimTween, CONST_OPEN_ANIM_STYLE)
         DoTweenPathLuaUtil.SetAutoKill(m_OpenAnimTween, false)
         DoTweenPathLuaUtil.OnRewind(m_OpenAnimTween, m_PrivateFunc.OnRewind)
@@ -147,6 +180,62 @@ end
 
 --load niu niu setting 
 m_PrivateFunc.LoadNiuNiuSetting = function()
+    m_GameRule = GetGameConfig():GetDefaultGameRule()
+    if m_GameRule == nil then  
+        return 
+    end 
+    local key = 1 
+    local page = tb_Pages[EGameType.EGT_NiuNiu]
+    for k,v in pairs(m_GameRule) do 
+        key = 1
+        if k == NN_KEY_ROUND then 
+            for _,sv in ipairs(NN_MAX_ROUND) do 
+                if sv == v then 
+                    key = _
+                    break
+                end 
+            end 
+            page.m_Round[key].toggle.isOn = true 
+        elseif k == NN_KEY_TABLE_MODE then 
+            for _,sv in ipairs(NN_TABLE_MODE) do 
+                if sv == v then 
+                    key = _
+                    break
+                end 
+            end 
+            page.m_TableMode[key].toggle.isOn = true 
+        elseif k == NN_KEY_PAY_MODE then 
+            for _,sv in ipairs(NN_PAY_MODE) do 
+                if sv == v then 
+                    key = _
+                    break
+                end 
+            end 
+            page.m_Pay[key].toggle.isOn = true 
+        elseif k == NN_KEY_BASE_CHIP then 
+            for _,sv in ipairs(NN_BASE_CHIP) do 
+                if sv == v then 
+                    key = _
+                    break
+                end 
+            end 
+            page.m_BaseChip[key].toggle.isOn = true 
+        elseif k == NN_KEY_FLUSH then 
+            page.m_flush.toggle.isOn = v 
+        elseif k == NN_KEY_BOMB then 
+            page.m_bomb.toggle.isOn = v 
+        elseif k == NN_KEY_SUITED then 
+            page.m_suited.toggle.isOn = true
+        elseif k == NN_KEY_STRAIGHT then 
+            page.m_straight.toggle.isOn = v 
+        elseif k == NN_KEY_FULL_HOUSE then 
+            page.m_fullhouse.toggle.isOn = v 
+        elseif k == NN_KEY_FIVE_SMALL then 
+            page.m_fivesmall.toggle.isOn = true
+        elseif k == NN_KEY_FIVE_BIG then 
+            page.m_fivesbig.toggle.isOn = true
+        end 
+    end 
 end 
 
 --initial niu niu panel 
@@ -155,31 +244,52 @@ m_PrivateFunc.InitialPanel_NiuNiu = function()
     local page = {}
     page.root = root.gameObject
 
-    page.m_Round = {}
-
     --initial round 
     local trans = nil 
-    for i=1,3 do 
+    page.m_Round = {}
+    for i=1,4 do 
         local item = {}
         trans = root:Find("round/section/" .. i)
         item.toggle = trans:GetComponent("Toggle")
         item.desc = trans:Find("desc"):GetComponent("Text")
         item.toggle.onValueChanged:AddListener(function(isOn) 
             if isOn == true then 
-                local bSame = m_GameRule[KEY_MAX_ROUND] == DEFINED_ROUND[i].round
-                m_GameRule[KEY_MAX_ROUND] = DEFINED_ROUND[i].round
-                m_GameRule[KEY_ROOM_CARD] = DEFINED_ROUND[i].card
+                local bSame = m_GameRule[KEY_MAX_ROUND] == NN_MAX_ROUND[i]
+                m_GameRule[KEY_MAX_ROUND] = NN_MAX_ROUND[i]
+                m_GameRule[KEY_ROOM_CARD] = NN_COST_CARD[i]
                 item.desc.color = FOCUSED_COLOR
                 if bCanPlaySound == true and bSame == false then 
                     AudioManager.getInstance():PlaySound(EGameSound.EGS_Btn_Choose)
                 end 
-                txt_ps.text = string.format(create_table_ps, tostring(DEFINED_ROUND[i].card))
+                txt_ps.text = string.format(create_table_ps, tostring(NN_COST_CARD[i]))
             else 
                 item.desc.color = DEFAULT_COLOR
             end 
         end) 
         table.insert(page.m_Round, item)
     end 
+
+    page.m_BaseChip = {} 
+    for j=1,3 do 
+        local item = {}
+        trans = root:Find("base_chip/section/" .. j)
+        item.toggle = trans:GetComponent("Toggle")
+        item.desc = trans:Find("desc"):GetComponent("Text")
+        item.toggle.onValueChanged:AddListener(function(isOn) 
+            if isOn == true then 
+                local bSame = m_GameRule[NN_KEY_BASE_CHIP] == NN_BASE_CHIP[j]
+                m_GameRule[NN_KEY_BASE_CHIP] = NN_BASE_CHIP[j]
+                item.desc.color = FOCUSED_COLOR
+                if bCanPlaySound == true and bSame == false then 
+                    AudioManager.getInstance():PlaySound(EGameSound.EGS_Btn_Choose)
+                end 
+            else 
+                item.desc.color = DEFAULT_COLOR
+            end 
+        end) 
+        table.insert(page.m_BaseChip, item)
+    end 
+
     
     page.m_Pay = {}
     for s=1,3 do 
@@ -189,8 +299,8 @@ m_PrivateFunc.InitialPanel_NiuNiu = function()
         item.desc = trans:Find("desc"):GetComponent("Text")
         item.toggle.onValueChanged:AddListener(function(isOn) 
             if isOn == true then 
-                local bSame = m_GameRule[KEY_PAY_MODE] == DEFINED_PAY[s]
-                m_GameRule[KEY_PAY_MODE] = DEFINED_PAY[s]
+                local bSame = m_GameRule[KEY_PAY_MODE] == NN_PAY_MODE[s]
+                m_GameRule[KEY_PAY_MODE] = NN_PAY_MODE[s]
                 item.desc.color = FOCUSED_COLOR
                 if bCanPlaySound == true and bSame == false then 
                     AudioManager.getInstance():PlaySound(EGameSound.EGS_Btn_Choose)
@@ -203,15 +313,15 @@ m_PrivateFunc.InitialPanel_NiuNiu = function()
     end 
 
     page.m_TableMode = {}
-    for i=1,2 do 
+    for i=1,3 do 
         local item = {}
         trans = root:Find("members/section/" .. i)
         item.toggle = trans:GetComponent("Toggle")
         item.desc = trans:Find("desc"):GetComponent("Text")
         item.toggle.onValueChanged:AddListener(function(isOn) 
             if isOn == true then 
-                local bSame = m_GameRule[KEY_TABLE_MODE] == DEFINED_TABLE_MODE[i]
-                m_GameRule[KEY_TABLE_MODE] = DEFINED_PAY[i]
+                local bSame = m_GameRule[KEY_TABLE_MODE] == NN_TABLE_MODE[i]
+                m_GameRule[KEY_TABLE_MODE] = NN_TABLE_MODE[i]
                 item.desc.color = FOCUSED_COLOR
                 if bCanPlaySound == true and bSame == false then 
                     AudioManager.getInstance():PlaySound(EGameSound.EGS_Btn_Choose)
@@ -223,48 +333,48 @@ m_PrivateFunc.InitialPanel_NiuNiu = function()
         table.insert(page.m_TableMode, item)
     end 
 
-    --chixi
-    page.m_chixi = {}
-    page.m_chixi.toggle = root:Find("option/chixi"):GetComponent("Toggle")
-    page.m_chixi.desc = root:Find("option/chixi/desc"):GetComponent("Text")
-    page.m_chixi.toggle.onValueChanged:AddListener(function(isOn) 
-        m_GameRule[KEY_TAX] = isOn
+    --flush 同花顺
+    page.m_flush = {}
+    page.m_flush.toggle = root:Find("option/flush"):GetComponent("Toggle")
+    page.m_flush.desc = root:Find("option/flush/desc"):GetComponent("Text")
+    page.m_flush.toggle.onValueChanged:AddListener(function(isOn) 
+        m_GameRule[NN_KEY_FLUSH] = isOn
         if isOn == true then 
-            page.m_chixi.desc.color = FOCUSED_COLOR
+            page.m_flush.desc.color = FOCUSED_COLOR
         else 
-            page.m_chixi.desc.color = DEFAULT_COLOR
+            page.m_flush.desc.color = DEFAULT_COLOR
         end
         if bCanPlaySound == true then 
             AudioManager.getInstance():PlaySound(EGameSound.EGS_Btn_Choose)
         end 
     end)
 
-    --show card
-    page.m_showcard = {}
-    page.m_showcard.toggle = root:Find("option/showcard"):GetComponent("Toggle")
-    page.m_showcard.desc = root:Find("option/showcard/desc"):GetComponent("Text")
-    page.m_showcard.toggle.onValueChanged:AddListener(function(isOn) 
-        m_GameRule[KEY_SHOW_LAST_CARDS] = isOn
+    --straight 顺子牛
+    page.m_straight = {}
+    page.m_straight.toggle = root:Find("option/straight"):GetComponent("Toggle")
+    page.m_straight.desc = root:Find("option/straight/desc"):GetComponent("Text")
+    page.m_straight.toggle.onValueChanged:AddListener(function(isOn) 
+        m_GameRule[NN_KEY_STRAIGHT] = isOn
         if isOn == true then 
-            page.m_showcard.desc.color = FOCUSED_COLOR
+            page.m_straight.desc.color = FOCUSED_COLOR
         else 
-            page.m_showcard.desc.color = DEFAULT_COLOR
+            page.m_straight.desc.color = DEFAULT_COLOR
         end
         if bCanPlaySound == true then 
             AudioManager.getInstance():PlaySound(EGameSound.EGS_Btn_Choose)
         end 
     end)
 
-     --235
-     page.m_235 = {}
-     page.m_235.toggle = root:Find("option/235"):GetComponent("Toggle")
-     page.m_235.desc = root:Find("option/235/desc"):GetComponent("Text")
-     page.m_235.toggle.onValueChanged:AddListener(function(isOn) 
-         m_GameRule[KEY_235] = isOn
+     --suited 同花牛
+     page.m_suited = {}
+     page.m_suited.toggle = root:Find("option/suited"):GetComponent("Toggle")
+     page.m_suited.desc = root:Find("option/suited/desc"):GetComponent("Text")
+     page.m_suited.toggle.onValueChanged:AddListener(function(isOn) 
+         m_GameRule[NN_KEY_SUITED] = isOn
          if isOn == true then 
-             page.m_235.desc.color = FOCUSED_COLOR
+             page.m_suited.desc.color = FOCUSED_COLOR
          else 
-             page.m_235.desc.color = DEFAULT_COLOR
+             page.m_suited.desc.color = DEFAULT_COLOR
          end
          if bCanPlaySound == true then 
             AudioManager.getInstance():PlaySound(EGameSound.EGS_Btn_Choose)
@@ -272,6 +382,69 @@ m_PrivateFunc.InitialPanel_NiuNiu = function()
      end)
 
 
+     --five_big 五大牛
+    page.m_fivebig = {}
+    page.m_fivebig.toggle = root:Find("option/five_big"):GetComponent("Toggle")
+    page.m_fivebig.desc = root:Find("option/five_big/desc"):GetComponent("Text")
+    page.m_fivebig.toggle.onValueChanged:AddListener(function(isOn) 
+        m_GameRule[NN_KEY_FIVE_BIG] = isOn
+        if isOn == true then 
+            page.m_fivebig.desc.color = FOCUSED_COLOR
+        else 
+            page.m_fivebig.desc.color = DEFAULT_COLOR
+        end
+        if bCanPlaySound == true then 
+            AudioManager.getInstance():PlaySound(EGameSound.EGS_Btn_Choose)
+        end 
+    end)
+
+    --five_small wu xiao niu
+    page.m_fivesmall = {}
+    page.m_fivesmall.toggle = root:Find("option/five_small"):GetComponent("Toggle")
+    page.m_fivesmall.desc = root:Find("option/five_small/desc"):GetComponent("Text")
+    page.m_fivesmall.toggle.onValueChanged:AddListener(function(isOn) 
+        m_GameRule[NN_KEY_FIVE_SMALL] = isOn
+        if isOn == true then 
+            page.m_fivesmall.desc.color = FOCUSED_COLOR
+        else 
+            page.m_fivesmall.desc.color = DEFAULT_COLOR
+        end
+        if bCanPlaySound == true then 
+            AudioManager.getInstance():PlaySound(EGameSound.EGS_Btn_Choose)
+        end 
+    end)
+
+     --full_house 葫芦牛
+     page.m_fullhouse = {}
+     page.m_fullhouse.toggle = root:Find("option/full_house"):GetComponent("Toggle")
+     page.m_fullhouse.desc = root:Find("option/full_house/desc"):GetComponent("Text")
+     page.m_fullhouse.toggle.onValueChanged:AddListener(function(isOn) 
+         m_GameRule[NN_KEY_FULL_HOUSE] = isOn
+         if isOn == true then 
+             page.m_fullhouse.desc.color = FOCUSED_COLOR
+         else 
+             page.m_fullhouse.desc.color = DEFAULT_COLOR
+         end
+         if bCanPlaySound == true then 
+            AudioManager.getInstance():PlaySound(EGameSound.EGS_Btn_Choose)
+        end 
+     end)
+
+      --full_house 葫芦牛
+      page.m_bomb = {}
+      page.m_bomb.toggle = root:Find("option/bomb"):GetComponent("Toggle")
+      page.m_bomb.desc = root:Find("option/bomb/desc"):GetComponent("Text")
+      page.m_bomb.toggle.onValueChanged:AddListener(function(isOn) 
+          m_GameRule[NN_KEY_BOMB] = isOn
+          if isOn == true then 
+              page.m_bomb.desc.color = FOCUSED_COLOR
+          else 
+              page.m_bomb.desc.color = DEFAULT_COLOR
+          end
+          if bCanPlaySound == true then 
+             AudioManager.getInstance():PlaySound(EGameSound.EGS_Btn_Choose)
+         end 
+      end)
 
     page.LoadSetting = m_PrivateFunc.LoadNiuNiuSetting
     page.Free = function() 
@@ -295,17 +468,53 @@ m_PrivateFunc.InitialPanel_NiuNiu = function()
         end 
         page.m_Pay = nil 
 
-        page.m_chixi.toggle.onValueChanged:RemoveAllListeners()
-        page.m_chixi.desc = nil 
-        page.m_chixi = nil 
+        for _,v in ipairs(page.m_TableMode) do 
+            if v then 
+                v.toggle.onValueChanged:RemoveAllListeners()
+                v.toggle = nil 
+                v.desc = nil 
+            end 
+            page.m_TableMode[_] = nil 
+        end 
+        page.m_TableMode = nil 
 
-        page.m_235.toggle.onValueChanged:RemoveAllListeners()
-        page.m_235.desc = nil 
-        page.m_235 = nil 
+        for _,v in ipairs(page.m_BaseChip) do 
+            if v then 
+                v.toggle.onValueChanged:RemoveAllListeners()
+                v.toggle = nil 
+                v.desc = nil 
+            end 
+            page.m_BaseChip[_] = nil 
+        end 
+        page.m_BaseChip = nil
 
-        page.m_showcard.toggle.onValueChanged:RemoveAllListeners()
-        page.m_showcard.desc = nil 
-        page.m_showcard = nil 
+        page.m_flush.toggle.onValueChanged:RemoveAllListeners()
+        page.m_flush.desc = nil 
+        page.m_flush = nil 
+
+        page.m_straight.toggle.onValueChanged:RemoveAllListeners()
+        page.m_straight.desc = nil 
+        page.m_straight = nil 
+
+        page.m_suited.toggle.onValueChanged:RemoveAllListeners()
+        page.m_suited.desc = nil 
+        page.m_suited = nil 
+
+        page.m_fivebig.toggle.onValueChanged:RemoveAllListeners()
+        page.m_fivebig.desc = nil 
+        page.m_fivebig = nil 
+
+        page.m_fivesmall.toggle.onValueChanged:RemoveAllListeners()
+        page.m_fivesmall.desc = nil 
+        page.m_fivesmall = nil 
+
+        page.m_fullhouse.toggle.onValueChanged:RemoveAllListeners()
+        page.m_fullhouse.desc = nil 
+        page.m_fullhouse = nil
+
+        page.m_bomb.toggle.onValueChanged:RemoveAllListeners()
+        page.m_bomb.desc = nil 
+        page.m_bomb = nil
     end 
     tb_Pages[EGameType.EGT_NiuNiu] = page
     bCanPlaySound = true
