@@ -31,13 +31,11 @@
 
     hand_cards_num 21 : integer  #玩家手中的牌数量
 
-    allow_acts 31 : *act_info        #玩家允许的行动列表
-   
 
-    score 51 : integer          #本局积分
+    round_score 51 : integer          #本局积分
     total_score 52 : integer    #总积分
 
-    add_chip_times_total 61:integer
+    
 
     hand_cards_state 71:    integer
 
@@ -122,41 +120,6 @@
 }
 
 
-
-.act_info{
-    act_type 0:integer
-    #need_chip 1:*integer
-}
-#玩家可以行动了
-.you_can_act {
-     action_infos  1 :*act_info       #card for the act
-    remain_time 2:integer            #remain_time for act   
-}
-
-
-
-
-.req_user_act{
-    act_type 0:integer
-    act_chip 1:integer
-    target_seat_id 2:integer
-}
-
-
-
-
-.user_act_done{
-    seat_id 0:integer
-    act_type 1:integer
-    act_chip 2:integer
-    target_seat_id 3:integer
-    hand_cards 4:*integer
-    target_hand_cards 6:*integer
-    vs_winner_seat_id 11:integer
-}
-
-
-
 #玩家请求开始新局失败
 .req_start_round_fail {
     code 0 : integer        #错误代码，定义common_data.lua:act_error_code
@@ -185,12 +148,7 @@
     seat_id 0 : integer #玩家座位号
 }
 
-.user_get_score{
-    seat_id     0:integer
-    score_type  1 :integer #defined in common.score_type
-    score       2:integer
-    target_score_infos 3:*score_info 
-}
+
 
 
 
