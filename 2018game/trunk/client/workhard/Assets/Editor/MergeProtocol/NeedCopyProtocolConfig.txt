@@ -1,3 +1,18 @@
-sproto
-games/nn_tb
-types
+
+[
+	{
+		"dir":"sproto",
+		"prefix":"",
+		"mode":2
+	},
+	{
+		"dir":"games/nn_tb",
+		"prefix":"nn_tb",
+		"mode":1
+	},
+	{
+		"dir":"types",
+		"prefix":"",
+		"mode":0
+	}
+]

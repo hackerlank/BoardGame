@@ -6,6 +6,19 @@ using System.IO;
 
 public class MergeProtocol
 {
+    private enum EMergeMode
+    {
+        skip=0,
+        all=1,
+        sproto=2,
+        max=3
+    }
+    private class FMerge
+    {
+        public string dir = "";
+        public string prefix = "";
+        public EMergeMode mode = EMergeMode.skip;
+    }
     /// <summary>
     /// test build bundle manager file
     /// </summary>
@@ -24,10 +37,9 @@ public class MergeProtocol
         string client_sproto_path = client_root + "/sproto/";
         string client_type_path = client_root + "/types/";
 
-        List<string> configs = new List<string>();
-
         string config_file_path = project_root + "/Editor/MergeProtocol/NeedCopyProtocolConfig.txt";
 
+        List<FMerge> objs = new List<FMerge>();
         FileStream fs = new FileStream(config_file_path, FileMode.Open);
         if (fs != null)
         {
@@ -35,18 +47,10 @@ public class MergeProtocol
 
             if (reader != null)
             {
+                string s = reader.ReadToEnd();
+                objs = LitJson.JsonMapper.ToObject<List<FMerge>>(s);
                 string line = reader.ReadLine();
-                while (line != null)
-                {
-                    if (line != "")
-                    {
-                        configs.Add(line);
-                    }
-
-                    line = reader.ReadLine();
-                }
             }
-
             reader.Close();
         }
 
@@ -68,29 +72,29 @@ public class MergeProtocol
         }
 
         //clear msg path
-        FileSystem.ClearFilesSkipExtend(client_msg_path, ".meta");
-        FileSystem.ClearFilesSkipExtend(client_sproto_path, ".meta");
+       // FileSystem.ClearFilesSkipExtend(client_msg_path, ".meta");
+        //FileSystem.ClearFilesSkipExtend(client_sproto_path, ".meta");
 
         List<string> files = new List<string>();
 
 
 
         string serverProtocolPath = "";
-        while (configs.Count > 0)
+        while (objs.Count > 0)
         {
 
-            string tmpFilePath = configs[0];
+            FMerge tmp_obj = objs[0];
+            if(tmp_obj.mode == EMergeMode.skip)
+            {
+                objs.RemoveAt(0);
+                continue;
+            }
+            string tmpFilePath = tmp_obj.dir;
+        
             serverProtocolPath = serverProtocolRoot + tmpFilePath;
 
-            string prefix = "";
-            if (tmpFilePath.StartsWith("games"))
-            {
-                serverProtocolPath += "/sproto";
-                if (tmpFilePath.Contains("/") == true)
-                {
-                    prefix = string.Format("{0}_", tmpFilePath.Substring(tmpFilePath.LastIndexOf("/") + 1, tmpFilePath.Length - tmpFilePath.LastIndexOf("/") - 1));
-                }
-            }
+            string prefix = tmp_obj.prefix;
+
 
             files.Clear();
             if (Directory.Exists(serverProtocolPath))
@@ -127,6 +131,8 @@ public class MergeProtocol
                     }
                     else if (extension.ToLower().Equals("lua"))
                     {
+                        if (tmp_obj.mode == EMergeMode.sproto)
+                            continue;
                         string splitchar = ".";
                         string[] str = file.Split(splitchar.ToCharArray());
                         string fileName = file;
@@ -155,7 +161,7 @@ public class MergeProtocol
             {
                 Debug.LogError("Failed to find directory " + serverProtocolPath);
             }
-            configs.RemoveAt(0);
+            objs.RemoveAt(0);
         }
 
     }
