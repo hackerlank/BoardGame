@@ -53,3 +53,4 @@ has_see_card=已看牌
 see_card=看牌
 zha_jin_hua=焖 鸡
 remain_round=局数:%d/%d
+base_chip=底分:%s
