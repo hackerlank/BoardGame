@@ -30,19 +30,24 @@ function SetGameTypeCommand:execute(note)
     local t = nil 
     if oldType ~= EGameType.EGT_MAX and oldType ~= EGameType.EGT_Common then 
         --try to unregister extracommand
-        command = gameManager.GetGameName() .. ".unregister_extra_commands"
-        if facade:hasCommand(command) == true then 
-            facade:sendNotification(command)
-        else 
-            t = {root_path.GAME_MVC_CONTROLLER_PATH, "UnregisterExtraCommand"}
-            t = table.concat(t)
-            local command = depends(t)
-            if command ~= nil then 
-                command:execute(nil)
+        local game_name = gameManager.GetGameName() 
+        if game_name then     
+            command = game_name .. ".unregister_extra_commands"
+            if facade:hasCommand(command) == true then 
+                facade:sendNotification(command)
             else 
-                LogError("failed to load ungreister command " .. t )
+                t = {root_path.GAME_MVC_CONTROLLER_PATH, "UnregisterExtraCommand"}
+                t = table.concat(t)
+                local command = depends(t)
+                if command ~= nil then 
+                    command:execute(nil)
+                else 
+                    LogError("failed to load ungreister command " .. t )
+                end 
+            
             end 
-           
+        else 
+            LogError("missed game:: " .. GameNames[tostring(oldType)] )
         end 
     end 
 

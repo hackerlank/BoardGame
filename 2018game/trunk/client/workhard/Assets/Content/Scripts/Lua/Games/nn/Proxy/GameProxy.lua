@@ -27,7 +27,7 @@ local game_service_id = nil
 
 local protocolmanager = depends('Common.ProtocolManager')
 local hall_sproto = protocolmanager.GetHallSproto()
-local game_sproto = protocolmanager.GetGameSproto_NNtb()
+local game_sproto = protocolmanager.GetGameSproto_NNTb()
 local base_sproto = protocolmanager.GetBaseSproto()
 local common_sproto = protocolmanager.GetCommonSproto()
 
@@ -1049,93 +1049,6 @@ game_pack[game_msg_id.req_ready_fail] = function(buf)
     local body = game_sproto:decode("req_ready_fail", buf)
    
     facade:sendNotification(nn.PLAYER_REQ_READY_RSP,{errorcode = body.code, desc = body.desc})
-end 
-
---sc2::ntf player do action
-game_pack[game_msg_id.you_can_act] = function(buf)
-    local body = game_sproto:decode("you_can_act", buf)
-    local acts = {}
-	m_currentActionInfo = {}
- 
-    if body.action_infos ~= nil then 
-        for k,v in ipairs(body.action_infos) do 
-            local t = {} 
-            t.act_type = v.act_type
-            table.insert(acts, t)
-        end 
-    end 
-    m_currentActionInfo.actions = acts
-    m_currentActionInfo.remain_time = body.remain_time
-    
-    PushCmd(Common.NTF_PLAYER_ACTION, {actions = acts, real_seat_id = m_PlayerInfo[self_seat_id].real_seat_id, remain_time = m_tableInfo.act_timeout})
-end 
-
---s2c:: user get score
-game_pack[game_msg_id.user_get_score] = function(buf)
-    local body = game_sproto:decode("user_get_score", buf)
-    local score = m_userGameInfo[body.seat_id].score or 0 
-    score = score + (body.score or 0)
-    m_userGameInfo[body.seat_id].score = score 
-
-   
-    local score_infos = {} 
-
-    local m_scores = {}
-    table.insert(m_scores,{real_seat_id = m_PlayerInfo[body.seat_id].real_seat_id, win_score = body.score})
-
-    if body.target_score_infos ~= nil then 
-        for k,v in ipairs(body.target_score_infos) do 
-            if v then 
-                if v.seat_id then 
-                    score = m_userGameInfo[v.seat_id].score  or 0
-                    score = score + (v.score or 0)
-                    m_userGameInfo[v.seat_id].score = score 
-                    table.insert(m_scores,{real_seat_id = m_PlayerInfo[v.seat_id].real_seat_id, win_score = v.score})
-                end 
-
-                local s = {}
-                s.seat_id = v.seat_id
-                s.score = v.score 
-                table.insert(score_infos, s )
-            end 
-        end 
-    end 
-    PushCmd(Common.NTF_USER_GET_SCORE, {tb_scores = m_scores, score_type = body.score_type})
-end 
-
---s2c::req do action fail
-game_pack[game_msg_id.req_user_act_fail] = function(buf)
-    local body = game_sproto:decode("req_user_act_fail", buf) 
-    Log("req_user_act_fail " .. tostring( current_req_act))
-    current_req_act = nil 
-    facade:sendNotification(nn.PLAYER_REQ_ACT_RSP, {real_seat_id = real_seat_id, errorcode = EGameErrorCode.EGE_ReqActFail, desc = body.desc, actions = m_currentActionInfo.actions})
-end
-
---s2c:: user act done
-game_pack[game_msg_id.user_act_done] = function(buf)
-    local body = game_sproto:decode("user_act_done", buf)
-    local m_info = {}
-    m_info.act_type = body.act_type 
-
-    m_info.act_chip = body.act_chip
-    if body.target_seat_id and body.target_seat_id > 0 then 
-        m_info.target_real_seat_id = m_PlayerInfo[body.target_seat_id].real_seat_id
-        m_info.target_hand_cards = body.target_hand_cards 
-    else 
-        m_info.target_real_seat_id = nil 
-    end 
-    m_info.hand_cards = body.hand_cards
-    m_info.real_seat_id = m_PlayerInfo[body.seat_id].real_seat_id
-    if body.vs_winner_seat_id and body.vs_winner_seat_id > 0 then 
-        m_info.vs_winner_real_seat_id = m_PlayerInfo[body.vs_winner_seat_id].real_seat_id
-    end 
-    PushCmd(Common.NTF_PLAYER_ACT_DONE, {info = m_info})
-end 
-
---s2c::req_user_act_ok
-game_pack[game_msg_id.req_user_act_ok] =  function(buf)
-    --local body = game_sproto:decode("req_user_act_ok", buf)    
-    facade:sendNotification(nn.PLAYER_REQ_ACT_RSP, {real_seat_id = m_PlayerInfo[self_seat_id].real_seat_id, errorcode = EGameErrorCode.EGE_Success})
 end 
 
 --s2c:: start round fail

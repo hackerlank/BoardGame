@@ -1,4 +1,4 @@
 --服务器配置
-server_address=120.78.161.236
---server_address=192.168.1.5
+--server_address=120.78.161.236
+server_address=192.168.1.5
 server_port=3101

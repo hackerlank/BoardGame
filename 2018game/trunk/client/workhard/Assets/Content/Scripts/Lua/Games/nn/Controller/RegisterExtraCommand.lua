@@ -21,7 +21,7 @@ function RegisterExtraCommand:execute(note)
 	end 
 	Log("registering extra command of:: " .. gameName)
 	local facade = pm.Facade.getInstance(GAME_FACADE_NAME)
-
+	local hall_type = note.body.hall_type
 	--register proxy
 	if nil ~= nn.tb_proxy then 
 		for k,v in ipairs(nn.tb_proxy) do 
@@ -29,7 +29,7 @@ function RegisterExtraCommand:execute(note)
 				local finalPath = root_path.GAME_MVC_PROXY_PATH .. v.script
 				local proxy = depends(finalPath)
 				if nil ~= proxy then 
-					proxy:SetHallServiceId(login_proxy:GetHallServiceId("zhajinhua"))
+					proxy:SetHallServiceId(login_proxy:GetHallServiceId(hall_type))
 					facade:registerProxy(proxy)		
 				else 
 					LogError("Failed to register proxy:: " .. v.name)

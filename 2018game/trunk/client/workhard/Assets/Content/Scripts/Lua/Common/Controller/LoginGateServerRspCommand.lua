@@ -34,6 +34,7 @@ end
 
 --coding function in here
 function LoginGateServerRspCommand:execute(note)
+
   if note.body == nil then 
         return 
     end 
@@ -65,12 +66,16 @@ function LoginGateServerRspCommand:execute(note)
                     local  t = {root_path.GAME_MVC_CONTROLLER_PATH, "RegisterExtraCommand"}
                     local command = depends(table.concat(t))
                     if command ~= nil then 
-                        command:execute(nil)
+                        local param = {}
+                        param.body = {hall_type = hall_type}
+                        command:execute(param)
                     end  
                     UnityEngine.Yield(UnityEngine.WaitForSeconds(0.06))
                     game_name = m_GameManager.GetGameName()
                     command = game_name .. ".player_req_online"
                     facade:sendNotification(command)
+                else 
+                    Debug.LogError("invalid game_type")
                 end 
             end)
             coroutine.resume(cor)

@@ -1,7 +1,7 @@
 INT	STR	STR	STR	STR		INT	STR	STR
 	game name	game icon	name image	card image	bg image	game type	target menu	hall type
 id	showname	IconPath	NameIcon	CardIcon	BGIcon	Type	MenuName	HallType
-1	经典牛牛	common/menu/zjm_icon_nn.png	common/menu/zjm_lbl_jdnn.png	common/menu/zjm_icon_pk01.png	common/menu/zjm_bg_zise.png	1	UI_CreateNiuNiuTable	niuniu
+1	经典牛牛	common/menu/zjm_icon_nn.png	common/menu/zjm_lbl_jdnn.png	common/menu/zjm_icon_pk01.png	common/menu/zjm_bg_zise.png	1	UI_CreateNiuNiuTable	nn_tb
 2	斗地主	common/menu/zjm_icon_dz.png	common/menu/zjm_lbl_ddz.png	common/menu/zjm_icon_pk02.png	common/menu/zjm_bg_hongse.png	2	UI_CreateNiuNiuTable	dizhu
 3	炸金花	common/menu/zjm_icon_zd.png	common/menu/zjm_lbl_zjh.png	common/menu/zjm_icon_pk03.png	common/menu/zjm_bg_huangse.png	9999	UI_CreateZhaJinHuaTable	zhajinhua
 4	尽情期待				common/menu/zjm_bg_lanse.png	10000	UI_CreateNiuNiuTable	niuniu

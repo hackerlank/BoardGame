@@ -54,7 +54,9 @@ function PreJoinGameRspCommand:execute(note)
                     local  t = {root_path.GAME_MVC_CONTROLLER_PATH, "RegisterExtraCommand"}
                     local command = depends(table.concat(t))
                     if command ~= nil then 
-                        command:execute(nil)
+                        local param = {} 
+                        param.body = {hall_type = hall_type}
+                        command:execute(param)
                         timer = LuaTimer.Add(200, function()
                             -- body
                             if timer then 

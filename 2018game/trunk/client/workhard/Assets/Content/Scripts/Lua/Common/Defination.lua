@@ -102,6 +102,7 @@ EBundleUpdateMode ={
 EGameType = {
     EGT_Common=0, --it means common bundle. not a game
     EGT_NiuNiu=1, --poker_niuniu
+    EGT_Doudizhu=2,
     EGT_Coming=9999, --coming soon.
 	EGT_MAX=10000,  --Invalid Game
     }
@@ -124,6 +125,7 @@ EMenuType = {
 --Defined Game Name
 GameNames = GameNames or {}
 GameNames[tostring(EGameType.EGT_NiuNiu)] = "nn"
+GameNames[tostring(EGameType.EGT_Doudizhu)] = "doudizhu"
 GameNames[tostring(EGameType.EGT_Coming)] = "coming"
 GameNames[tostring(EGameType.EGT_MAX)] = "Invalid"
 

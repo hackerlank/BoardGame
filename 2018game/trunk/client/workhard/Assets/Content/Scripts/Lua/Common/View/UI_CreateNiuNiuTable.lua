@@ -148,7 +148,7 @@ end
 --callback function of create btn
 m_PrivateFunc.onClickCreateBtn = function()
     if facade ~= nil then 
-        facade:sendNotification(Common.PRE_ENTER_HALL, {game_type = EGameType.EGT_ZhaJinHua, game_rule=m_GameRule, operation = EOperation.EO_CreateGame})
+        facade:sendNotification(Common.PRE_ENTER_HALL, {game_type = EGameType.EGT_NiuNiu, game_rule=m_GameRule, operation = EOperation.EO_CreateGame})
     end 
 end
 
@@ -565,7 +565,7 @@ function tbclass:Init()
     tb_Pages = {}
     create_table_ps = luaTool:GetLocalize("create_table_ps")
     btn = transform:Find("Panel/bottom/btn_create"):GetComponent("Button")
-    btn.onClick:AddListener(onClickCreateBtn)
+    btn.onClick:AddListener(m_PrivateFunc.onClickCreateBtn)
     table.insert(tb_btns, btn)
 
     tb_Pages = {}
