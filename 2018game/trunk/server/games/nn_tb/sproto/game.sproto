@@ -31,11 +31,13 @@
 
     hand_cards_num 21 : integer  #玩家手中的牌数量
 
+    niu_point 31:integer    #牛点数
+    ex_niu_type 32:integer      #额外牛牌型
 
     round_score 51 : integer          #本局积分
     total_score 52 : integer    #总积分
 
-    
+    chips       53:integer      #下注数目    
 
     hand_cards_state 71:    integer
 
@@ -59,6 +61,8 @@
     users 5 : *user_info(seat_id)       #玩家列表
     turn_user 7 : integer               #本回合轮到的玩家座位号
     dealer 8 : integer                  #庄家编号
+
+    winner 10:integer                   #赢家座位号
      
     private_key 21:integer
 
@@ -88,6 +92,28 @@
     dealer 2 : integer              #庄家座位号
     
 }
+
+.req_open_cards_fail{
+    code 0 : integer        #定义common_data.lua:act_error_code
+    desc 1 : string         #错误说明
+}
+
+.use_open_cards{
+    seat_id 1:integer
+    hand_cards 2 :*integer
+}
+
+.owner_req_start_game_fail{
+    code 0 : integer        #定义common_data.lua:act_error_code
+    desc 1 : string         #错误说明
+}
+
+
+.owner_req_start_round_fail{
+    code 0 : integer        #定义common_data.lua:act_error_code
+    desc 1 : string         #错误说明
+}
+
 
 #一轮游戏结束，现实小结
 .round_over {

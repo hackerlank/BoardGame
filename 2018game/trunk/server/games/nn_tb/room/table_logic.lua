@@ -149,11 +149,6 @@ function logic.round_start()
         logic.shuffle(info.left_cards)
     end
 
-    if not info.dealer then 
-        log.error("fatal error!! no dealer !!")
-    end    
-
-    info.turn_user = info.dealer
 
     
     info.left_cards_num = # info.left_cards

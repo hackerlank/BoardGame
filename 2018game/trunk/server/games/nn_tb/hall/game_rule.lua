@@ -9,6 +9,7 @@ local toboolean = require("toboolean")
     pay_room_card       局数扣除的房卡数量，和max_round一一对应
     base_chip            用户下注基数
     pay_mode            谁支付房卡
+    start_game_mode     开始游戏的模式。人满开或者房主开
     enable_flush         是否支持同花顺
     enable_straight          是否支持顺子牛
     enable_suited        是否支持同花牛
@@ -25,6 +26,7 @@ local game_rule = {
     pay_room_card       = {5,20,30,40},
     pay_mode            = {1,2,3,4},
     base_chip           = {10,20,100},
+    start_game_mode     =   {1,2},
     enable_flush        = {true,false},
     enable_straight          ={true,false},
     enable_suited        = {true,false},
@@ -40,6 +42,7 @@ local rule_parser = {
     max_round           = tonumber,
     pay_room_card       = tonumber,
     pay_mode            = tonumber,
+    start_game_mode     = tonumber,
     base_chip           = tonumber,
     enable_flush        = toboolean,
     enable_straight          =toboolean,
@@ -57,6 +60,7 @@ local rule_error = {
     pay_room_card       = "没有正确设置：局数对应支付的房卡数",
     pay_mode            = "没有正确设置：谁支付房卡",
     base_chip            = "没有正确设置：下注分数",
+    start_game_mode     = "没有正确设置：开始游戏方式",
    
 }
 
@@ -103,6 +107,8 @@ function game_rule.verify(rules)
         game_rule.assert_is_member(rules,"pay_mode")
 
         game_rule.assert_is_member(rules,"base_chip")
+
+        game_rule.assert_is_member(rules,"start_game_mode")
        
         return true
     end)

@@ -18,8 +18,6 @@ _G.user_game_state = _G.user_game_state or require("user_game_state")
 
 _G.user_hand_cards_state = _G.user_hand_cards_state or require("user_hand_cards_state")
 
-_G.card_color = _G.card_color or require("card_color")
+_G.start_game_mode = _G.start_game_mode or require ("start_game_mode")
 
-_G.card_point = _G.card_point or require("card_point")
-
-_G.cards_kind = _G.cards_kind or require("cards_kind")
+_G.ex_type_fan = _G.ex_type_fan or require "ex_type_fan"

@@ -3,10 +3,9 @@
 
 ]]
 return {
-    give_up = 1,
-    lose  = 2,
-    alive = 3,
-    alive_and_see = 4,
+    in_game = 1,
+    observer  = 2,
+
 }
 
 

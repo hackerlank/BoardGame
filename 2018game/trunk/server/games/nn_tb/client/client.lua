@@ -968,17 +968,21 @@ function table_pack.game_over(fd_,buf)
 end
 function table_pack.user_is_ready(fd_,buf)
 	print("table_pack.user_is_ready")
-	local body = game_sproto:decode("user_is_ready",buf)
+	local body = game_sproto:decode("user_ready",buf)
 	print_r(body)
 
 	--if body.seat_id==user_info.seat_id then
 	--	user_info.phase_ack=phase_ack.ready
 	--end
 		--req start
-	print("req .owner_req_start_game")
+	if body.seat_id~=user_info.seat_id then 
 
-		send_pack(fd_,table_service,game_msg_id.owner_req_start_game,
-	nil)	
+		print("req .owner_req_start_game")
+
+			send_pack(fd_,table_service,game_msg_id.owner_req_start_game,
+		nil)	
+
+	end
 end
 function table_pack.user_pass(fd_,buf)
 	print("table_pack.user_pass")
@@ -1510,6 +1514,14 @@ function table_pack.req_bao_jiao_fail(fd_,buf)
 			print_r(body)
 end
 
+function table_pack.begin_play(fd_)
+			print("table_pack.begin_play")
+
+		sleep(1)
+				send_pack(fd_,table_service,game_msg_id.req_open_cards,	nil)		
+
+end
+
 --消息映射
 table_map[table_msg_id.user_enter_table]		=table_pack.user_enter_table
 table_map[table_msg_id.user_left_table]			=table_pack.user_left_table
@@ -1533,6 +1545,7 @@ table_map[game_msg_id.game_start]				=table_pack.game_start
 table_map[game_msg_id.round_start]				=table_pack.round_start
 --table_map[game_msg_id.user_ding_que]			=	table_pack.user_ding_que
 table_map[game_msg_id.begin_deal]				=table_pack.begin_deal
+table_map[game_msg_id.begin_play]				=table_pack.begin_play
 table_map[game_msg_id.round_over]				=table_pack.round_over
 table_map[game_msg_id.game_over]				=table_pack.game_over
 table_map[game_msg_id.user_ready]				=table_pack.user_is_ready

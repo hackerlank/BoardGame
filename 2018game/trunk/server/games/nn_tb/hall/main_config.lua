@@ -11,7 +11,7 @@ _G.conf.center_node_info = _G.conf.center_node_info or {
 --本度集群节点信息
 _G.conf.self_node_info = _G.conf.self_node_info or {
     node_name = "nn_tb_hall1",
-    node_address = "127.0.0.1:2911",
+    node_address = "127.0.0.1:2921",
     node_type = "nn_tb_hall",
 }
 
@@ -44,7 +44,7 @@ _G.conf.mysql = _G.conf.mysql or {
     max_play_record         最多读取录像条数
 ]]
 _G.conf.hall_name = "通比牛牛大厅"
-_G.conf.hall_type = "zhajinhua"
+_G.conf.hall_type = "nn_tb"
 _G.conf.hall_desc = "通比牛牛大厅"
 _G.conf.hall_version = 1
 _G.conf.client_version = 1
