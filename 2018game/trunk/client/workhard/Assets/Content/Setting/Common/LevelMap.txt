@@ -1,0 +1,9 @@
+INT	INT	INT	STR	STR	STR
+游戏类型	游戏难度	关卡索引	关卡名字	游戏GameMode类	游戏描述
+G	D	L	levelName	GameMode	desc
+0	1	1	Update	Common.UpdateGameMode	更新场景
+0	1	2	Login	Common.LoginGameMode	登录场景
+0	1	3	Main	Common.MainGameMode	登录场景
+7	1	1	Poker	Games.mj_cdxz.GameMode.MJ_CdxzGameMode	游戏场景
+8	1	1	Poker	Games.mj_nj.GameMode.GameMode	游戏场景
+9	1	1	Poker	Games.zha_jin_hua.GameMode.GameMode	游戏场景

@@ -1,0 +1,22 @@
+[
+	{
+		"id":1,
+		"path":"Assets/Content/ArtWork/UI/Common/images/btn_love.png",
+		"prefab":"Assets/Content/Prefabs/anims/anim_mouse.prefab"
+	},
+	{
+		"id":2,
+		"path":"Assets/Content/ArtWork/UI/Common/images/btn_egg.png",
+		"prefab":"Assets/Content/Prefabs/anims/anim_egg.prefab"
+	},
+	{
+		"id":3,
+		"path":"Assets/Content/ArtWork/UI/Common/images/btn_bear.png",
+		"prefab":"Assets/Content/Prefabs/anims/anim_bear.prefab"
+	},
+	{
+		"id":4,
+		"path":"Assets/Content/ArtWork/UI/Common/images/btn_bomb.png",
+		"prefab":"Assets/Content/Prefabs/anims/anim_zhadan.prefab"
+	}
+]

@@ -1,0 +1,16 @@
+[
+    
+    {
+        "platform" : 2,        
+        "release_version" : "1.1.0",        
+        "build" : 207,        
+        "development_version" : "1.1.207"
+    },    
+    
+    {
+        "platform" : 1,        
+        "release_version" : "1.1.0",        
+        "build" : 23,        
+        "development_version" : "1.1.23"
+    }
+]

@@ -1,0 +1,11 @@
+INT	STR	STR
+声音枚举ID	sound路径	描述
+id	soundPath	desc
+1	Assets/Content/Prefabs/Sound/Common/bgm_general.prefab	normal background music
+2	Assets/Content/Prefabs/Sound/Fish/bgm_fish.prefab	fish game background music
+3	Assets/Content/Prefabs/Sound/Fish2d/bgm_fish2d.prefab	fish2d game background music
+4	Assets/Content/Prefabs/Sound/bgm_sun.prefab	poker game background music
+101	Assets/Content/Prefabs/Sound/Common/ui_btn_choose.prefab	normal button
+102	Assets/Content/Prefabs/Sound/Common/ui_btn_back.prefab	back button
+103	Assets/Content/Prefabs/Sound/Common/ui_notice.prefab	back button
+

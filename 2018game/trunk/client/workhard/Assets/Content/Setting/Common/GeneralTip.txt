@@ -1,0 +1,17 @@
+INT	STR	STR	STR	STR	NUL
+提示ID	提示标题	提示内容	确定按钮文字	取消按钮文字	注释
+id	title	content	sure_text	cancel_text	
+1	Info	are you sure exit fish game?	Sure	Cancel	
+2	Warning	are you sure exit fish game?	Sure	Cancel	
+3	Fetal Error	are you sure exit fish game?	Sure	Cancel	
+4	Info	are you sure exit fish game?	Sure	Cancel	
+5	Info	are you sure exit fish game?	Sure	Cancel	
+6	下载游戏	尚未安装该游戏，是否下载?	确 定	取 消	提示是否下载游戏
+7	错误	与服务器断开连接，是否要重新连接?	重连	退出游戏	提示是否下载游戏
+8	错误	连接服务器失败，是否要重新连接?	重连	退出游戏	提示是否下载游戏
+9	提示	房主%s想解散房间,是否同意?	同意	拒绝	解散房间提示
+10	解散房间	游戏未开始，解散房间不会扣除房卡！	确 定	取 消	解散房间提示
+11	解散房间	游戏已经开始，解散房间会扣除房卡！	确 定	取 消	解散房间提示
+12	退出房间	游戏未开始，您确定要离开房间？	确 定	取 消	离开房间提示
+13	提示	您的账号已经在其他设备上登录了，请重新修改密码或者重新登录！	确 定	取 消	玩家被剔除
+14	登录失败	登录游戏失败，请重新登录或者重启游戏！	确 定	取 消	登录失败
