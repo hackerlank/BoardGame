@@ -1,6 +1,6 @@
 INT	STR	STR	INT	STR	STR
 	game name	game icon	game type	target menu	hall type
-id	Name	IconPath	Type	MenuName	HallType
-7	成都麻将	Assets/Content/ArtWork/UI/Common/images/majiang_01.png	7	UI_CreateCDMJTable	cdxz
-8	内江麻将	Assets/Content/ArtWork/UI/Common/images/majiang_02.png	8	UI_CreateNJMJTable	mj_nj
-9	焖鸡	Assets/Content/ArtWork/UI/Common/images/majiang_03.png	9	UI_CreateZhaJinHuaTable	zhajinhua
+id	showname	IconPath	Type	MenuName	HallType
+1	牛牛	Assets/Content/Artwork/tmp/majiang_01.png	1	UI_CreateNiuNiuTable	niuniu
+2	即将到来	Assets/Content/ArtWork/tmp/majiang_03.png	9999	UI_CreateNJMJTable	mj_nj
+3	即将到来	Assets/Content/ArtWork/tmp/majiang_03.png	9999	UI_CreateZhaJinHuaTable	zhajinhua

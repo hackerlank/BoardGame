@@ -102,6 +102,7 @@ EBundleUpdateMode ={
 EGameType = {
     EGT_Common=0, --it means common bundle. not a game
     EGT_NiuNiu=1, --poker_niuniu
+    EGT_Coming=9999, --coming soon.
 	EGT_MAX=10000,  --Invalid Game
     }
 
@@ -123,6 +124,7 @@ EMenuType = {
 --Defined Game Name
 GameNames = GameNames or {}
 GameNames[tostring(EGameType.EGT_NiuNiu)] = "nn"
+GameNames[tostring(EGameType.EGT_Coming)] = "coming"
 GameNames[tostring(EGameType.EGT_MAX)] = "Invalid"
 
 --fish particle type
@@ -197,14 +199,6 @@ ESeatDir = {
     ESD_West=3,
     ESD_North=4,
     ESD_Max=5
-}
-
-ERoomMode = {
-    ERM_xzdd=1, --血战到底
-    ERM_xlch=2, --血流成河
-    ERM_njmj=3, --内江派奖
-    ERM_zhajinhua=4, --焖鸡
-    ERM_Max=10
 }
 
 EOperation = {

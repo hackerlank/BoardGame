@@ -97,17 +97,19 @@ local function onClickCreateGameBtn(data)
     if iGameType == nil or type(iGameType) ~= "number" then 
         return
     end
-   
-    if GBC.IsInstalledGame(iGameType) then
-        if facade ~= nil then 
-            facade:sendNotification(Common.SET_GAME_TYPE, iGameType) 
-            facade:sendNotification(Common.OPEN_UI_COMMAND, data:GetMenuOpenParam())  
+
+    if iGameType ~= EGameType.EGT_Coming then 
+        if GBC.IsInstalledGame(iGameType) then
+            if facade ~= nil then 
+                facade:sendNotification(Common.SET_GAME_TYPE, iGameType) 
+                facade:sendNotification(Common.OPEN_UI_COMMAND, data:GetMenuOpenParam())  
+            end
+        else        
+        -- current_selected = data
+        -- local param = ci.GetGeneralTipParameter().new(Common.MENU_GENERAL_TIP, EMenuType.EMT_Common, nil, 6, DownloadGameSureCallback, DownloadGameCancelCallback)
+            --facade:sendNotification(Common.OPEN_UI_COMMAND, param)
         end
-    else        
-       -- current_selected = data
-       -- local param = ci.GetGeneralTipParameter().new(Common.MENU_GENERAL_TIP, EMenuType.EMT_Common, nil, 6, DownloadGameSureCallback, DownloadGameCancelCallback)
-        --facade:sendNotification(Common.OPEN_UI_COMMAND, param)
-    end
+    end 
 end 
 
 local JOIN_MENU_PARAM = ci.GetUiParameterBase().new(Common.MENU_JOIN_ROOM,EMenuType.EMT_Common,nil,false)

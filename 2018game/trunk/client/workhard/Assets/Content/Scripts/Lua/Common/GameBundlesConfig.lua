@@ -95,7 +95,6 @@ function GBC.GetGameBundles(iGameType)
 	return m_assets
 end 
 
-
 --get bundles of game that need to be downloaded
 function GBC.GetNeedDownloadBundles(inGameType)
 	if inGameType == nil or type(inGameType) ~= "number" then 

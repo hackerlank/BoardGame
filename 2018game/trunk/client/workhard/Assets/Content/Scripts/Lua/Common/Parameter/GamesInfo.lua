@@ -3,7 +3,7 @@ local GamesInfo = class('GamesInfo')
 
 function GamesInfo:ctor(tbKey, tbValue)
     self.id = nil
-    self.Name = nil
+    self.showName = nil
     self.IconPath = nil
     self.Type = nil
     self.MenuName = nil 
@@ -11,8 +11,8 @@ function GamesInfo:ctor(tbKey, tbValue)
     for k,v in ipairs(tbKey) do
         if v == "id" then 
             self.id = tonumber(tbValue[k])
-        elseif v == "Name" then 
-            self.Name = tbValue[k]
+        elseif v == "showname" then 
+            self.showName = tbValue[k]
         elseif v == "IconPath" then 
             self.IconPath = tbValue[k]
         elseif v == "Type" then
@@ -29,8 +29,9 @@ function GamesInfo:ctor(tbKey, tbValue)
     end 
 end 
 
-function GamesInfo:GetGameName()
-    return self.Name
+--desc
+function GamesInfo:GetGameShowName()
+    return self.showName
 end 
 
 function GamesInfo:GetGameIconPath()

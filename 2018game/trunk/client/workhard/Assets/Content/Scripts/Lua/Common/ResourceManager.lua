@@ -610,7 +610,11 @@ function rm:LoadAssetAsync_s(assetType, szFiles, fnOnLoaded)
 			if v:GetAssetPath() == assetPath then 
 				if fnOnLoaded ~= nil then 
 					v:Clone()
-					queueItem.objs[#queueItem.objs + 1] = v
+					if bLoadFromBundle == true then 
+						queueItem.objs[#queueItem.objs + 1] = v
+					else 
+						objs[#objs+1] = v
+					end  
 					--fnOnLoaded(v)
 					bLoaded = true
 					break
