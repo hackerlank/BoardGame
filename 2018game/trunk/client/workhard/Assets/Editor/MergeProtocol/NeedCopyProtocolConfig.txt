@@ -6,7 +6,7 @@
 		"mode":2
 	},
 	{
-		"dir":"games/nn_tb",
+		"dir":"games/nn_tb/sproto",
 		"prefix":"nn_tb",
 		"mode":1
 	},

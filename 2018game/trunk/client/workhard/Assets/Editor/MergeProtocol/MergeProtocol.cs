@@ -94,7 +94,10 @@ public class MergeProtocol
             serverProtocolPath = serverProtocolRoot + tmpFilePath;
 
             string prefix = tmp_obj.prefix;
-
+            if(string.IsNullOrEmpty(prefix) == false )
+            {
+                prefix += "_";
+            }
 
             files.Clear();
             if (Directory.Exists(serverProtocolPath))
