@@ -5,6 +5,9 @@ function GamesInfo:ctor(tbKey, tbValue)
     self.id = nil
     self.showName = nil
     self.IconPath = nil
+    self.NameIcon = nil 
+    self.CardIcon = nil 
+    self.BGIcon = nil 
     self.Type = nil
     self.MenuName = nil 
     self.HallType = nil 
@@ -15,6 +18,12 @@ function GamesInfo:ctor(tbKey, tbValue)
             self.showName = tbValue[k]
         elseif v == "IconPath" then 
             self.IconPath = tbValue[k]
+        elseif v == "NameIcon" then 
+            self.NameIcon = tbValue[k]
+        elseif v == "CardIcon" then 
+            self.CardIcon = tbValue[k]
+        elseif v == "BGIcon" then 
+            self.BGIcon = tbValue[k]
         elseif v == "Type" then
             self.Type = tonumber(tbValue[k])
         elseif v == "MenuName" then 
@@ -37,6 +46,19 @@ end
 function GamesInfo:GetGameIconPath()
     return self.IconPath
 end 
+
+function GamesInfo:GetNameIconPath()
+    return self.NameIcon
+end 
+
+function GamesInfo:GetCardIconPath()
+    return self.CardIcon
+end 
+
+function GamesInfo:GetBGIconPath()
+    return self.BGIcon
+end 
+
 
 function GamesInfo:GetGameId()
     return self.id

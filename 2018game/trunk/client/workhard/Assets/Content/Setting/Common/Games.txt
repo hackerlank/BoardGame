@@ -1,6 +1,9 @@
-INT	STR	STR	INT	STR	STR
-	game name	game icon	game type	target menu	hall type
-id	showname	IconPath	Type	MenuName	HallType
-1	牛牛	Assets/Content/Artwork/tmp/majiang_01.png	1	UI_CreateNiuNiuTable	niuniu
-2	即将到来	Assets/Content/ArtWork/tmp/majiang_03.png	9999	UI_CreateNJMJTable	mj_nj
-3	即将到来	Assets/Content/ArtWork/tmp/majiang_03.png	9999	UI_CreateZhaJinHuaTable	zhajinhua
+INT	STR	STR	STR	STR		INT	STR	STR
+	game name	game icon	name image	card image	bg image	game type	target menu	hall type
+id	showname	IconPath	NameIcon	CardIcon	BGIcon	Type	MenuName	HallType
+1	经典牛牛	common/menu/zjm_icon_nn.png	common/menu/zjm_lbl_jdnn.png	common/menu/zjm_icon_pk01.png	common/menu/zjm_bg_zise.png	1	UI_CreateNiuNiuTable	niuniu
+2	斗地主	common/menu/zjm_icon_dz.png	common/menu/zjm_lbl_ddz.png	common/menu/zjm_icon_pk02.png	common/menu/zjm_bg_hongse.png	2	UI_CreateNJMJTable	mj_nj
+3	炸金花	common/menu/zjm_icon_zd.png	common/menu/zjm_lbl_zjh.png	common/menu/zjm_icon_pk03.png	common/menu/zjm_bg_huangse.png	9999	UI_CreateZhaJinHuaTable	zhajinhua
+4	尽情期待				common/menu/zjm_bg_lanse.png	10000	UI_CreateNiuNiuTable	niuniu
+5	尽情期待				common/menu/zjm_bg_lvse.png	10000	UI_CreateNJMJTable	mj_nj
+6	尽情期待				common/menu/zjm_bg_lanse.png	10000	UI_CreateZhaJinHuaTable	zhajinhua

@@ -3,7 +3,7 @@
 --  define all data struct in here. base class
 --     
 -----------------------------------------------------------------------------
-DEFINED_SCREEN_RESOLUTION = {width=1270, height=720}
+DEFINED_SCREEN_RESOLUTION = {width=1920, height=1080}
 
 --pre-define path of manager
 DEFAULT_LUA_GAME_MODE = "Common.LaunchGameMode"

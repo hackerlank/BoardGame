@@ -55,8 +55,8 @@ local txt_name = nil
 local txt_id = nil 
 --list of game 
 local m_GameList = nil 
---render room card
-local txt_roomCard = nil 
+--diamond
+local txt_diamond = nil 
 
 --radio message transform
 local m_TransRadio = nil 
@@ -66,7 +66,7 @@ local txt_radio = nil
 --radio initial pos 
 local m_RadioMsgInitialPos = nil 
 --radio animation per 1 second
-local RADIO_ANIM_SPEED = 70.0
+local RADIO_ANIM_SPEED = 70
 --mask width
 local m_RadioMaskWidth = 0
 --message that need to be rendered
@@ -74,6 +74,8 @@ local tb_NeedRenderMessage = nil
 --radio tween 
 local m_RadioTween = nil 
 
+--save lua assets of menu loaded
+local tb_LoadedLuaAssets = nil 
 
 --instanced game items
 local m_tbInstancedGameItems = nil 
@@ -89,7 +91,7 @@ function tbclass:Opened(inTrans, inName, luaAsset)
 end 
 
 --=================ui callbacks ======================
-local function onClickCreateGameBtn(data)
+local function onClickGameBtn(data)
     if data == nil then 
         return 
     end 
@@ -118,6 +120,11 @@ local function onClickJoinGameBtn(data)
     facade:sendNotification(Common.OPEN_UI_COMMAND, JOIN_MENU_PARAM)    
 end 
 
+local function onClickCreateGameBtn(data)
+    AudioManager.getInstance():PlaySound(EGameSound.EGS_Btn_Choose)
+    --facade:sendNotification(Common.OPEN_UI_COMMAND, JOIN_MENU_PARAM)    
+end 
+
 local ACHIEVE_MENU_PARAM = ci.GetUiParameterBase().new(Common.MENU_ACHIEVE, EMenuType.EMT_Common, nil, false)
 local function onClickAchieveBtn()
     AudioManager.getInstance():PlaySound(EGameSound.EGS_Btn_Choose)
@@ -137,21 +144,15 @@ local function onClickHeadBtn()
 end 
 
 local MAIL_MENU_PARAM = ci.GetUiParameterBase().new(Common.MENU_MAIL, EMenuType.EMT_Common, nil, false)
-local function onClickMailBtn()
+local function onClickStoreBtn()
     AudioManager.getInstance():PlaySound(EGameSound.EGS_Btn_Choose)
     --facade:sendNotification(Common.OPEN_UI_COMMAND, MAIL_MENU_PARAM)
 end 
 
 local WECHAT_SHARE_MENU_PARAM = ci.GetUiParameterBase().new(Common.MENU_WECHAT_SHARE, EMenuType.EMT_Common, nil, false)
-local function onClickWeChatBtn()
+local function onClickShareBtn()
     AudioManager.getInstance():PlaySound(EGameSound.EGS_Btn_Choose)
     facade:sendNotification(Common.OPEN_UI_COMMAND, WECHAT_SHARE_MENU_PARAM)
-end 
-
-local GM_MENU_PARAM = ci.GetUiParameterBase().new(Common.MENU_GM, EMenuType.EMT_Common, nil, false)
-local function onClickServiceBtn()
-    AudioManager.getInstance():PlaySound(EGameSound.EGS_Btn_Choose)
-    facade:sendNotification(Common.OPEN_UI_COMMAND, GM_MENU_PARAM)
 end 
 
 local PURCHASE_MENU_PARAM = ci.GetUiParameterBase().new(Common.MENU_PURCHASE, EMenuType.EMT_Common, nil, false)
@@ -161,13 +162,13 @@ local function onClickBuyBtn()
 end 
 
 local HELP_MENU_PARAM = ci.GetUiParameterBase().new(Common.MENU_HELP, EMenuType.EMT_Common, nil, false)
-local function onClickHelpBtn()
+local function onClickClubBtn()
     AudioManager.getInstance():PlaySound(EGameSound.EGS_Btn_Choose)
     --facade:sendNotification(Common.OPEN_UI_COMMAND, HELP_MENU_PARAM)
 end 
 
 --load game item data
-local function LoadGameItemData(gameItem, data)
+--[[local function LoadGameItemData(gameItem, data)
     local listItem = {}
     local trans = gameItem.transform
     listItem.img = trans:Find("img_gameicon"):GetComponent("Image")
@@ -197,7 +198,7 @@ local function LoadGameItemData(gameItem, data)
     listItem.state.gameObject:SetActive(false)
     listItem.download_tip = trans:Find("download_tip").gameObject
     m_tbInstancedGameItems[#m_tbInstancedGameItems + 1] = listItem
-end 
+end ]]
 
 --render msg
 local function _RenderMsg()
@@ -227,6 +228,95 @@ local function _RenderMsg()
     DoTweenPathLuaUtil.DORestart(m_TransRadio)
 end 
 
+
+local function InitialGameList() 
+    m_GameList = {} 
+    local root = transform:Find("Panel/games")
+    for i=1, root.childCount do 
+        local game = {}
+        local trans = root:Find("game_" .. i)
+        game.gameObject = trans.gameObject
+        game.img_card = trans:Find("img_card"):GetComponent("Image")
+        game.img_name = trans:Find("img_name"):GetComponent("Image")
+        game.img_game_icon = trans:Find("img_game_icon"):GetComponent("Image")
+        game.img_coming = trans:Find("img_comingsoon"):GetComponent("Image")
+        game.img_bg = trans:GetComponent("Image")
+        game.img_coming.enabled = false 
+        game.btn = trans:GetComponent("Button")
+        table.insert(tb_btns, game.btn)
+        game.trans = trans 
+        table.insert(m_GameList, game)
+    end 
+
+
+    local allGamesInfos = luaTool:GetGamesInfos()
+    local len = #allGamesInfos 
+    for j=1, len do 
+        if m_GameList[j] then 
+            -- LoadGameItemData(m_GameList[j] , v)
+            local v = allGamesInfos[j]
+            local game = m_GameList[j]
+            local bg_path = string.format("%s%s",UI_IMAGE_PATH, v:GetBGIconPath())
+            game.btn.onClick:RemoveAllListeners()
+            game.btn.onClick:AddListener(function() 
+                onClickGameBtn(game)
+            end)
+            GetResourceManager().LoadAssetAsync(GameHelper.EAssetType.EAT_Sprite, bg_path , function(asset) 
+                    if asset and asset:IsValid() == true then 
+                        game.img_bg.sprite = asset:GetAsset() 
+                        tb_LoadedLuaAssets[bg_path] = asset
+                    else 
+                        game.img_bg.enabled = false 
+                    end 
+            end)
+
+            local game_type = v:GetGameType() 
+            if game_type == EGameType.EGT_MAX then 
+                game.img_card.enabled = false 
+                game.img_name.enabled = false 
+                game.img_coming.enabled = false 
+                game.img_game_icon.enabled = false 
+            else 
+                game.img_card.enabled = true 
+                game.img_name.enabled = true 
+                game.img_coming.enabled = game_type == EGameType.EGT_Coming 
+                game.img_game_icon.enabled = true 
+                local card_icon_path = string.format("%s%s",UI_IMAGE_PATH,v:GetCardIconPath())
+                local name_icon_path = string.format("%s%s",UI_IMAGE_PATH,v:GetNameIconPath())
+                local game_icon_path = string.format("%s%s",UI_IMAGE_PATH,v:GetGameIconPath())
+                GetResourceManager().LoadAssetAsync(GameHelper.EAssetType.EAT_Sprite, card_icon_path , function(asset) 
+                    if asset and asset:IsValid() == true then 
+                        game.img_card.sprite = asset:GetAsset() 
+                        tb_LoadedLuaAssets[card_icon_path] = asset
+                    else 
+                        game.img_bg.enabled = false 
+                    end 
+                end)
+                GetResourceManager().LoadAssetAsync(GameHelper.EAssetType.EAT_Sprite, name_icon_path , function(asset) 
+                    if asset and asset:IsValid() == true then 
+                        game.img_name.sprite = asset:GetAsset() 
+                        tb_LoadedLuaAssets[name_icon_path] = asset
+                    else 
+                        game.img_bg.enabled = false 
+                    end 
+                end)
+                GetResourceManager().LoadAssetAsync(GameHelper.EAssetType.EAT_Sprite, game_icon_path , function(asset) 
+                    if asset and asset:IsValid() == true then 
+                        game.img_game_icon.sprite = asset:GetAsset() 
+                        tb_LoadedLuaAssets[game_icon_path] = asset
+                    else 
+                        game.img_bg.enabled = false 
+                    end 
+                end)
+
+            end 
+        else 
+            m_GameList[j].gameObject:SetActive(false)
+        end 
+    end 
+end 
+
+
 --radio animation completed event
 function tbclass:OnRadioAnimCompleted()
     txt_radio.text = ""
@@ -247,11 +337,23 @@ function tbclass:Init()
         btn.onClick:AddListener(function() onClickJoinGameBtn() end)
     end 
     table.insert(tb_btns, btn)
+
+    btn = transform:Find("Panel/bottom/btn_create"):GetComponent("Button")
+    if btn ~= nil then  
+        btn.onClick:AddListener(function() onClickCreateGameBtn() end)
+    end 
+    table.insert(tb_btns, btn)
     
 
     btn = transform:Find("Panel/bottom/btn_achive"):GetComponent("Button")
     if btn ~= nil then 
         btn.onClick:AddListener(onClickAchieveBtn)
+    end 
+    table.insert(tb_btns, btn)
+
+    btn = transform:Find("Panel/bottom/btn_invite"):GetComponent("Button")
+    if btn ~= nil then 
+        btn.onClick:AddListener(onClickInviteCodeBtn)
     end 
     table.insert(tb_btns, btn)
 
@@ -261,31 +363,25 @@ function tbclass:Init()
     end 
     table.insert(tb_btns, btn)
 
-    btn = transform:Find("Panel/bottom/btn_help"):GetComponent("Button")
+    btn = transform:Find("Panel/bottom/btn_club"):GetComponent("Button")
     if btn ~= nil then 
-        btn.onClick:AddListener(onClickHelpBtn)
+        btn.onClick:AddListener(onClickClubBtn)
     end 
     table.insert(tb_btns, btn)
 
-    btn = transform:Find("Panel/bottom/btn_mail"):GetComponent("Button")
+    btn = transform:Find("Panel/bottom/btn_store"):GetComponent("Button")
     if btn ~= nil then 
-        btn.onClick:AddListener(onClickMailBtn)
+        btn.onClick:AddListener(onClickStoreBtn)
     end 
     table.insert(tb_btns, btn)
 
-    btn = transform:Find("Panel/bottom/btn_wechat"):GetComponent("Button")
+    btn = transform:Find("Panel/bottom/btn_share"):GetComponent("Button")
     if btn ~= nil then 
-        btn.onClick:AddListener(onClickWeChatBtn)
+        btn.onClick:AddListener(onClickShareBtn)
     end 
     table.insert(tb_btns, btn)
 
-    btn = transform:Find("Panel/bottom/btn_service"):GetComponent("Button")
-    if btn ~= nil then 
-        btn.onClick:AddListener(onClickServiceBtn)
-    end 
-    table.insert(tb_btns, btn)
-
-    btn = transform:Find("Panel/top/room_card/btn_buy"):GetComponent("Button")
+    btn = transform:Find("Panel/top/diamond/btn_purchase"):GetComponent("Button")
     if btn ~= nil then 
         btn.onClick:AddListener(onClickBuyBtn)
         btn.gameObject:SetActive(false)
@@ -302,8 +398,10 @@ function tbclass:Init()
 
     txt_name = transform:Find("Panel/top/userInfo/txt_name"):GetComponent("Text")
     txt_id = transform:Find("Panel/top/userInfo/txt_id"):GetComponent("Text")
-    m_GameList = transform:Find("Panel/listgames"):GetComponent("CardRoundSelectorEx")
-    txt_roomCard = transform:Find("Panel/top/room_card/txt_num"):GetComponent("Text")
+    tb_LoadedLuaAssets = {} 
+    InitialGameList()
+    --m_GameList = transform:Find("Panel/listgames"):GetComponent("CardRoundSelectorEx")
+    txt_diamond = transform:Find("Panel/top/diamond/txt_diamond"):GetComponent("Text")
     m_tbInstancedGameItems = {}
 
     m_TransRadio = transform:Find("Panel/top/radio/mask/txt_msg")
@@ -315,14 +413,14 @@ function tbclass:Init()
 end 
 
 --instance game list
-function tbclass:InitialGameList()
+--[[function tbclass:InitialGameList()
     local allGamesInfos = luaTool:GetGamesInfos()
     for _, v in ipairs(allGamesInfos) do
         local gameItem = m_GameList:Spawn()
         LoadGameItemData(gameItem, v)
     end
     m_GameList:Reset()
-end
+end]]
 
 --render message 
 function tbclass:RenderMsg(msg)

@@ -37,7 +37,6 @@ end
 function mediator:Opened(param)
     self.viewComponent:SetMediator(self)
     loginProxy = pm.Facade.getInstance(GAME_FACADE_NAME):retrieveProxy(Common.LOGIN_PROXY)
-    self.viewComponent:InitialGameList()
     self.viewComponent:FreshPlayerInfo(loginProxy:GetUserName(),loginProxy:GetHeadImageUrl(), loginProxy:GetUserId(), loginProxy:GetRoomCard())
 
     if param then 
