@@ -1,0 +1,107 @@
+2017-10-25 21:18:27 sntxt : (3) LAUNCH snlua launcher
+2017-10-25 21:18:27 sntxt : (4) LAUNCH snlua cdummy
+2017-10-25 21:18:27 sntxt : (5) LAUNCH harbor 0 4
+2017-10-25 21:18:27 sntxt : (6) LAUNCH snlua datacenterd
+2017-10-25 21:18:27 sntxt : (7) LAUNCH snlua service_mgr
+2017-10-25 21:18:27 sntxt : (8) LAUNCH snlua main
+2017-10-25 21:18:27 info  : (8) center server start
+2017-10-25 21:18:27 sntxt : (9) LAUNCH snlua writer
+2017-10-25 21:18:27 info  : (9) start dbmysql , id  9
+2017-10-25 21:18:27 debug : (9) cc_redis:set_config()
++host [127.0.0.1]
++port [6377]
++db [0]
++auth [123789]
+2017-10-25 21:18:27 info  : (9) connecting to db
+2017-10-25 21:18:27 info  : (9) ok
+2017-10-25 21:18:27 info  : (9) begin logic.write_user_loop()
+2017-10-25 21:18:27 sntxt : (10) LAUNCH snlua console
+2017-10-25 21:18:27 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:18:27 sntxt : (2) KILL self
+2017-10-25 21:18:37 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:18:47 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:18:57 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:19:07 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:19:17 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:19:27 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:19:37 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:19:47 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:19:57 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:20:07 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:20:17 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:20:27 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:20:37 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:20:47 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:20:57 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:21:07 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:21:17 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:21:27 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:21:37 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:21:47 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:21:57 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:22:07 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:22:17 debug : (9) cc_redis:spop() ok,key changed_users r
+user:123
+2017-10-25 21:22:17 debug : (9) cc_redis:hgetall() ok,key user:123 type(r) table r
++1 [user_name]
++2 [test111]
++3 [user_pass]
++4 [123]
++5 [logout_time]
++6 [2017-10-23 15:36:02]
++7 [room_card]
++8 [100]
++9 [money]
++10 [1000]
++11 [login_type]
++12 [1]
++13 [login_time]
++14 [2017-10-25 21:22:10]
++15 [user_id]
++16 [123]
+2017-10-25 21:22:17 info  : (9) logic.write_user() 123
+2017-10-25 21:22:17 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:22:27 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:22:37 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:22:47 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:22:57 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:23:07 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:23:17 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:23:27 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:23:37 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:23:47 debug : (9) cc_redis:spop() ok,key changed_users r
+nil
+2017-10-25 21:23:57 debug : (9) cc_redis:spop() ok,key changed_users r
+nil

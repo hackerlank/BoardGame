@@ -1,0 +1,100 @@
+客户端帐号登陆流程：
+1.帐号登陆，协议login.msgid.lua login.sproto
+    连接login服务器
+    客户端发送user_login
+    登陆成功login服务发送user_login_fail
+    登陆成功login服务发送user_login_ok
+    客户端从user_login_ok读取帐号信息
+        user_id,auth_code   玩家编号，验证码
+        gate_address        玩家分配的网关IP地址
+        gate_service       网关登陆服务地址
+2.客户端更新广场，协议同1
+    客户端发送get_version_info
+    服务器返回version_info
+    客户端根据version_info确定是否需要更新广场
+3.登陆到用户网关，协议gate.msgid.lua,gate.sproto
+    断开到login服务器的连接
+    连接到gate服务器
+    客户端发送user_login
+    失败gate服务器返回user_login_fail
+    成功gate服务器返回user_login_ok，
+    返回参数
+        plaza_service
+            广场服务地址
+        hall_service
+            hall_service为0转11
+            hall_service不为0转21
+11.读取大厅信息，协议plaza.msgid.lua,plaza.sproto
+    客户端向plaza发送get_hall_list
+    plaza发送注册的游戏大厅列表
+    plaza发送hall_list
+    客户端遍历hall_list的每个hall_info,对比hall_type,找到所有匹配的hall_info
+    根据客户端版本和hall_info的hall_version,client_version，is_expired，匹配最合适的大厅服务
+12.更新游戏版本，协议hall.msgid.lua,hall.sproto
+    向选中的hall发送get_version_info
+    hall发送version_info
+    客户端根据version_info确定是否需要更新游戏版本
+    选择大厅完成后（广场类游戏由玩家选择，固定游戏直接由程序选定），得到大厅的hall_service
+    转21
+21.进入游戏大厅，协议hall.msgid.lua,hall.sproto
+    向hall发送req_enter_hall
+    失败hall发送req_enter_hall_fail
+    成功req_enter_hall_ok
+22.读取桌子信息，协议hall.msgid.lua,hall.sproto
+    向hall发送get_table_info
+    失败hall返回get_table_info_fail,说明出现系统错误，转1重新登陆
+    成功返回your_table_info
+        参数
+        table_service 0,说明玩家没有在桌子中，转31，41
+        table_service 非0,说明玩家在桌子中，转71
+31.加入公共桌子（匹配模式），未完成，跳过
+41.创建私有桌子（房卡模式），协议hall.msgid.lua,hall.sproto
+    向hall发送req_create_private_table
+    失败hall发送req_create_private_table_fail
+    成功hall发送you_enter_table
+        参数
+        table_service  桌子服务器地址
+        private_key    桌子号码，可以邀请其他玩家进入桌子
+    进入桌子进行游戏（流程见具体游戏）
+    给好友private_key，邀请好友进入桌子游戏
+42.加入私有桌子，协议hall.msgid.lua,hall.sproto
+    向hall发送req_join_private_table
+    失败hall发送req_join_private_table_fail
+    成功hall发送you_enter_table
+        参数
+        table_service  桌子服务器地址
+    进入桌子进行游戏（流程见具体游戏）
+
+71.玩家上线，协议table_base.msgid.lua,table_base.sproto
+    向table发送req_online
+    失败table发送req_online_fail
+    成功    table发送req_online_ok
+           table向其他玩家广播user_online
+    开始游戏，流程见具体游戏文档
+72.其他玩家进入，协议table_base.msgid.lua,table_base.sproto
+    table广播user_enter_table
+75.玩家离线
+    table广播user_offline
+81.玩家请求离开桌子，协议table_base.msgid.lua,table_base.sproto
+    向table发送req_left_table
+    失败返回req_left_table_fail
+    成功转101
+91.桌子解散，协议table_base.msgid.lua,table_base.sproto
+    游戏结束，严重逻辑错误，大厅指令等，会解散桌子
+    table广播dismiss_table
+    玩家离开桌子，转101
+95.玩家离开桌子协议table_base.msgid.lua,table_base.sproto,hall.msgid.lua,hall.sproto
+    hall向玩家发送hall.you_left_table
+    table向其他玩家广播table_base.user_left_table
+
+101.玩家离开大厅,协议hall.msgid.lua,hall.sproto
+    玩家没有在游戏中时，可以离开大厅
+    玩家向hall发送req_left_hall
+    失败hall发送req_left_hall_fail
+    成功hall发送req_left_hall_ok
+
+111.退出登陆，协议gate.msgid.lua,gate.sproto
+    玩家没有在大厅中时可以退出登陆
+    向gate发送user_logout
+    失败gate发送user_logout_fail
+    成功gate发送user_logout_ok

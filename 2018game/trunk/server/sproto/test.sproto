@@ -1,0 +1,62 @@
+# 测试消息
+.test {
+    #电话
+    .phone {
+        number 0 : string
+        type 1 : integer
+    }
+    #玩家信息
+    .persion {
+        name 0 : string
+        id 1 : integer
+        email 2 : string
+        phone 3  : phone
+    }
+
+    # 数值
+    n 0 : integer
+    # 字符串
+    s 1 : string
+    # 布尔值
+    b 3 : boolean
+    # 数值序列
+    na 11 : *integer
+    # 字符串序列
+    sa 12 : *string
+    ba 13 : *boolean
+    test_id 100 : integer
+
+    persion 101 : *persion
+}
+.test1 {
+    # 数值
+    n 0 : integer
+    # 字符串
+    s 1 : string
+    # 布尔值
+    b 3 : boolean
+    # 数值序列
+    na 11 : *integer
+    # 字符串序列
+    sa 12 : *string
+    ba 13 : *boolean
+    test_id 100 : integer
+}
+.test2 {
+    x 1 : integer
+    y 2 : integer
+    z 3 : integer
+    t 4 : test1
+}
+.test_list {
+    test 0 : *test(test_id)
+}
+# 游戏规则
+.game_rule {
+    name  0 : string #规则名称
+    value 1 : string #规则值
+}
+# 测设游戏规则
+.test_rule {
+    rules 1 : *game_rule
+}

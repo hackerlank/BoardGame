@@ -1,0 +1,31 @@
+为了增强服务器的安全性，简化维护工作量，新增加agent服务，负责处理玩家与核心服务的交互。
+协议方面的变更如下：
+增加 agent.sproto agent.msgid.lua
+删除plaza.sproto plaza.msgid.lua
+一下所有消息移动到agent.sproto agent.msgid.lua
+plaza.msgid.lua
+    get_hall_list
+    hall_list
+    get_hall_info
+    hall_info
+    req_query_private_table
+    ack_query_private_table
+plaza.sproto
+    .get_hall_info
+    .hall_info
+    .hall_list
+    .req_query_private_table
+    .ack_query_private_table
+
+gate.msgid.lua
+    get_user_info
+    user_info
+    req_update_gps
+    ack_update_gps
+    req_pay
+    ack_pay
+gate.sproto
+    .user_info
+    .req_pay
+    .ack_pay
+    .req_update_gps

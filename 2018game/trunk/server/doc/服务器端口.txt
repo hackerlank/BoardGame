@@ -1,0 +1,7 @@
+服务名   集群端口  用户端口
+center  2501
+db      2502
+plaza   2503
+login   2504
+lgate   2505    3101
+ugate   2506    3102

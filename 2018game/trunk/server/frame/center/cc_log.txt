@@ -1,0 +1,228 @@
+2017-10-25 21:18:21 sntxt : (4) LAUNCH snlua cdummy
+2017-10-25 21:18:21 sntxt : (5) LAUNCH harbor 0 4
+2017-10-25 21:18:21 sntxt : (6) LAUNCH snlua datacenterd
+2017-10-25 21:18:21 sntxt : (7) LAUNCH snlua service_mgr
+2017-10-25 21:18:21 sntxt : (8) LAUNCH snlua main
+2017-10-25 21:18:21 info  : (8) center server start
+2017-10-25 21:18:21 sntxt : (9) LAUNCH snlua center
+2017-10-25 21:18:21 sntxt : (10) LAUNCH snlua clusterd
+2017-10-25 21:18:21 info  : (9) start center id is 9
+2017-10-25 21:18:21 info  : (9) register cluster node
++node_address [127.0.0.1:2501]
++node_name [center]
++node_type [center]
+2017-10-25 21:18:21 info  : (9) command.register(),
++node_address [127.0.0.1:2501]
++node_name [center]
++node_type [center]
+2017-10-25 21:18:21 info  : (9) logic.new_node_id(),node_name center node_id 1
+2017-10-25 21:18:21 info  : (9) register(),add new node,info.node_num 0
+2017-10-25 21:18:21 info  : (9) wake up all waiting node
+2017-10-25 21:18:21 info  : (9) reload cluster name
+2017-10-25 21:18:21 info  : (9) 1 center center 127.0.0.1:2501
+2017-10-25 21:18:21 info  : (9) ok
+2017-10-25 21:18:21 info  : (9) open center node 2501
+2017-10-25 21:18:21 sntxt : (11) LAUNCH snlua gate
+2017-10-25 21:18:21 sntxt : (11) Listen on 0.0.0.0:2501
+2017-10-25 21:18:21 info  : (9) ok
+2017-10-25 21:18:21 sntxt : (12) LAUNCH snlua console
+2017-10-25 21:18:21 sntxt : (2) KILL self
+2017-10-25 21:18:30 sntxt : (10) socket accept from 127.0.0.1:46328
+2017-10-25 21:18:30 info  : (9) command.register(),
++node_address [127.0.0.1:2507]
++node_id [999999]
++node_name [httpd]
++node_type [httpd]
+2017-10-25 21:18:30 info  : (9) logic.new_node_id(),node_name httpd node_id 2
+2017-10-25 21:18:30 info  : (9) register(),add new node,info.node_num 0
+2017-10-25 21:18:30 info  : (9) wake up all waiting node
+2017-10-25 21:18:30 info  : (9) reload cluster name
+2017-10-25 21:18:30 info  : (9) 1 center center 127.0.0.1:2501
+2017-10-25 21:18:30 info  : (9) 2 httpd httpd 127.0.0.1:2507
+2017-10-25 21:18:30 info  : (9) logic.probe_node_alive() httpd
+2017-10-25 21:18:30 debug : (9) get_node_update(),node_name httpd waiting for update
+2017-10-25 21:18:33 sntxt : (10) socket accept from 127.0.0.1:46332
+2017-10-25 21:18:33 info  : (9) command.register(),
++node_address [127.0.0.1:2502]
++node_id [999999]
++node_name [db]
++node_type [db]
+2017-10-25 21:18:33 info  : (9) logic.new_node_id(),node_name db node_id 3
+2017-10-25 21:18:33 info  : (9) register(),add new node,info.node_num 0
+2017-10-25 21:18:33 info  : (9) wake up all waiting node
+2017-10-25 21:18:33 info  : (9) reload cluster name
+2017-10-25 21:18:33 info  : (9) 3 db db 127.0.0.1:2502
+2017-10-25 21:18:33 info  : (9) 2 httpd httpd 127.0.0.1:2507
+2017-10-25 21:18:33 info  : (9) 1 center center 127.0.0.1:2501
+2017-10-25 21:18:33 debug : (9) get_node_update(),node_name, httpd wakeup
+2017-10-25 21:18:33 info  : (9) logic.probe_node_alive() db
+2017-10-25 21:18:33 debug : (9) get_node_update(),node_name db waiting for update
+2017-10-25 21:18:33 debug : (9) get_node_update(),node_name httpd waiting for update
+2017-10-25 21:18:33 info  : (9) command.reigster_service, userdb 50331662
+2017-10-25 21:18:36 sntxt : (10) socket accept from 127.0.0.1:46340
+2017-10-25 21:18:36 info  : (9) command.register(),
++node_address [127.0.0.1:2503]
++node_id [999999]
++node_name [plaza]
++node_type [plaza]
+2017-10-25 21:18:36 info  : (9) logic.new_node_id(),node_name plaza node_id 4
+2017-10-25 21:18:36 info  : (9) register(),add new node,info.node_num 0
+2017-10-25 21:18:36 info  : (9) wake up all waiting node
+2017-10-25 21:18:36 info  : (9) reload cluster name
+2017-10-25 21:18:36 info  : (9) 3 db db 127.0.0.1:2502
+2017-10-25 21:18:36 info  : (9) 4 plaza plaza 127.0.0.1:2503
+2017-10-25 21:18:36 info  : (9) 2 httpd httpd 127.0.0.1:2507
+2017-10-25 21:18:36 info  : (9) 1 center center 127.0.0.1:2501
+2017-10-25 21:18:36 debug : (9) get_node_update(),node_name, db wakeup
+2017-10-25 21:18:36 debug : (9) get_node_update(),node_name, httpd wakeup
+2017-10-25 21:18:36 info  : (9) logic.probe_node_alive() plaza
+2017-10-25 21:18:36 debug : (9) get_node_update(),node_name httpd waiting for update
+2017-10-25 21:18:36 debug : (9) get_node_update(),node_name db waiting for update
+2017-10-25 21:18:36 debug : (9) get_node_update(),node_name plaza waiting for update
+2017-10-25 21:18:36 info  : (9) command.reigster_service, plaza 67108877
+2017-10-25 21:18:39 sntxt : (10) socket accept from 127.0.0.1:46344
+2017-10-25 21:18:39 info  : (9) command.register(),
++node_address [127.0.0.1:2504]
++node_id [999999]
++node_name [login]
++node_type [login]
+2017-10-25 21:18:39 info  : (9) logic.new_node_id(),node_name login node_id 5
+2017-10-25 21:18:39 info  : (9) register(),add new node,info.node_num 0
+2017-10-25 21:18:39 info  : (9) wake up all waiting node
+2017-10-25 21:18:39 info  : (9) reload cluster name
+2017-10-25 21:18:39 info  : (9) 1 center center 127.0.0.1:2501
+2017-10-25 21:18:39 info  : (9) 4 plaza plaza 127.0.0.1:2503
+2017-10-25 21:18:39 info  : (9) 5 login login 127.0.0.1:2504
+2017-10-25 21:18:39 info  : (9) 2 httpd httpd 127.0.0.1:2507
+2017-10-25 21:18:39 info  : (9) 3 db db 127.0.0.1:2502
+2017-10-25 21:18:39 debug : (9) get_node_update(),node_name, db wakeup
+2017-10-25 21:18:39 debug : (9) get_node_update(),node_name, httpd wakeup
+2017-10-25 21:18:39 debug : (9) get_node_update(),node_name, plaza wakeup
+2017-10-25 21:18:39 info  : (9) logic.probe_node_alive() login
+2017-10-25 21:18:39 debug : (9) get_node_update(),node_name plaza waiting for update
+2017-10-25 21:18:39 debug : (9) get_node_update(),node_name httpd waiting for update
+2017-10-25 21:18:39 debug : (9) get_node_update(),node_name login waiting for update
+2017-10-25 21:18:39 debug : (9) get_node_update(),node_name db waiting for update
+2017-10-25 21:18:39 info  : (9) command.reigster_service, userlogin 83886093
+2017-10-25 21:18:42 sntxt : (10) socket accept from 127.0.0.1:46348
+2017-10-25 21:18:42 info  : (9) command.register(),
++node_address [127.0.0.1:2505]
++node_id [999999]
++node_name [lgate1]
++node_type [lgate]
+2017-10-25 21:18:42 info  : (9) logic.new_node_id(),node_name lgate1 node_id 6
+2017-10-25 21:18:42 info  : (9) register(),add new node,info.node_num 0
+2017-10-25 21:18:42 info  : (9) wake up all waiting node
+2017-10-25 21:18:42 info  : (9) reload cluster name
+2017-10-25 21:18:42 info  : (9) 1 center center 127.0.0.1:2501
+2017-10-25 21:18:42 info  : (9) 6 lgate1 lgate 127.0.0.1:2505
+2017-10-25 21:18:42 info  : (9) 4 plaza plaza 127.0.0.1:2503
+2017-10-25 21:18:42 info  : (9) 5 login login 127.0.0.1:2504
+2017-10-25 21:18:42 info  : (9) 2 httpd httpd 127.0.0.1:2507
+2017-10-25 21:18:42 info  : (9) 3 db db 127.0.0.1:2502
+2017-10-25 21:18:42 debug : (9) get_node_update(),node_name, db wakeup
+2017-10-25 21:18:42 debug : (9) get_node_update(),node_name, login wakeup
+2017-10-25 21:18:42 debug : (9) get_node_update(),node_name, httpd wakeup
+2017-10-25 21:18:42 debug : (9) get_node_update(),node_name, plaza wakeup
+2017-10-25 21:18:42 info  : (9) logic.probe_node_alive() lgate1
+2017-10-25 21:18:42 debug : (9) get_node_update(),node_name httpd waiting for update
+2017-10-25 21:18:42 debug : (9) get_node_update(),node_name login waiting for update
+2017-10-25 21:18:42 debug : (9) get_node_update(),node_name plaza waiting for update
+2017-10-25 21:18:42 debug : (9) get_node_update(),node_name db waiting for update
+2017-10-25 21:18:42 debug : (9) get_node_update(),node_name lgate1 waiting for update
+2017-10-25 21:18:45 sntxt : (10) socket accept from 127.0.0.1:46352
+2017-10-25 21:18:45 info  : (9) command.register(),
++node_address [127.0.0.1:2506]
++node_id [999999]
++node_name [ugate1]
++node_type [ugate]
+2017-10-25 21:18:45 info  : (9) logic.new_node_id(),node_name ugate1 node_id 7
+2017-10-25 21:18:45 info  : (9) register(),add new node,info.node_num 0
+2017-10-25 21:18:45 info  : (9) wake up all waiting node
+2017-10-25 21:18:45 info  : (9) reload cluster name
+2017-10-25 21:18:45 info  : (9) 7 ugate1 ugate 127.0.0.1:2506
+2017-10-25 21:18:45 info  : (9) 1 center center 127.0.0.1:2501
+2017-10-25 21:18:45 info  : (9) 6 lgate1 lgate 127.0.0.1:2505
+2017-10-25 21:18:45 info  : (9) 4 plaza plaza 127.0.0.1:2503
+2017-10-25 21:18:45 info  : (9) 5 login login 127.0.0.1:2504
+2017-10-25 21:18:45 info  : (9) 2 httpd httpd 127.0.0.1:2507
+2017-10-25 21:18:45 info  : (9) 3 db db 127.0.0.1:2502
+2017-10-25 21:18:45 debug : (9) get_node_update(),node_name, login wakeup
+2017-10-25 21:18:45 debug : (9) get_node_update(),node_name, lgate1 wakeup
+2017-10-25 21:18:45 debug : (9) get_node_update(),node_name, plaza wakeup
+2017-10-25 21:18:45 debug : (9) get_node_update(),node_name, httpd wakeup
+2017-10-25 21:18:45 debug : (9) get_node_update(),node_name, db wakeup
+2017-10-25 21:18:45 info  : (9) logic.probe_node_alive() ugate1
+2017-10-25 21:18:45 debug : (9) get_node_update(),node_name db waiting for update
+2017-10-25 21:18:45 debug : (9) get_node_update(),node_name lgate1 waiting for update
+2017-10-25 21:18:45 debug : (9) get_node_update(),node_name plaza waiting for update
+2017-10-25 21:18:45 debug : (9) get_node_update(),node_name ugate1 waiting for update
+2017-10-25 21:18:45 debug : (9) get_node_update(),node_name httpd waiting for update
+2017-10-25 21:18:45 debug : (9) get_node_update(),node_name login waiting for update
+2017-10-25 21:18:48 sntxt : (10) socket accept from 127.0.0.1:46360
+2017-10-25 21:18:48 info  : (9) command.register(),
++node_address [127.0.0.1:2903]
++node_id [999999]
++node_name [mj_cdxz_hall1]
++node_type [mj_cdxz_hall]
+2017-10-25 21:18:48 info  : (9) logic.new_node_id(),node_name mj_cdxz_hall1 node_id 8
+2017-10-25 21:18:48 info  : (9) register(),add new node,info.node_num 0
+2017-10-25 21:18:48 info  : (9) wake up all waiting node
+2017-10-25 21:18:48 info  : (9) reload cluster name
+2017-10-25 21:18:48 info  : (9) 5 login login 127.0.0.1:2504
+2017-10-25 21:18:48 info  : (9) 7 ugate1 ugate 127.0.0.1:2506
+2017-10-25 21:18:48 info  : (9) 1 center center 127.0.0.1:2501
+2017-10-25 21:18:48 info  : (9) 6 lgate1 lgate 127.0.0.1:2505
+2017-10-25 21:18:48 info  : (9) 4 plaza plaza 127.0.0.1:2503
+2017-10-25 21:18:48 info  : (9) 8 mj_cdxz_hall1 mj_cdxz_hall 127.0.0.1:2903
+2017-10-25 21:18:48 info  : (9) 2 httpd httpd 127.0.0.1:2507
+2017-10-25 21:18:48 info  : (9) 3 db db 127.0.0.1:2502
+2017-10-25 21:18:48 debug : (9) get_node_update(),node_name, ugate1 wakeup
+2017-10-25 21:18:48 debug : (9) get_node_update(),node_name, lgate1 wakeup
+2017-10-25 21:18:48 debug : (9) get_node_update(),node_name, plaza wakeup
+2017-10-25 21:18:48 debug : (9) get_node_update(),node_name, login wakeup
+2017-10-25 21:18:48 debug : (9) get_node_update(),node_name, httpd wakeup
+2017-10-25 21:18:48 debug : (9) get_node_update(),node_name, db wakeup
+2017-10-25 21:18:48 info  : (9) logic.probe_node_alive() mj_cdxz_hall1
+2017-10-25 21:18:48 debug : (9) get_node_update(),node_name plaza waiting for update
+2017-10-25 21:18:48 debug : (9) get_node_update(),node_name lgate1 waiting for update
+2017-10-25 21:18:48 debug : (9) get_node_update(),node_name httpd waiting for update
+2017-10-25 21:18:48 debug : (9) get_node_update(),node_name ugate1 waiting for update
+2017-10-25 21:18:48 debug : (9) get_node_update(),node_name login waiting for update
+2017-10-25 21:18:48 debug : (9) get_node_update(),node_name db waiting for update
+2017-10-25 21:18:48 debug : (9) get_node_update(),node_name mj_cdxz_hall1 waiting for update
+2017-10-25 21:18:51 sntxt : (10) socket accept from 127.0.0.1:46366
+2017-10-25 21:18:51 info  : (9) command.register(),
++node_address [127.0.0.1:2904]
++node_id [999999]
++node_name [mj_cdxz_room1]
++node_type [mj_cdxz_room]
+2017-10-25 21:18:51 info  : (9) logic.new_node_id(),node_name mj_cdxz_room1 node_id 9
+2017-10-25 21:18:51 info  : (9) register(),add new node,info.node_num 0
+2017-10-25 21:18:51 info  : (9) wake up all waiting node
+2017-10-25 21:18:51 info  : (9) reload cluster name
+2017-10-25 21:18:51 info  : (9) 7 ugate1 ugate 127.0.0.1:2506
+2017-10-25 21:18:51 info  : (9) 4 plaza plaza 127.0.0.1:2503
+2017-10-25 21:18:51 info  : (9) 8 mj_cdxz_hall1 mj_cdxz_hall 127.0.0.1:2903
+2017-10-25 21:18:51 info  : (9) 2 httpd httpd 127.0.0.1:2507
+2017-10-25 21:18:51 info  : (9) 1 center center 127.0.0.1:2501
+2017-10-25 21:18:51 info  : (9) 6 lgate1 lgate 127.0.0.1:2505
+2017-10-25 21:18:51 info  : (9) 3 db db 127.0.0.1:2502
+2017-10-25 21:18:51 info  : (9) 9 mj_cdxz_room1 mj_cdxz_room 127.0.0.1:2904
+2017-10-25 21:18:51 info  : (9) 5 login login 127.0.0.1:2504
+2017-10-25 21:18:51 debug : (9) get_node_update(),node_name, login wakeup
+2017-10-25 21:18:51 debug : (9) get_node_update(),node_name, ugate1 wakeup
+2017-10-25 21:18:51 debug : (9) get_node_update(),node_name, lgate1 wakeup
+2017-10-25 21:18:51 debug : (9) get_node_update(),node_name, plaza wakeup
+2017-10-25 21:18:51 debug : (9) get_node_update(),node_name, mj_cdxz_hall1 wakeup
+2017-10-25 21:18:51 debug : (9) get_node_update(),node_name, httpd wakeup
+2017-10-25 21:18:51 debug : (9) get_node_update(),node_name, db wakeup
+2017-10-25 21:18:51 info  : (9) logic.probe_node_alive() mj_cdxz_room1
+2017-10-25 21:18:51 debug : (9) get_node_update(),node_name login waiting for update
+2017-10-25 21:18:51 debug : (9) get_node_update(),node_name db waiting for update
+2017-10-25 21:18:51 debug : (9) get_node_update(),node_name httpd waiting for update
+2017-10-25 21:18:51 debug : (9) get_node_update(),node_name ugate1 waiting for update
+2017-10-25 21:18:51 debug : (9) get_node_update(),node_name plaza waiting for update
+2017-10-25 21:18:51 debug : (9) get_node_update(),node_name lgate1 waiting for update
+2017-10-25 21:18:51 debug : (9) get_node_update(),node_name mj_cdxz_room1 waiting for update
+2017-10-25 21:18:51 debug : (9) get_node_update(),node_name mj_cdxz_hall1 waiting for update

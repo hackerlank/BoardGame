@@ -1,0 +1,5 @@
+--游戏目录结构
+doc             游戏公共文档
+niuniu          牛牛
+zhaduizi        炸对子
+common          公共游戏类库

@@ -1,0 +1,9 @@
+游戏房间服务框架
+logic       服务主要逻辑
+pack        用户封包接受处理
+sender      用户封包发送
+command     服务命令，一般用于相应其他服务的调用
+/sproto/table_base.msgid.lua
+            房间服务框架用户消息编号
+/sproto/table_base.sproto
+            房间服务框架用户消息体定义

@@ -1,0 +1,1 @@
+/opt/skynet/skynet ./config

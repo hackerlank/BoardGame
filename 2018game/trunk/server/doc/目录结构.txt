@@ -1,0 +1,21 @@
+服务器代码结构
+center          中心服务器
+client          客户端测试代码
+cservice        c写的服务路径
+db              数据库路径
+doc             服务器文档
+games           游戏路径
+gate            网关服务器
+hall            大厅服务
+login           登陆服务器
+luaclib         c写的扩展库
+luaclib         lua写的扩展库
+plaza           广场服务器
+room            房间服务
+service         通用lua服务
+snax            snax框架写的服务
+sproto          框架通讯协议
+sql-script      框架sql脚本
+types           通用类型定义
+test            测试代码
+utils           控制台指令

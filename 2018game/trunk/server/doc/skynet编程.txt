@@ -1,0 +1,9 @@
+Snax
+符合Snax规范的服务主要用于的远程调用，不使用消息投递
+
+Coroutine
+skynet服务挂起必须使用net.coroutine.yield，不能使用lua协程自带的yield。
+
+Cluster和master/slave
+由于m/s模式不适用于弹性部署，最终选定Cluster模式
+

@@ -1,0 +1,36 @@
+-- skynet root
+root="/opt/skynet/"
+-- cc frame root
+cc_root="../../"
+
+thread = 4
+
+-- bootstrap parameter
+bootstrap = "snlua bootstrap"	-- The service for bootstrap
+cpath = root.."cservice/?.so;"..root.."cservice/?.so"
+logger = "log_writer"
+logservice = "snlua"
+logpath = "./log"
+harbor = 0
+start = "main"	-- main script
+
+-- snlua parameter
+lualoader = root .. "lualib/loader.lua"
+luaservice = root.."service/?.lua;"
+            ..cc_root.."service/?.lua;"
+            ..cc_root.."utils/?.lua;"
+            .."./hotfix/?.lua;"
+            .."./?.lua"
+lua_path = root.."lualib/?.lua;"
+            ..root.."lualib/?/init.lua;"
+            ..cc_root.."lualib/?.lua;"
+            ..cc_root.."service_module/?.lua;"
+            .."./?.lua;"
+lua_cpath = root .. "luaclib/?.so;"
+            ..cc_root.."luaclib/?.so"
+preload = cc_root.."lualib/preload.lua"	-- run preload.lua before every lua service run
+snax = root.."snax/?.lua"
+-- snax_interface_g = "snax_g"
+-- profile = true
+
+-- daemon = "./daemon.pid"

@@ -1,0 +1,5 @@
+广场后台协议
+广场后台地址/backstage/plaza
+查询大厅列表
+    路径  /backstage/plaza/get_hall_list
+    请求  无

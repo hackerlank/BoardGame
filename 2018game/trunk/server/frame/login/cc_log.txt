@@ -1,0 +1,130 @@
+2017-10-25 21:18:39 info  : (8) login server start
+2017-10-25 21:18:39 sntxt : (9) LAUNCH snlua clusternode
+2017-10-25 21:18:39 sntxt : (10) LAUNCH snlua clusterd
+2017-10-25 21:18:39 info  : (9) start clusternode id is 9
+2017-10-25 21:18:39 info  : (9) clusternode service start
+2017-10-25 21:18:39 info  : (9) center_node_info
++node_address [127.0.0.1:2501]
++node_id [1]
++node_name [center]
++node_type [center]
+2017-10-25 21:18:39 info  : (9) self_node_info
++node_address [127.0.0.1:2504]
++node_name [login]
++node_type [login]
+2017-10-25 21:18:39 info  : (9) register center node
+2017-10-25 21:18:39 info  : (9) reload cluster name
+2017-10-25 21:18:39 info  : (9) 1 center 127.0.0.1:2501
+2017-10-25 21:18:39 info  : (9) 999999 login 127.0.0.1:2504
+2017-10-25 21:18:39 info  : (9) open cluster node 2504
+2017-10-25 21:18:39 sntxt : (11) LAUNCH snlua gate
+2017-10-25 21:18:39 sntxt : (11) Listen on 0.0.0.0:2504
+2017-10-25 21:18:39 info  : (9) done
+2017-10-25 21:18:39 info  : (9) create center proxy
+2017-10-25 21:18:39 sntxt : (12) LAUNCH snlua clusterproxy center center
+2017-10-25 21:18:39 info  : (9) done
+2017-10-25 21:18:39 info  : (9) register self node ...
+2017-10-25 21:18:39 sntxt : (10) socket accept from 127.0.0.1:57454
+2017-10-25 21:18:39 info  : (9) done
+2017-10-25 21:18:39 info  : (9) refresh_node_list
+2017-10-25 21:18:39 info  : (9) self_node_id 5
+2017-10-25 21:18:39 info  : (9) reload cluster name
+2017-10-25 21:18:39 info  : (9) 5 login 127.0.0.1:2504
+2017-10-25 21:18:39 info  : (9) 3 db 127.0.0.1:2502
+2017-10-25 21:18:39 info  : (9) 1 center 127.0.0.1:2501
+2017-10-25 21:18:39 info  : (9) 2 httpd 127.0.0.1:2507
+2017-10-25 21:18:39 info  : (9) 4 plaza 127.0.0.1:2503
+2017-10-25 21:18:39 info  : (9) add new node db 3
+2017-10-25 21:18:39 info  : (9) add new node httpd 2
+2017-10-25 21:18:39 info  : (9) add new node plaza 4
+2017-10-25 21:18:39 info  : (9) start update_node_list
+2017-10-25 21:18:39 sntxt : (13) LAUNCH snlua userlogin
+2017-10-25 21:18:39 debug : (9) command.probe_alive()
+2017-10-25 21:18:39 info  : (13) start userlogin id is 13
+2017-10-25 21:18:39 sntxt : (14) LAUNCH snlua console
+2017-10-25 21:18:39 sntxt : (2) KILL self
+2017-10-25 21:18:42 info  : (9) refresh_node_list
+2017-10-25 21:18:42 info  : (9) self_node_id 5
+2017-10-25 21:18:42 info  : (9) reload cluster name
+2017-10-25 21:18:42 info  : (9) 1 center 127.0.0.1:2501
+2017-10-25 21:18:42 info  : (9) 6 lgate1 127.0.0.1:2505
+2017-10-25 21:18:42 info  : (9) 4 plaza 127.0.0.1:2503
+2017-10-25 21:18:42 info  : (9) 5 login 127.0.0.1:2504
+2017-10-25 21:18:42 info  : (9) 2 httpd 127.0.0.1:2507
+2017-10-25 21:18:42 info  : (9) 3 db 127.0.0.1:2502
+2017-10-25 21:18:42 info  : (9) add new node lgate1 6
+2017-10-25 21:18:45 info  : (9) refresh_node_list
+2017-10-25 21:18:45 info  : (9) self_node_id 5
+2017-10-25 21:18:45 info  : (9) reload cluster name
+2017-10-25 21:18:45 info  : (9) 7 ugate1 127.0.0.1:2506
+2017-10-25 21:18:45 info  : (9) 1 center 127.0.0.1:2501
+2017-10-25 21:18:45 info  : (9) 6 lgate1 127.0.0.1:2505
+2017-10-25 21:18:45 info  : (9) 3 db 127.0.0.1:2502
+2017-10-25 21:18:45 info  : (9) 5 login 127.0.0.1:2504
+2017-10-25 21:18:45 info  : (9) 2 httpd 127.0.0.1:2507
+2017-10-25 21:18:45 info  : (9) 4 plaza 127.0.0.1:2503
+2017-10-25 21:18:45 info  : (9) add new node ugate1 7
+2017-10-25 21:18:45 sntxt : (10) socket accept from 127.0.0.1:57466
+2017-10-25 21:18:45 debug : (13) register gate
+2017-10-25 21:18:45 debug : (13) 
++gate_address [192.168.50.201:3102]
++node_id [7]
++user_num [0]
++gate_service [117440525]
++node_name [ugate1]
++max_user [1024]
+2017-10-25 21:18:48 info  : (9) refresh_node_list
+2017-10-25 21:18:48 info  : (9) self_node_id 5
+2017-10-25 21:18:48 info  : (9) reload cluster name
+2017-10-25 21:18:48 info  : (9) 1 center 127.0.0.1:2501
+2017-10-25 21:18:48 info  : (9) 4 plaza 127.0.0.1:2503
+2017-10-25 21:18:48 info  : (9) 5 login 127.0.0.1:2504
+2017-10-25 21:18:48 info  : (9) 6 lgate1 127.0.0.1:2505
+2017-10-25 21:18:48 info  : (9) 3 db 127.0.0.1:2502
+2017-10-25 21:18:48 info  : (9) 8 mj_cdxz_hall1 127.0.0.1:2903
+2017-10-25 21:18:48 info  : (9) 2 httpd 127.0.0.1:2507
+2017-10-25 21:18:48 info  : (9) 7 ugate1 127.0.0.1:2506
+2017-10-25 21:18:48 info  : (9) add new node mj_cdxz_hall1 8
+2017-10-25 21:18:51 info  : (9) refresh_node_list
+2017-10-25 21:18:51 info  : (9) self_node_id 5
+2017-10-25 21:18:51 info  : (9) reload cluster name
+2017-10-25 21:18:51 info  : (9) 7 ugate1 127.0.0.1:2506
+2017-10-25 21:18:51 info  : (9) 4 plaza 127.0.0.1:2503
+2017-10-25 21:18:51 info  : (9) 8 mj_cdxz_hall1 127.0.0.1:2903
+2017-10-25 21:18:51 info  : (9) 2 httpd 127.0.0.1:2507
+2017-10-25 21:18:51 info  : (9) 1 center 127.0.0.1:2501
+2017-10-25 21:18:51 info  : (9) 6 lgate1 127.0.0.1:2505
+2017-10-25 21:18:51 info  : (9) 3 db 127.0.0.1:2502
+2017-10-25 21:18:51 info  : (9) 9 mj_cdxz_room1 127.0.0.1:2904
+2017-10-25 21:18:51 info  : (9) 5 login 127.0.0.1:2504
+2017-10-25 21:18:51 info  : (9) add new node mj_cdxz_room1 9
+2017-10-25 21:22:10 sntxt : (10) socket accept from 127.0.0.1:57480
+2017-10-25 21:22:10 debug : (13) userlogin on_pack,msg_id 5
+2017-10-25 21:22:10 info  : (13) pack.create_user(),gate_service 100663309 fd 6 body
++user_name [test111]
++login_type [1]
++user_pass [123]
+2017-10-25 21:22:10 error : (13) create user from db fail 帐号已经存在
+2017-10-25 21:22:10 debug : (13) userlogin.send_create_user_fail(),gate_service 100663309 fd 6
+2017-10-25 21:22:10 debug : (9) clusternode.send(),address 100663309 cmd send_pack
+2017-10-25 21:22:10 debug : (13) userlogin on_pack,msg_id 1
+2017-10-25 21:22:10 info  : (13) pack.user_login()
++user_name [test111]
++user_pass [123]
+2017-10-25 21:22:10 debug : (13) pack.user_login(),dbuser
++login_type [1]
++user_id [123]
+2017-10-25 21:22:10 info  : (13) add new user info 123
+2017-10-25 21:22:10 debug : (13) userlogin.send_user_login_ok(),gate_service 100663309 fd 6
+2017-10-25 21:22:10 info  : (13) pack.user_login() ok,
++state [0]
++auth_code [779a79ce-d3e8-465c-c622-64a53a6f5212]
++login_type [1]
++user_gate+gate_address [192.168.50.201:3102]
+|         +node_id [7]
+|         +user_num [1]
+|         +gate_service [117440525]
+|         +node_name [ugate1]
+|         +max_user [1024]
++user_id [123]
+2017-10-25 21:22:10 debug : (9) clusternode.send(),address 100663309 cmd send_pack

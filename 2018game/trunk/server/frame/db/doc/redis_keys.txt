@@ -1,0 +1,5 @@
+redis 键名
+"user:"+user_id     已经登录玩家数据
+"auth_user_name"    账号密码登录玩家索引
+"auth_wei_xin"      微信登录玩家索引
+"changed_users"     修改过的玩家列表

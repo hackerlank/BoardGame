@@ -1,0 +1,49 @@
+-- test config
+-- skynet root
+root="/opt/skynet/"
+cc_root="../"
+
+thread = 2
+
+-- bootstrap parameter
+bootstrap = "snlua bootstrap"	-- The service for bootstrap
+cpath = root.."cservice/?.so;".."../cservice/?.so"
+logger = "log_writer"
+logservice = "snlua"
+logpath = "./log"
+--standalone = "0.0.0.0:2013"
+--master = "127.0.0.1:2013"
+--address = "127.0.0.1:2526"
+harbor = 0
+start = "main"	-- main script
+
+--  cluster config
+center = "127.0.0.1:2501"
+node_name = "test"
+node_address = "127.0.0.1:2666"
+node_type = "test"
+no_delay = false
+
+test_time = 10*100
+
+-- snlua parameter
+lualoader = root .. "lualib/loader.lua"
+luaservice = root.."service/?.lua;"
+                .."../service/?.lua;"
+                .."../utils/?.lua;"
+                .."./?.lua;"
+                .."/opt/skynet/test/?.lua"
+lua_path = root.."lualib/?.lua;"..root.."lualib/?/init.lua;"
+                .."../lualib/?.lua;"
+                .."../lualib/?/init.lua;"
+                .."../service_module/?.lua;"
+                .."./?.lua;"
+                .."./?/init.lua"
+lua_cpath = root .. "luaclib/?.so;"
+                ..cc_root.."luaclib/?.so"
+preload = cc_root.."lualib/preload.lua"	-- run preload.lua before every lua service run
+snax = "../snax/?.lua"
+-- snax_interface_g = "snax_g"
+-- profile = true
+
+-- daemon = "./daemon.pid"

@@ -1,0 +1,14 @@
+[Unit]
+Description=ccgames
+After=network.target mysql.target nss-lookup.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/ccgames.pid
+ExecStart=/bin/sh /opt/ccgames/scripts/restart_frame.sh
+ExecReload=/bin/sh /opt/ccgames/scripts/restart_frame.sh
+ExecStop=pkill skynet
+PrivateTmp=true
+
+[Install]  
+WantedBy=multi-user.target

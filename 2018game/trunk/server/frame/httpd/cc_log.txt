@@ -1,0 +1,159 @@
+2017-10-25 21:18:30 sntxt : (3) LAUNCH snlua launcher
+2017-10-25 21:18:30 sntxt : (4) LAUNCH snlua cdummy
+2017-10-25 21:18:30 sntxt : (5) LAUNCH harbor 0 4
+2017-10-25 21:18:30 sntxt : (6) LAUNCH snlua datacenterd
+2017-10-25 21:18:30 sntxt : (7) LAUNCH snlua service_mgr
+2017-10-25 21:18:30 sntxt : (8) LAUNCH snlua main
+2017-10-25 21:18:30 info  : (8) httpd server start
+2017-10-25 21:18:30 sntxt : (9) LAUNCH snlua clusternode
+2017-10-25 21:18:30 sntxt : (10) LAUNCH snlua clusterd
+2017-10-25 21:18:30 info  : (9) start clusternode id is 9
+2017-10-25 21:18:30 info  : (9) clusternode service start
+2017-10-25 21:18:30 info  : (9) center_node_info
++node_address [127.0.0.1:2501]
++node_id [1]
++node_name [center]
++node_type [center]
+2017-10-25 21:18:30 info  : (9) self_node_info
++node_address [127.0.0.1:2507]
++node_name [httpd]
++node_type [httpd]
+2017-10-25 21:18:30 info  : (9) register center node
+2017-10-25 21:18:30 info  : (9) reload cluster name
+2017-10-25 21:18:30 info  : (9) 1 center 127.0.0.1:2501
+2017-10-25 21:18:30 info  : (9) 999999 httpd 127.0.0.1:2507
+2017-10-25 21:18:30 info  : (9) open cluster node 2507
+2017-10-25 21:18:30 sntxt : (11) LAUNCH snlua gate
+2017-10-25 21:18:30 sntxt : (11) Listen on 0.0.0.0:2507
+2017-10-25 21:18:30 info  : (9) done
+2017-10-25 21:18:30 info  : (9) create center proxy
+2017-10-25 21:18:30 sntxt : (12) LAUNCH snlua clusterproxy center center
+2017-10-25 21:18:30 info  : (9) done
+2017-10-25 21:18:30 info  : (9) register self node ...
+2017-10-25 21:18:30 sntxt : (10) socket accept from 127.0.0.1:56332
+2017-10-25 21:18:30 info  : (9) done
+2017-10-25 21:18:30 info  : (9) refresh_node_list
+2017-10-25 21:18:30 info  : (9) self_node_id 2
+2017-10-25 21:18:30 info  : (9) reload cluster name
+2017-10-25 21:18:30 info  : (9) 1 center 127.0.0.1:2501
+2017-10-25 21:18:30 info  : (9) 2 httpd 127.0.0.1:2507
+2017-10-25 21:18:30 info  : (9) start update_node_list
+2017-10-25 21:18:30 sntxt : (13) LAUNCH snlua httpd_gate
+2017-10-25 21:18:30 debug : (9) command.probe_alive()
+2017-10-25 21:18:30 sntxt : (14) LAUNCH snlua sharedatad
+2017-10-25 21:18:30 info  : (13) start httpd_gate 13
+2017-10-25 21:18:30 sntxt : (15) LAUNCH snlua httpd_agent agent
+2017-10-25 21:18:30 info  : (15) start  httpd_agent 15
+2017-10-25 21:18:30 sntxt : (16) LAUNCH snlua httpd_agent agent
+2017-10-25 21:18:30 info  : (16) start  httpd_agent 16
+2017-10-25 21:18:30 sntxt : (17) LAUNCH snlua httpd_agent agent
+2017-10-25 21:18:30 info  : (17) start  httpd_agent 17
+2017-10-25 21:18:30 sntxt : (18) LAUNCH snlua httpd_agent agent
+2017-10-25 21:18:30 info  : (18) start  httpd_agent 18
+2017-10-25 21:18:30 sntxt : (19) LAUNCH snlua httpd_agent agent
+2017-10-25 21:18:30 info  : (19) start  httpd_agent 19
+2017-10-25 21:18:30 sntxt : (20) LAUNCH snlua httpd_agent agent
+2017-10-25 21:18:30 info  : (20) start  httpd_agent 20
+2017-10-25 21:18:30 sntxt : (21) LAUNCH snlua httpd_agent agent
+2017-10-25 21:18:30 info  : (21) start  httpd_agent 21
+2017-10-25 21:18:30 sntxt : (22) LAUNCH snlua httpd_agent agent
+2017-10-25 21:18:30 info  : (22) start  httpd_agent 22
+2017-10-25 21:18:30 sntxt : (23) LAUNCH snlua httpd_agent agent
+2017-10-25 21:18:30 info  : (23) start  httpd_agent 23
+2017-10-25 21:18:30 sntxt : (24) LAUNCH snlua httpd_agent agent
+2017-10-25 21:18:30 info  : (24) start  httpd_agent 24
+2017-10-25 21:18:30 sntxt : (25) LAUNCH snlua httpd_agent agent
+2017-10-25 21:18:30 info  : (25) start  httpd_agent 25
+2017-10-25 21:18:30 sntxt : (26) LAUNCH snlua httpd_agent agent
+2017-10-25 21:18:30 info  : (26) start  httpd_agent 26
+2017-10-25 21:18:30 sntxt : (27) LAUNCH snlua httpd_agent agent
+2017-10-25 21:18:30 info  : (27) start  httpd_agent 27
+2017-10-25 21:18:30 sntxt : (28) LAUNCH snlua httpd_agent agent
+2017-10-25 21:18:30 info  : (28) start  httpd_agent 28
+2017-10-25 21:18:30 sntxt : (29) LAUNCH snlua httpd_agent agent
+2017-10-25 21:18:30 info  : (29) start  httpd_agent 29
+2017-10-25 21:18:30 sntxt : (30) LAUNCH snlua httpd_agent agent
+2017-10-25 21:18:30 info  : (30) start  httpd_agent 30
+2017-10-25 21:18:30 sntxt : (31) LAUNCH snlua httpd_agent agent
+2017-10-25 21:18:30 info  : (31) start  httpd_agent 31
+2017-10-25 21:18:30 sntxt : (32) LAUNCH snlua httpd_agent agent
+2017-10-25 21:18:30 info  : (32) start  httpd_agent 32
+2017-10-25 21:18:30 sntxt : (33) LAUNCH snlua httpd_agent agent
+2017-10-25 21:18:30 info  : (33) start  httpd_agent 33
+2017-10-25 21:18:30 sntxt : (34) LAUNCH snlua httpd_agent agent
+2017-10-25 21:18:30 info  : (34) start  httpd_agent 34
+2017-10-25 21:18:30 info  : (13) httpd listen  0.0.0.0 : 8081
+2017-10-25 21:18:30 sntxt : (35) LAUNCH snlua console
+2017-10-25 21:18:30 sntxt : (2) KILL self
+2017-10-25 21:18:33 info  : (9) refresh_node_list
+2017-10-25 21:18:33 info  : (9) self_node_id 2
+2017-10-25 21:18:33 info  : (9) reload cluster name
+2017-10-25 21:18:33 info  : (9) 3 db 127.0.0.1:2502
+2017-10-25 21:18:33 info  : (9) 2 httpd 127.0.0.1:2507
+2017-10-25 21:18:33 info  : (9) 1 center 127.0.0.1:2501
+2017-10-25 21:18:33 info  : (9) add new node db 3
+2017-10-25 21:18:33 sntxt : (10) socket accept from 127.0.0.1:56340
+2017-10-25 21:18:33 info  : (13) httpd.command.register_handler(),path /weixin/pay_order service 50331665 entry notify_pay_order desc wei xin pay order notify
+2017-10-25 21:18:36 info  : (9) refresh_node_list
+2017-10-25 21:18:36 info  : (9) self_node_id 2
+2017-10-25 21:18:36 info  : (9) reload cluster name
+2017-10-25 21:18:36 info  : (9) 4 plaza 127.0.0.1:2503
+2017-10-25 21:18:36 info  : (9) 3 db 127.0.0.1:2502
+2017-10-25 21:18:36 info  : (9) 1 center 127.0.0.1:2501
+2017-10-25 21:18:36 info  : (9) 2 httpd 127.0.0.1:2507
+2017-10-25 21:18:36 info  : (9) add new node plaza 4
+2017-10-25 21:18:39 info  : (9) refresh_node_list
+2017-10-25 21:18:39 info  : (9) self_node_id 2
+2017-10-25 21:18:39 info  : (9) reload cluster name
+2017-10-25 21:18:39 info  : (9) 5 login 127.0.0.1:2504
+2017-10-25 21:18:39 info  : (9) 3 db 127.0.0.1:2502
+2017-10-25 21:18:39 info  : (9) 1 center 127.0.0.1:2501
+2017-10-25 21:18:39 info  : (9) 2 httpd 127.0.0.1:2507
+2017-10-25 21:18:39 info  : (9) 4 plaza 127.0.0.1:2503
+2017-10-25 21:18:39 info  : (9) add new node login 5
+2017-10-25 21:18:42 info  : (9) refresh_node_list
+2017-10-25 21:18:42 info  : (9) self_node_id 2
+2017-10-25 21:18:42 info  : (9) reload cluster name
+2017-10-25 21:18:42 info  : (9) 1 center 127.0.0.1:2501
+2017-10-25 21:18:42 info  : (9) 6 lgate1 127.0.0.1:2505
+2017-10-25 21:18:42 info  : (9) 4 plaza 127.0.0.1:2503
+2017-10-25 21:18:42 info  : (9) 5 login 127.0.0.1:2504
+2017-10-25 21:18:42 info  : (9) 2 httpd 127.0.0.1:2507
+2017-10-25 21:18:42 info  : (9) 3 db 127.0.0.1:2502
+2017-10-25 21:18:42 info  : (9) add new node lgate1 6
+2017-10-25 21:18:45 info  : (9) refresh_node_list
+2017-10-25 21:18:45 info  : (9) self_node_id 2
+2017-10-25 21:18:45 info  : (9) reload cluster name
+2017-10-25 21:18:45 info  : (9) 7 ugate1 127.0.0.1:2506
+2017-10-25 21:18:45 info  : (9) 1 center 127.0.0.1:2501
+2017-10-25 21:18:45 info  : (9) 6 lgate1 127.0.0.1:2505
+2017-10-25 21:18:45 info  : (9) 3 db 127.0.0.1:2502
+2017-10-25 21:18:45 info  : (9) 5 login 127.0.0.1:2504
+2017-10-25 21:18:45 info  : (9) 2 httpd 127.0.0.1:2507
+2017-10-25 21:18:45 info  : (9) 4 plaza 127.0.0.1:2503
+2017-10-25 21:18:45 info  : (9) add new node ugate1 7
+2017-10-25 21:18:48 info  : (9) refresh_node_list
+2017-10-25 21:18:48 info  : (9) self_node_id 2
+2017-10-25 21:18:48 info  : (9) reload cluster name
+2017-10-25 21:18:48 info  : (9) 1 center 127.0.0.1:2501
+2017-10-25 21:18:48 info  : (9) 4 plaza 127.0.0.1:2503
+2017-10-25 21:18:48 info  : (9) 5 login 127.0.0.1:2504
+2017-10-25 21:18:48 info  : (9) 6 lgate1 127.0.0.1:2505
+2017-10-25 21:18:48 info  : (9) 3 db 127.0.0.1:2502
+2017-10-25 21:18:48 info  : (9) 8 mj_cdxz_hall1 127.0.0.1:2903
+2017-10-25 21:18:48 info  : (9) 2 httpd 127.0.0.1:2507
+2017-10-25 21:18:48 info  : (9) 7 ugate1 127.0.0.1:2506
+2017-10-25 21:18:48 info  : (9) add new node mj_cdxz_hall1 8
+2017-10-25 21:18:51 info  : (9) refresh_node_list
+2017-10-25 21:18:51 info  : (9) self_node_id 2
+2017-10-25 21:18:51 info  : (9) reload cluster name
+2017-10-25 21:18:51 info  : (9) 7 ugate1 127.0.0.1:2506
+2017-10-25 21:18:51 info  : (9) 4 plaza 127.0.0.1:2503
+2017-10-25 21:18:51 info  : (9) 8 mj_cdxz_hall1 127.0.0.1:2903
+2017-10-25 21:18:51 info  : (9) 2 httpd 127.0.0.1:2507
+2017-10-25 21:18:51 info  : (9) 1 center 127.0.0.1:2501
+2017-10-25 21:18:51 info  : (9) 6 lgate1 127.0.0.1:2505
+2017-10-25 21:18:51 info  : (9) 3 db 127.0.0.1:2502
+2017-10-25 21:18:51 info  : (9) 9 mj_cdxz_room1 127.0.0.1:2904
+2017-10-25 21:18:51 info  : (9) 5 login 127.0.0.1:2504
+2017-10-25 21:18:51 info  : (9) add new node mj_cdxz_room1 9

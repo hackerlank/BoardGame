@@ -1,0 +1,11 @@
+
+{
+    "major" : "1.3.0",
+    "minor" : "0003",
+    "min_major"  : "1.3.0",
+    "min_minor"  : "0003",
+    "major_url" : "http://runger.net:8080/ccgames/update/w8yx/g_mj_xzdd/android/pkg/1.3.0",
+    "minor_url" : "http://runger.net:8080/ccgames/update/w8yx/g_mj_xzdd/android/asset/0003",
+    "store_url" : "appstore://",
+    "restart" : false
+}
