@@ -467,22 +467,28 @@ m_PrivateFunc.LoadPokerImage = function()
     poker_card_asset = {}
     local strs = { "diamond", "club", "heart",  "spade" }
     local id = 1
-    local path = "Assets/Content/Artwork/tmp/poker/"
+    local path = "Assets/Content/Artwork/ui/poker/"
     local t = {}
     local index = 1
     local paths = {}
     for k,v in pairs(strs) do 
         for i=1, 13 do 
             local s = {id=id}
-            paths[#paths + 1 ] = string.format("%s%s-%d.png", path, v, i)
+            paths[#paths + 1 ] = string.format("%s%s_%d.png", path, v, i)
             t[#t +1] = s
         end 
         id = id + 1
     end 
 
     --load bg 
-    table.insert(paths, string.format("%s%s", path, "pkp_bm.png"))
+    table.insert(paths, string.format("%s%s", path, "bg_puke02.png"))
     table.insert(t, {id = ECardType.max})
+    --joker_small
+    table.insert(paths, string.format("%s%s", path, "joker_small.png"))
+    table.insert(t, {id = ECardType.joker_small})
+    --joker_big
+    table.insert(paths, string.format("%s%s", path, "joker_big.png"))
+    table.insert(t, {id = ECardType.joker_big})
 
     --@todo if has other poker , add it in bellow
     GetResourceManager().LoadAssetsAsync(GameHelper.EAssetType.EAT_Sprite, paths, function(assets) 
