@@ -145,26 +145,28 @@ end
 function sender.send_begin_deal()
     log.debug("send_begin_deal()")
 
-    local t = {
-        dices = info.dices,
-        users = {},
-        table_card_num = info.card_num,
-        }
-    for seat_id,user in pairs(info.users) do
-        t.users[seat_id] = {
-            seat_id = seat_id,
-            cards = user.cards,
-            chip = user.chip,
-            stake = user.stake,
-            score = user.score,
-            own_score = user.own_score,
-            total_score = user.total_score,
-        }
-    end
-    local body = game_sproto:encode("begin_deal",t)
-	local np = spx.encode_pack1(info.table_service,game_msg_id.begin_deal,body)
-
     for _,dst in pairs(user_list) do
+        local t = {
+        
+            users = {},
+            table_card_num = info.card_num,
+            }
+        for seat_id,user in pairs(info.users) do
+            t.users[seat_id] = {
+                seat_id = seat_id,
+                hand_cards_num = user.hand_cards_num,
+
+            }
+
+            if  dst ==  user   then
+                   t.users[seat_id] .hand_cards= user.hand_cards
+            end    
+
+        end
+        local body = game_sproto:encode("begin_deal",t)
+	    local np = spx.encode_pack1(info.table_service,game_msg_id.begin_deal,body)
+
+    
 	    sender.send_user_pack(dst,np)
     end
 end

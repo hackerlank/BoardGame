@@ -291,10 +291,7 @@ function logic.other_user_act_timeout()
 
 end
 
---房主开始
-function logic.owner_req_start_game(user)
 
-end
 
 --房主开始
 function logic.owner_req_start_game(user)
@@ -302,14 +299,14 @@ function logic.owner_req_start_game(user)
         sender.send_owner_req_start_game_fail(user,0,"you not owner")
         return
     elseif info .start_game_mode ~= start_game_mode.owner then
-            sender.send_owner_req_start_round_fail(user,0,"start when full user")        
+            sender.send_owner_req_start_game_fail(user,0,"start when full user")        
     else 
         if info.state==table_state.idle then
             if info.user_num>=tonumber(conf.min_table_users)   then
-                if logic.is_all_ready() then
+                --if logic.is_all_ready() then
                     log.info("owner start game  now . enough user")
                     logic.game_start()
-                end
+               -- end
             else 
                 sender.send_owner_req_start_game_fail(user,0,"not enough user")
                 log.error("not enough user,user num is :"..info.user_num.." and min user is :"..conf.min_table_users)
