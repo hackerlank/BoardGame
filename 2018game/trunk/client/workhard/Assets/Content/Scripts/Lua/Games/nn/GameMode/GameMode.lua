@@ -24,7 +24,7 @@ end
 
 local function LoadGameView()
 	--print(" --------------------load  game  view ---------------------")
-	local tmp_mediator = depends(m_mediator_name)
+	--local tmp_mediator = depends(m_mediator_name)
 	--local viewcomp = depends("Games.nn.View.GameView")
 	--viewcomp:Init()
 				 

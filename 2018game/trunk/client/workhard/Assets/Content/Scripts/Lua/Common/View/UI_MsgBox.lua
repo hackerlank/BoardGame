@@ -82,7 +82,7 @@ function tbclass:Init()
         Canvas.worldCamera = UnityEngine.Camera.main
     end
 
-    endPos = UnityEngine.Vector3(initial_pos.x, initial_pos.y + 80, initial_pos.z)
+    endPos = UnityEngine.Vector3(initial_pos.x, initial_pos.y + 160, initial_pos.z)
 
     template_msg:SetActive(false)
 
@@ -214,7 +214,7 @@ end
 --show a message with content.
 --@param sz_content 
 function tbclass:ShowMsgWithContent(sz_content)
-     if sz_content == nil or sz_content == "" then 
+    if sz_content == nil or sz_content == "" then 
         return 
     end 
     local active_msg = FindValidMsgItem()

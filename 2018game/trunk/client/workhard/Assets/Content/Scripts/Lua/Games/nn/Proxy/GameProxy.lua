@@ -1293,7 +1293,7 @@ end
 --s2c:: table has been dismissed
 game_pack[base_msg_id.dismiss_table] = function(buf)
     local body = base_sproto:decode("dismiss_table", buf)
-    facade:sendNotification(Common.RENDER_MESSAGE_VALUE,body.desc)
+    --facade:sendNotification(Common.RENDER_MESSAGE_VALUE,body.desc)
 end 
 
 --s2d::req onlie rsp

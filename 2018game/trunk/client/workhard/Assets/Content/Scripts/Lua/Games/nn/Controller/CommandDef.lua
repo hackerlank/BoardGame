@@ -55,17 +55,6 @@ nn.PLAYER_REQ_START_GAME_RSP = "nn.player_req_start_game_rsp"
 nn.PLAYER_REQ_START_ROUND = "nn.player_req_start_round"
 nn.PLAYER_REQ_START_ROUND_RSP = "nn.player_req_start_round_rsp"
 
---command:: req piao
-nn.PLAYER_REQ_PIAO = "nn.player_req_piao"
-nn.PLAYER_REQ_PIAO_RSP = "nn.player_req_piao_rsp"
-
---command:: req piao
-nn.PLAYER_REQ_DING_PIAO = "nn.player_req_ding_piao"
-nn.PLAYER_REQ_DING_PIAO_RSP = "nn.player_req_ding_piao_rsp"
-
-nn.PLAYER_REQ_BAO_JIAO = "nn.player_req_bao_jiao"
-nn.PLAYER_REQ_BAO_JIAO_RSP = "nn.player_req_bao_jiao_rsp"
-
 --command:: 退出播放录像
 nn.EXIT_PLAY_RECORD = "nn.exit_play_record"
 nn.START_PLAY_RECORD = "nn.start_play_record"
@@ -133,13 +122,6 @@ if #nn.tb_proxy == 0 then
     nn.tb_proxy[#nn.tb_proxy+1] = {name=nn.GAME_PROXY_NAME, script="GameProxy"}
 end
 
---defined partilce type of this game
-nn.EParticleType = {
-    EPT_GameStarted=1,
-    EPT_DealCards=2,
-    EPT_Shuffle=3,
-}
-
 nn.ERecordGameStep={
     EGS_Idle=0,
     EGS_SetPiao=1,
@@ -177,8 +159,10 @@ nn.ETableState = depends("Games.nn.GameLib.table_state")
 nn.EUserAct = depends("Games.nn.GameLib.user_act")
 nn.EUserGameState = depends("Games.nn.GameLib.user_game_state")
 nn.EHandCardState = depends("Games.nn.GameLib.user_hand_cards_state")
-nn.ECardColor = depends("Games.nn.GameLib.card_color")
-nn.ECardPoint = depends("Games.nn.GameLib.card_point")
+nn.ECardColor = depends("Games.nn.GameLib.poker_color")
+nn.ECardPoint = depends("Games.nn.GameLib.poker_point")
+nn.game_logic = depends("Games.nn.GameLib.niuniu_logic")
+nn.ENiuStyle = depends("Games.nn.GameLib.niu_style")
 
 --defined game menus
 nn.GAME_VIEW = "Game"
