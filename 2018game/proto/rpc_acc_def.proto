@@ -1,0 +1,15 @@
+package rpc;
+
+
+enum LogoutReason
+{
+	LR_Normal = 0;
+	LR_RepeatedLogin = 1;
+};
+
+message S2C_Logout 
+{
+	required string accountID = 1;
+	required int32 deviceType = 2;
+	required LogoutReason reason = 3;
+};

@@ -1,0 +1,64 @@
+package game_def;
+
+// 客户端设备类型
+enum ClientDeviceType
+{
+	CDT_Unknown = 0;
+	CDT_IOS = 1;
+	CDT_Android = 2;
+	CDT_WebPlayer = 3;
+	CDT_Windows = 4;
+	CDT_MacOS = 5;
+}
+
+enum PlayerAttrType
+{
+	PAT_BindSafebox = 1;		            // 
+};
+
+
+enum ErrorCode
+{
+	EC_Unknown		= -1;		        //未知错误
+	EC_Success		= 0 ;			//有时候内嵌在其他消息里面用，但是一般不用这个，如果成功的话
+	EC_LackDiamond		= 1;			//钻石不足
+	
+	EC_WrongSelectTimes     = 2;			//倍数错误
+	EC_WrongGameId		= 3;			//游戏房间已经关闭
+	EC_WrongSelectLineCount = 4;			//选择线路的条数错误
+	EC_CurrencyMax		= 7;			//对方资源达到上限
+	EC_PlayerNotOnline	= 9;			//玩家不在线
+	EC_MessageNotRight	= 10;			//消息ID不存在或者本消条消息已过期
+	EC_JoinRoomDiamond	= 43;			//加入房间 ，钻石不足
+};
+
+
+enum GameType
+{
+	GT_Fruit=1;//水果机
+	GT_KingGlory=2;//王者荣耀
+	RT_ThreeKindoms=3;//三国志
+	RT_StreetFighter = 4;	//街霸
+	RT_LOL		= 5;  //英雄联盟
+	RT_Zombie	= 6;	// 打僵尸
+	RT_BattleGrounds = 7;		//绝地求生
+	RT_fish = 8;		//捕鱼
+	RT_Mammon	= 9;  //财神
+}
+
+
+enum EntityType
+{
+	ET_Normal = 1;
+	ET_Variable = 2;
+	ET_FreeTimes = 3;
+	ET_LittleGame = 4;
+	ET_Lottery = 5;
+}
+
+enum SpecialEventType
+{
+	SET_FreeGame	= 1;
+	SET_LittleGame	= 2;
+	SET_Lottery	= 3;
+}

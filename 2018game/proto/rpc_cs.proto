@@ -1,0 +1,147 @@
+package rpc;
+import "rpc_base.proto";
+import "game_def.proto";
+
+// 请求服务器当前时间
+message C2S_Time
+{
+};
+
+// 服务器当前时间
+message S2C_Time
+{
+	required int32 timestamp = 1;
+	required int32 zone = 2;
+	required int32 serverStartTime = 3;
+//	required int32 season = 4;
+};
+
+
+// 登录成功后，返回玩家信息，
+message S2C_LoginedPlayerInfo
+{
+	optional PlayerBaseInfo playerBaseInfo = 1;
+	optional string rollMessage = 2;
+	repeated LotteryInfo lotteryInfo = 3;
+};
+
+message S2C_ModifyPlayerAttr
+{
+	repeated PlayerAttribute attrs = 1;
+};
+
+message GmCommond
+{
+	required string cmd = 1;
+}
+
+// 通用错误码
+message S2C_Error
+{
+	required game_def.ErrorCode errorCode = 1;
+	optional string info = 2;
+}
+
+message C2S_SystemMessageTitleList
+{
+}
+message SystemMessageTitleInfo
+{
+	required int32 messageId = 1;
+	required string title = 2;
+	required int32 time = 3;
+	required bool read = 4;
+}
+
+message S2C_SystemMessageTitleList
+{
+	repeated SystemMessageTitleInfo titles= 1;
+}
+
+message C2S_SystemOneMessage
+{
+	required int32 messageId = 1;
+}
+
+message S2C_SystemOneMessage
+{
+	required int32 messageId = 1;
+	required string title	= 2;
+	required string message = 3;
+}
+
+message S2C_DiamondModify
+{
+	required string diamond = 1;
+}
+
+// 新的系统消息
+message S2C_NewSysMsg
+{
+}
+
+// 滚动消息
+message S2C_NewRollMsg
+{
+	required string message = 1;
+	required int32 index = 2; // 1, 滚动消息，2, 固定消息
+}
+
+message C2S_GetGames
+{
+	required int32 gameType = 1;
+}
+
+message S2C_GetGames
+{	
+	required int32 gameType = 1;
+	repeated GameItemInfo games = 2;
+}
+
+message C2S_EnterGame
+{
+	required int32 gameId = 1;
+}
+
+message S2C_EnterGame
+{
+	required game_def.ErrorCode errcode = 1;
+	required int32 gameId = 2;
+	optional FreePlayInfo freeInfo = 3;
+}
+
+message C2S_LeaveGame
+{
+	required int32 id = 1;	
+}
+
+
+message C2S_PlayOnce
+{
+	required int32 gameId = 1;		
+	required int32 lineCount = 2;  // 压线数量
+	required int32 times = 3;  //倍数
+}
+
+message S2C_PlayOnce
+{
+	required game_def.ErrorCode errcode = 1;
+	required int32 gameId = 2;
+	optional string score = 3;
+	optional string diamond = 4;
+	optional int32  totalTimes = 5;
+	optional int32 freeTimesLeft = 6;
+	optional int32 specialEventId = 7;
+	optional string  specialEventValue = 8;
+}
+
+message UiSwitchItem
+{
+	required string name = 1;
+	required int32 enable = 2;
+}
+
+message S2C_UiSwitch
+{
+	repeated UiSwitchItem items = 1;
+}

@@ -1,0 +1,51 @@
+package rpc;
+import "game_def.proto";
+
+message PlayerAttribute
+{
+	required game_def.PlayerAttrType attrType = 1;
+	required int32 value = 2;
+};
+
+message PlayerBaseInfo
+{
+	required int32 id = 1;
+	required string diamond = 2;
+	repeated PlayerAttribute attrs = 3;
+	optional bool isGuest = 6 [default=false];
+	optional bool newSystemMessage = 9 [default=false];
+};
+
+
+message GameItemInfo
+{
+	required int32 id = 1;     
+	required int32 baseBet = 2;
+	required int32 cfgId = 3;
+	required string lotteryDiamond = 4;
+}
+
+message FreePlayInfo
+{
+	required int32 betTimes = 1;			
+	required int32 lineCount = 2;			
+	required int32 freePlayTimes = 4;
+}
+
+message lineScore
+{
+	required int32 lineIndex = 1;
+	required int32 score = 2 ;
+}
+
+message LotteryItem
+{
+	required int32 gameId = 1;
+	required string lottery = 2;
+}
+
+message LotteryInfo
+{
+	required game_def.GameType gameType = 1;
+	repeated LotteryItem lotteries = 2;
+}

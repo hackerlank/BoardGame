@@ -1,0 +1,7 @@
+package rpc;
+
+message Request
+{
+	required string method = 1;
+	optional bytes serialized_request = 2;
+}

@@ -1,0 +1,79 @@
+package rpc;
+
+enum EAccountType
+{
+	EAT_Unknown = 0;
+	EAT_Internal = 1;		// 内部服务器
+	EAT_FeiDou = 2;			// 飞豆(开心，神之背叛
+	EAT_LeYou = 3;			// 天创乐游
+	EAT_LeYouAppStore = 4;	// 天创乐游 for appStore
+	EAT_Momo = 5;			// 陌陌
+	EAT_UCAndroid = 6;		// UC Android
+	EAT_360 = 7;
+	EAT_XiaoMi = 8;
+	EAT_YiJie = 9;			// 易接SDK 鸣镝
+	EAT_PPS = 10;
+	EAT_TX = 11;			// 腾讯（QQ、微信登录统一使用腾讯）
+	EAT_QQ = 12;
+	EAT_WeiXin = 13;
+	EAT_BaiDu = 14;			
+	EAT_Oppo = 15;
+	EAT_LianXiang = 16;
+	EAT_HuaWei = 17;
+	EAT_Vivo = 18;
+	EAT_JinLi = 19;
+	EAT_KuPai = 20;
+	EAT_YiJie_LinYou = 21;// 易接SDK 麟游
+	EAT_LengJing = 22;		// 棱镜SDK
+	EAT_BaiDu91 = 23;
+	EAT_LinYou = 24;		
+	EAT_FeiDouJP = 25;	//开心（日本）	
+	EAT_9377 = 26;
+	EAT_FeiDouEN = 27;	//开心（东南亚）
+	EAT_FeiDouKOR = 28;	//开心（韩国）
+	EAT_D = 29;			//当乐
+	EAT_YiWan = 30;		//益玩
+	EAT_WeiXinOpen = 31; // 微信开放平台
+};
+
+message LoginArgs 
+{
+	required string DeviceId = 1;	  // 设备码
+	required EAccountType AccountType = 2;  // 帐号类型
+	required string Token = 3;    // token
+	required string Version = 4;    // 版本号
+	required int32 DeviceType = 5;  // 设备类型（ClientDeviceType	
+	optional string DeviceDescription = 6; // 设备描述
+	optional string LoginIp = 7;
+}
+
+message LoginInfo 
+{
+	required int32 clientID = 1;
+	required LoginArgs args = 2;
+}
+
+message LoginInfoWithAccount 
+{
+	required int32 clientID = 1;
+	required int32 clientSubID = 2;
+	required LoginArgs args = 3;
+	required EAccountType accountType = 4;
+}
+
+message C2S_AuthLogin 
+{
+	required EAccountType accountType = 1;
+	required LoginArgs loginArgs = 2;	
+}
+
+message C2S_Logout 
+{
+	required int32 MsgIndex = 1;	// 网络Index号（用于后续处理
+	required string AccountID = 2;	// 账户
+};
+
+message C2S_PlayerReconnect
+{
+	required string Token = 1;
+};

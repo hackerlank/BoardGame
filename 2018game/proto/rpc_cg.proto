@@ -1,0 +1,45 @@
+package rpc;
+
+message C2S_Ping
+{
+	
+};
+
+message S2C_Ping
+{
+	
+};
+
+enum AuthResult
+{
+	AR_OK = 0;					// 成功
+	AR_Fail = 1;				// 一般失败
+	AR_MaxClient = 2;			// 网络连接已满
+	AR_RepeatedLogin = 3;		// 重复登录
+	AR_TokenInvalid = 4;		// token无效
+	AR_InputError = 5;			// 输入格式错误
+	AR_DisableLogin = 6;		// 禁止登录
+	AR_GameServerErr = 7;		// 游戏服务器出错
+	AR_AccountServerErr = 8;	// 帐号服务器出错
+	AR_VersionErr = 9;			// 版本不匹配
+	AR_GameServerNotOpen = 10;	// 游戏服务器未开放
+};
+
+message S2C_AuthLogin 
+{
+	required AuthResult result = 1;
+	required string AccountID = 2;
+	required string AccountName = 3;
+}
+
+enum ReconnectResult
+{
+	RR_OK = 0;
+	RR_Fail	= 1;
+	RR_MaxClient = 2;
+};
+
+message S2C_PlayerReconnect
+{
+	required ReconnectResult result = 1;
+};
